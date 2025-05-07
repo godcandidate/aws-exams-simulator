@@ -1,14 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
-import { AuthProvider } from './context/AuthContext';
-import ProtectedRoute from './components/common/ProtectedRoute';
 
 // Pages
 import LandingPage from './pages/LandingPage';
-import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
 import UserDashboard from './pages/UserDashboard';
-import AdminDashboard from './pages/AdminDashboard';
 import ExamPage from './pages/ExamPage';
 import ExamResultsPage from './pages/ExamResultsPage';
 // About page removed as requested
@@ -28,7 +23,11 @@ const GlobalStyle = createGlobalStyle`
     background-color: #f9fafb;
     color: #333;
     line-height: 1.5;
-    padding-top: 80px; /* Add padding to body to account for fixed header */
+  }
+  
+  /* Add padding only to pages with fixed headers, not for exam pages */
+  .with-header {
+    padding-top: 80px;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -73,45 +72,21 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <GlobalStyle />
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          {/* About page route removed as requested */}
-          
-          {/* Protected Routes - User */}
-          <Route path="/dashboard" element={
-            <ProtectedRoute>
-              <UserDashboard />
-            </ProtectedRoute>
-          } />
-          <Route path="/exam/:examId" element={
-            <ProtectedRoute>
-              <ExamPage />
-            </ProtectedRoute>
-          } />
-          <Route path="/exam-results" element={
-            <ProtectedRoute>
-              <ExamResultsPage />
-            </ProtectedRoute>
-          } />
-          
-          {/* Protected Routes - Admin */}
-          <Route path="/admin/dashboard" element={
-            <ProtectedRoute requireAdmin={true}>
-              <AdminDashboard />
-            </ProtectedRoute>
-          } />
-          
-          {/* Fallback route */}
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </Router>
-    </AuthProvider>
+    <Router>
+      <GlobalStyle />
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<LandingPage />} />
+        
+        {/* User Routes - No longer protected */}
+        <Route path="/dashboard" element={<UserDashboard />} />
+        <Route path="/exam/:examId" element={<ExamPage />} />
+        <Route path="/exam-results" element={<ExamResultsPage />} />
+        
+        {/* Fallback route */}
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
   );
 }
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useAuth } from '../context/AuthContext';
 import Layout from '../components/layout/Layout';
 
 const PageContainer = styled.div`
@@ -151,8 +150,6 @@ const FeatureTitle = styled.h3`
 `;
 
 const LandingPage = () => {
-  const { currentUser } = useAuth();
-  
   return (
     <Layout>
       <HeroSection>
@@ -162,14 +159,7 @@ const LandingPage = () => {
         </HeroSubtitle>
         
         <ButtonGroup>
-          {currentUser ? (
-            <GetStartedButton to="/dashboard">Go to Dashboard</GetStartedButton>
-          ) : (
-            <>
-              <GetStartedButton to="/signup">Sign Up Free</GetStartedButton>
-              <LoginButton to="/login">Log In</LoginButton>
-            </>
-          )}
+          <GetStartedButton to="/dashboard">Get Started</GetStartedButton>
         </ButtonGroup>
       </HeroSection>
       

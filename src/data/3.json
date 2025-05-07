@@ -1,0 +1,57 @@
+[
+  {
+    "id": 61,
+    "question": "Which AWS service is used to store objects in a scalable and durable manner?",
+    "options": [
+      { "id": "a", "text": "Amazon S3" },
+      { "id": "b", "text": "Amazon EC2" },
+      { "id": "c", "text": "Amazon RDS" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Amazon S3 (option a) is a scalable and durable object storage service for storing and retrieving data. Option b, EC2, is for compute instances, and option c, RDS, is for relational databases, not object storage."
+  },
+  {
+    "id": 62,
+    "question": "What is the primary function of Amazon CloudWatch?",
+    "options": [
+      { "id": "a", "text": "Monitoring and observability" },
+      { "id": "b", "text": "Serverless computing" },
+      { "id": "c", "text": "DNS routing" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Amazon CloudWatch (option a) is used for monitoring and observability of AWS resources and applications. Option b refers to Lambda, and option c refers to Route 53."
+  },
+  {
+    "id": 63,
+    "question": "Which AWS service provides a fully managed relational database?",
+    "options": [
+      { "id": "a", "text": "Amazon DynamoDB" },
+      { "id": "b", "text": "Amazon RDS" },
+      { "id": "c", "text": "Amazon Redshift" }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Amazon RDS (option b) provides fully managed relational databases like MySQL and PostgreSQL. Option a, DynamoDB, is a NoSQL database, and option c, Redshift, is for data warehousing."
+  },
+  {
+    "id": 64,
+    "question": "What does an IAM role allow in AWS?",
+    "options": [
+      { "id": "a", "text": "Temporary access to AWS services" },
+      { "id": "b", "text": "Permanent storage of data" },
+      { "id": "c", "text": "Load balancing of traffic" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "An IAM role (option a) allows temporary access to AWS services for entities like EC2 instances or users, using temporary credentials. Option b is incorrect as roles are not for storage, and option c refers to load balancers."
+  },
+  {
+    "id": 65,
+    "question": "Which service is used to route traffic to different AWS resources based on DNS?",
+    "options": [
+      { "id": "a", "text": "Amazon Route 53" },
+      { "id": "b", "text": "AWS Lambda" },
+      { "id": "c", "text": "Amazon API Gateway" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Amazon Route 53 (option a) is a DNS service that routes traffic to AWS resources. Option b, Lambda, is for serverless computing, and option c, API Gateway, is for managing APIs."
+  }
+]

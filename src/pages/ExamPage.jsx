@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Layout from '../components/layout/Layout';
 import Button from '../components/common/Button';
-
-const ExamLayout = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  width: 100%;
-`;
 
 const QuestionSidebar = styled.div`
   width: 280px;
@@ -29,58 +21,95 @@ const ExamContainer = styled.div`
   flex: 1;
   width: 100%;
   max-width: 100%;
-  padding: 1rem;
+  padding: 0;
+  scroll-behavior: smooth;
   
   @media (max-width: 576px) {
-    padding: 0.5rem;
+    padding: 0;
   }
 `;
 
 const ExamHeader = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  padding: 1rem 2rem;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 10;
+  
+  @media (max-width: 768px) {
+    padding: 0.75rem 1rem;
+  }
+`;
+
+// Exit button in the top-right corner
+const ExitButton = styled.button`
+  background-color: transparent;
+  color: #333;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: #f0f0f0;
+  }
+  
+  &::before {
+    content: '\2190'; /* Left arrow */
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+  }
 `;
 
 const ExamTitle = styled.h1`
-  font-size: 1.8rem;
+  font-size: 2rem;
   color: #333;
+  font-weight: 700;
 `;
 
 const ProgressBar = styled.div`
   height: 8px;
   background-color: #e9ecef;
-  border-radius: 4px;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 `;
 
 const ProgressFill = styled.div`
   height: 100%;
-  background-color: #0066cc;
+  background: linear-gradient(90deg, #0066cc 0%, #0088ff 100%);
   width: ${props => props.progress}%;
   transition: width 0.3s ease;
 `;
 
 const QuestionCard = styled.div`
   background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  padding: 2rem;
-  margin-bottom: 1rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  padding: 3rem;
+  margin-bottom: 2rem;
   display: flex;
   flex-direction: row;
   width: 100%;
+  min-height: 400px;
   
   @media (max-width: 992px) {
     flex-direction: column;
-    padding: 1.5rem;
+    padding: 2rem;
+    min-height: auto;
   }
   
   @media (max-width: 576px) {
-    padding: 1rem;
-    border-radius: 8px;
+    padding: 1.5rem;
+    border-radius: 12px;
   }
 `;
 
@@ -88,41 +117,31 @@ const QuestionHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
-`;
-
-const QuestionNumber = styled.span`
-  font-size: 1.1rem;
-  color: #495057;
-  font-weight: 500;
-  
-  @media (max-width: 576px) {
-    font-size: 0.9rem;
-  }
+  margin-bottom: 2rem;
 `;
 
 const QuestionText = styled.h2`
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   color: #333;
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
-  font-weight: 500;
+  margin-bottom: 2rem;
+  line-height: 1.7;
+  font-weight: 600;
   
   @media (max-width: 768px) {
-    font-size: 1rem;
-    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
   }
 `;
 
 const QuestionContainer = styled.div`
   flex: 1;
-  padding-right: 2rem;
+  padding-right: 3rem;
   border-right: 1px solid #e9ecef;
   
   @media (max-width: 992px) {
     padding-right: 0;
-    padding-bottom: 1.5rem;
-    margin-bottom: 1.5rem;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
     border-right: none;
     border-bottom: 1px solid #e9ecef;
   }
@@ -130,7 +149,7 @@ const QuestionContainer = styled.div`
 
 const OptionsContainer = styled.div`
   flex: 1;
-  padding-left: 2rem;
+  padding-left: 3rem;
   
   @media (max-width: 992px) {
     padding-left: 0;
@@ -140,40 +159,54 @@ const OptionsContainer = styled.div`
 const OptionsList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: 1.2rem;
+  margin-bottom: 2.5rem;
 `;
 
 const OptionItem = styled.div`
   display: flex;
   align-items: flex-start;
-  padding: 1.2rem;
-  border: 1px solid ${props => {
-    if (props.isSelected && props.isCorrect) return '#28a745';
-    if (props.isSelected && !props.isCorrect) return '#dc3545';
-    if (props.isCorrect && props.showAnswer) return '#28a745';
-    return '#dee2e6';
+  padding: 1.5rem;
+  border: 2px solid ${props => {
+    // Only show correct/incorrect colors when showing the answer
+    if (props.showAnswer) {
+      if (props.isSelected && props.isCorrect) return '#28a745';
+      if (props.isSelected && !props.isCorrect) return '#dc3545';
+      if (props.isCorrect) return '#28a745';
+      return '#e9ecef';
+    }
+    // When not showing answer, just highlight selected items
+    return props.isSelected ? '#0066cc' : '#e9ecef';
   }};
   background-color: ${props => {
-    if (props.isSelected && props.isCorrect) return 'rgba(40, 167, 69, 0.1)';
-    if (props.isSelected && !props.isCorrect) return 'rgba(220, 53, 69, 0.1)';
-    if (props.isCorrect && props.showAnswer) return 'rgba(40, 167, 69, 0.1)';
-    return 'white';
+    // Only show correct/incorrect colors when showing the answer
+    if (props.showAnswer) {
+      if (props.isSelected && props.isCorrect) return 'rgba(40, 167, 69, 0.1)';
+      if (props.isSelected && !props.isCorrect) return 'rgba(220, 53, 69, 0.1)';
+      if (props.isCorrect) return 'rgba(40, 167, 69, 0.1)';
+      return 'white';
+    }
+    // When not showing answer, just highlight selected items
+    return props.isSelected ? 'rgba(0, 102, 204, 0.1)' : 'white';
   }};
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: ${props => props.showAnswer ? 'default' : 'pointer'};
-  transition: all 0.2s ease;
-  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  margin-bottom: 0.5rem;
   width: 100%;
+  box-shadow: ${props => {
+    if (props.isSelected) return '0 5px 15px rgba(0, 0, 0, 0.05)';
+    return 'none';
+  }};
   
   &:hover {
     background-color: ${props => props.showAnswer ? '' : '#f8f9fa'};
-    transform: ${props => props.showAnswer ? 'none' : 'translateY(-2px)'};
-    box-shadow: ${props => props.showAnswer ? 'none' : '0 4px 8px rgba(0, 0, 0, 0.05)'};
+    transform: ${props => props.showAnswer ? 'none' : 'translateY(-3px)'};
+    box-shadow: ${props => props.showAnswer ? 'none' : '0 8px 15px rgba(0, 0, 0, 0.1)'};
   }
   
   @media (max-width: 768px) {
-    padding: 1rem;
+    padding: 1.2rem;
   }
 `;
 
@@ -185,48 +218,58 @@ const OptionLabel = styled.label`
 `;
 
 const OptionText = styled.span`
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   margin-left: 1rem;
   line-height: 1.6;
   display: block;
   width: 100%;
   
   @media (max-width: 768px) {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
 `;
 
 const ExplanationSection = styled.div`
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  padding: 1.5rem;
-  margin-top: 1.5rem;
-  border-left: 4px solid ${props => props.isCorrect ? '#28a745' : '#dc3545'};
+  background-color: ${props => props.isCorrect ? 'rgba(40, 167, 69, 0.05)' : 'rgba(220, 53, 69, 0.05)'};
+  border-radius: 16px;
+  padding: 2rem;
+  margin-top: 2rem;
+  border-left: 5px solid ${props => props.isCorrect ? '#28a745' : '#dc3545'};
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
 `;
 
 const ExplanationTitle = styled.h3`
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: ${props => props.isCorrect ? '#28a745' : '#dc3545'};
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.2rem;
   display: flex;
   align-items: center;
+  
+  &::before {
+    content: '${props => props.isCorrect ? '✓' : '✗'}';
+    margin-right: 0.8rem;
+    font-size: 1.5rem;
+  }
 `;
 
 const ExplanationText = styled.p`
-  color: #495057;
-  line-height: 1.6;
+  color: #555;
+  line-height: 1.8;
+  font-size: 1.1rem;
 `;
 
 const NavigationButtons = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 2rem;
+  margin-top: 3rem;
+  gap: 1.5rem;
 `;
 
 const SidebarTitle = styled.h3`
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: #333;
   margin-bottom: 1.5rem;
+  font-weight: 600;
   
   @media (max-width: 992px) {
     margin-bottom: 1rem;
@@ -294,29 +337,107 @@ const ExamInfoItem = styled.div`
   }
 `;
 
-import { questions } from '../data/questions';
-
-// Define exams using the imported questions from data directory
-const exams = [
-  {
-    id: 1,
-    title: 'AWS Core Services',
-    description: 'Practice questions covering fundamental AWS services like EC2, S3, RDS, and more.',
-    questions: questions.slice(0, 10) // First 10 questions
-  },
-  {
-    id: 2,
-    title: 'AWS Security',
-    description: 'Security-focused questions about IAM, encryption, compliance, and best practices.',
-    questions: questions.slice(10, 20) // Next 10 questions
-  },
-  {
-    id: 3,
-    title: 'AWS Networking',
-    description: 'Test your knowledge of VPC, subnets, security groups, and other networking concepts.',
-    questions: questions.slice(20) // Remaining questions
+const SidebarItem = styled.div`
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background-color: #e9ecef;
   }
-];
+  
+  &.active {
+    background-color: #0066cc;
+    color: white;
+  }
+  
+  p {
+    font-size: 1rem;
+    color: #333;
+  }
+`;
+
+const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
+
+const RadioContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
+
+const Checkbox = styled.input`
+  margin-right: 1rem;
+  width: 20px;
+  height: 20px;
+  cursor: ${props => props.disabled ? 'default' : 'pointer'};
+`;
+
+const RadioButton = styled.input`
+  margin-right: 1rem;
+  width: 20px;
+  height: 20px;
+  cursor: ${props => props.disabled ? 'default' : 'pointer'};
+`;
+
+const MultipleChoiceNotice = styled.div`
+  background-color: rgba(0, 102, 204, 0.1);
+  color: #0066cc;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  
+  &::before {
+    content: '\2139';  /* Info icon */
+    margin-right: 0.8rem;
+    font-size: 1.2rem;
+  }
+`;
+
+const SubmitButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+`;
+
+const CorrectAnswersDisplay = styled.div`
+  background-color: rgba(40, 167, 69, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0 1.5rem;
+`;
+
+const CorrectAnswersTitle = styled.h4`
+  font-size: 1.1rem;
+  color: #28a745;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+`;
+
+const CorrectAnswersList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+`;
+
+const CorrectAnswerItem = styled.span`
+  background-color: #28a745;
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.9rem;
+`;
+
+// No need for mock data as we'll load directly from JSON files
 
 const ExamPage = () => {
   const { examId } = useParams();
@@ -328,20 +449,39 @@ const ExamPage = () => {
   const [userAnswers, setUserAnswers] = useState([]);
   const [showAnswer, setShowAnswer] = useState(false);
   const [score, setScore] = useState(0);
+  const [selectedOptions, setSelectedOptions] = useState({});
   
   useEffect(() => {
-    // Find the exam by ID
-    const foundExam = exams.find(e => e.id === parseInt(examId));
+    const fetchExamData = async () => {
+      try {
+        // Fetch the exam data from the corresponding JSON file based on examId
+        const response = await import(`../data/${examId}.json`);
+        const examData = response.default || response;
+        
+        // Create an exam object with the fetched data
+        const foundExam = {
+          id: parseInt(examId),
+          questions: examData
+        };
+        
+        setExam(foundExam);
+        setUserAnswers(new Array(examData.length).fill(undefined));
+        
+        // Initialize selectedOptions with empty arrays for each question
+        const initialSelectedOptions = {};
+        examData.forEach((_, index) => {
+          initialSelectedOptions[index] = [];
+        });
+        setSelectedOptions(initialSelectedOptions);
+        
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching exam data:', error);
+        navigate('/dashboard');
+      }
+    };
     
-    if (foundExam) {
-      setExam(foundExam);
-      setUserAnswers(new Array(foundExam.questions.length).fill(undefined));
-    } else {
-      // Redirect if exam not found
-      navigate('/dashboard');
-    }
-    
-    setLoading(false);
+    fetchExamData();
   }, [examId, navigate]);
   
   if (loading || !exam) {
@@ -352,18 +492,87 @@ const ExamPage = () => {
   const totalQuestions = exam.questions.length;
   const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
   
+  const isMultipleChoice = (question) => {
+    return Array.isArray(question.correctAnswer) && question.correctAnswer.length > 1;
+  };
+
   const handleSelectOption = (optionId) => {
     if (showAnswer) return;
     
+    const isMultipleChoiceQuestion = isMultipleChoice(currentQuestion);
+    
+    if (isMultipleChoiceQuestion) {
+      // Handle multiple choice question (checkboxes)
+      const currentSelected = [...selectedOptions[currentQuestionIndex]];
+      
+      // Toggle selection
+      if (currentSelected.includes(optionId)) {
+        // Remove if already selected
+        const updatedSelection = currentSelected.filter(id => id !== optionId);
+        setSelectedOptions({
+          ...selectedOptions,
+          [currentQuestionIndex]: updatedSelection
+        });
+      } else {
+        // Add if not already selected
+        const updatedSelection = [...currentSelected, optionId];
+        setSelectedOptions({
+          ...selectedOptions,
+          [currentQuestionIndex]: updatedSelection
+        });
+      }
+    } else {
+      // Handle single choice question (radio buttons)
+      // Set the selected option directly and show answer
+      const newAnswers = [...userAnswers];
+      newAnswers[currentQuestionIndex] = optionId;
+      setUserAnswers(newAnswers);
+      
+      // For single choice, we also update selectedOptions for consistency
+      setSelectedOptions({
+        ...selectedOptions,
+        [currentQuestionIndex]: [optionId]
+      });
+      
+      // Show the answer immediately for single choice questions
+      setShowAnswer(true);
+      
+      // Update score if answer is correct for single choice
+      const correctAnswer = currentQuestion.correctAnswer;
+      const isCorrect = optionId === correctAnswer;
+      
+      if (isCorrect) {
+        setScore(score + 1);
+      }
+    }
+  };
+  
+  // Function to submit multiple choice answers
+  const handleSubmitMultipleChoice = () => {
+    if (showAnswer) return;
+    
+    const currentSelected = selectedOptions[currentQuestionIndex] || [];
+    const correctAnswers = currentQuestion.correctAnswer;
+    
+    // Check if the selected options match the correct answers
+    const isCorrect = 
+      // Same number of selections as correct answers
+      currentSelected.length === correctAnswers.length && 
+      // All selected options are in the correct answers
+      currentSelected.every(option => correctAnswers.includes(option)) &&
+      // All correct answers are in the selected options
+      correctAnswers.every(option => currentSelected.includes(option));
+    
+    // Store the answer
     const newAnswers = [...userAnswers];
-    newAnswers[currentQuestionIndex] = optionId;
+    newAnswers[currentQuestionIndex] = currentSelected;
     setUserAnswers(newAnswers);
     
-    // Show the answer immediately
+    // Show the answer
     setShowAnswer(true);
     
-    // Update score if answer is correct
-    if (optionId === currentQuestion.correctAnswer) {
+    // Update score if all selections are correct
+    if (isCorrect) {
       setScore(score + 1);
     }
   };
@@ -396,80 +605,216 @@ const ExamPage = () => {
   
   // Navigation functions for moving between questions
 
-  return (
-    <Layout>
-      <ExamLayout>
-        <ExamContainer>
-          <ExamHeader>
-            <QuestionNumber>Question {currentQuestionIndex + 1} of {totalQuestions}</QuestionNumber>
-          </ExamHeader>
-          
-          <ProgressBar>
-            <ProgressFill progress={progress} />
-          </ProgressBar>
-          
-          <QuestionCard>
-            <QuestionContainer>
-              <QuestionText>{currentQuestion.question}</QuestionText>
-            </QuestionContainer>
-            
-            <OptionsContainer>
-              <OptionsList>
-                {currentQuestion.options.map((option) => {
-                  const isSelected = userAnswers[currentQuestionIndex] === option.id;
-                  const isCorrect = option.id === currentQuestion.correctAnswer;
-                  
-                  return (
-                    <OptionItem 
-                      key={option.id}
-                      isSelected={isSelected}
-                      isCorrect={isCorrect}
-                      showAnswer={showAnswer}
-                      onClick={() => handleSelectOption(option.id)}
-                    >
-                      <OptionLabel showAnswer={showAnswer}>
-                        <OptionText>
-                          {option.id.toUpperCase()}. {option.text}
-                        </OptionText>
-                      </OptionLabel>
-                    </OptionItem>
-                  );
-                })}
-              </OptionsList>
-              
-              {showAnswer && (
-                <ExplanationSection isCorrect={userAnswers[currentQuestionIndex] === currentQuestion.correctAnswer}>
-                  <ExplanationTitle isCorrect={userAnswers[currentQuestionIndex] === currentQuestion.correctAnswer}>
-                    {userAnswers[currentQuestionIndex] === currentQuestion.correctAnswer 
-                      ? '✓ Correct!' 
-                      : '✗ Incorrect!'}
-                  </ExplanationTitle>
-                  <ExplanationText>{currentQuestion.explanation}</ExplanationText>
-                </ExplanationSection>
-              )}
-            </OptionsContainer>
-            
+  // Add a custom exit handler to the component
+  const handleExitExam = () => {
+    if (window.confirm('Are you sure you want to exit this exam? Your progress will not be saved.')) {
+      navigate('/dashboard');
+    }
+  };
+  
+  // Define the missing styled components
+  const ExamLayout = styled.div`
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    overflow-y: auto;
+  `;
 
-          </QuestionCard>
+  const TwoColumnLayout = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0 2rem;
+    
+    @media (max-width: 992px) {
+      flex-direction: column;
+      padding: 0 1rem;
+    }
+  `;
+
+  const QuestionColumn = styled.div`
+    flex: 1;
+    padding-right: 2rem;
+    
+    @media (max-width: 992px) {
+      padding-right: 0;
+      padding-bottom: 2rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid #e9ecef;
+    }
+  `;
+
+  const OptionsColumn = styled.div`
+    flex: 1;
+    
+    @media (max-width: 992px) {
+      width: 100%;
+    }
+  `;
+
+  const QuestionNumber = styled.div`
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+  `;
+
+  return (
+    <ExamLayout>
+      <ExamContainer>
+        <ExamHeader>
+          <QuestionNumber>Question {currentQuestionIndex + 1} of {totalQuestions}</QuestionNumber>
+          <ExitButton onClick={handleExitExam}>Exit to Dashboard</ExitButton>
+        </ExamHeader>
+        
+        <ProgressBar style={{ margin: 0 }}>
+          <ProgressFill progress={progress} />
+        </ProgressBar>
+        
+        <TwoColumnLayout>
+          {/* Left Column - Question */}
+          <QuestionColumn>
+            <QuestionText>{currentQuestion.question}</QuestionText>
+          </QuestionColumn>
           
-          <NavigationButtons>
-            <Button 
-              className="secondary" 
-              onClick={handlePreviousQuestion}
-              disabled={currentQuestionIndex === 0}
-            >
-              Previous
-            </Button>
+          {/* Right Column - Options */}
+          <OptionsColumn>
+            {isMultipleChoice(currentQuestion) && !showAnswer && (
+              <MultipleChoiceNotice>
+                This question has multiple correct answers. Select all that apply.
+              </MultipleChoiceNotice>
+            )}
+            
+            <OptionsList>
+              {currentQuestion.options.map((option) => {
+                const optionId = option.id;
+                const isMultipleChoiceQuestion = isMultipleChoice(currentQuestion);
+                
+                // For multiple choice, check if this option is in the selected options array
+                const isSelected = isMultipleChoiceQuestion
+                  ? (selectedOptions[currentQuestionIndex] || []).includes(optionId)
+                  : userAnswers[currentQuestionIndex] === optionId;
+                                 
+                const isCorrect = Array.isArray(currentQuestion.correctAnswer)
+                  ? currentQuestion.correctAnswer.includes(optionId)
+                  : currentQuestion.correctAnswer === optionId;
+                
+                return (
+                  <OptionItem 
+                    key={optionId}
+                    isSelected={isSelected}
+                    isCorrect={isCorrect}
+                    showAnswer={showAnswer}
+                    onClick={() => handleSelectOption(optionId)}
+                  >
+                    <OptionLabel showAnswer={showAnswer}>
+                      {isMultipleChoiceQuestion ? (
+                        <CheckboxContainer>
+                          <Checkbox 
+                            type="checkbox" 
+                            checked={isSelected}
+                            disabled={showAnswer}
+                            onChange={() => handleSelectOption(optionId)}
+                          />
+                          <OptionText>{option.id.toUpperCase()}. {option.text}</OptionText>
+                        </CheckboxContainer>
+                      ) : (
+                        <RadioContainer>
+                          <RadioButton 
+                            type="radio" 
+                            checked={isSelected}
+                            disabled={showAnswer}
+                            onChange={() => handleSelectOption(optionId)}
+                          />
+                          <OptionText>{option.id.toUpperCase()}. {option.text}</OptionText>
+                        </RadioContainer>
+                      )}
+                    </OptionLabel>
+                  </OptionItem>
+                );
+              })}
+            </OptionsList>
+            
+            {/* Submit button for multiple choice questions */}
+            {isMultipleChoice(currentQuestion) && !showAnswer && (
+              <SubmitButtonContainer>
+                <Button onClick={handleSubmitMultipleChoice}>
+                  Submit Answers
+                </Button>
+              </SubmitButtonContainer>
+            )}
             
             {showAnswer && (
-              <Button onClick={handleNextQuestion}>
-                {currentQuestionIndex < totalQuestions - 1 ? 'Next Question' : 'Finish Exam'}
-              </Button>
+              <ExplanationSection isCorrect={
+                isMultipleChoice(currentQuestion)
+                  ? // For multiple choice, check if arrays match exactly
+                    JSON.stringify(userAnswers[currentQuestionIndex].sort()) === JSON.stringify(currentQuestion.correctAnswer.sort())
+                  : // For single choice, simple equality check
+                    userAnswers[currentQuestionIndex] === currentQuestion.correctAnswer
+              }>
+                <ExplanationTitle isCorrect={
+                  isMultipleChoice(currentQuestion)
+                    ? // For multiple choice, check if arrays match exactly
+                      JSON.stringify(userAnswers[currentQuestionIndex].sort()) === JSON.stringify(currentQuestion.correctAnswer.sort())
+                    : // For single choice, simple equality check
+                      userAnswers[currentQuestionIndex] === currentQuestion.correctAnswer
+                }>
+                  {isMultipleChoice(currentQuestion)
+                    ? (JSON.stringify(userAnswers[currentQuestionIndex].sort()) === JSON.stringify(currentQuestion.correctAnswer.sort())
+                        ? '✓ Correct!' 
+                        : '✗ Incorrect!')
+                    : (userAnswers[currentQuestionIndex] === currentQuestion.correctAnswer
+                        ? '✓ Correct!' 
+                        : '✗ Incorrect!')}
+                </ExplanationTitle>
+                
+                {isMultipleChoice(currentQuestion) && (
+                  <CorrectAnswersDisplay>
+                    <CorrectAnswersTitle>Correct answers:</CorrectAnswersTitle>
+                    <CorrectAnswersList>
+                      {currentQuestion.correctAnswer.map(answer => (
+                        <CorrectAnswerItem key={answer}>
+                          {answer.toUpperCase()}
+                        </CorrectAnswerItem>
+                      ))}
+                    </CorrectAnswersList>
+                  </CorrectAnswersDisplay>
+                )}
+                
+                <ExplanationText>{currentQuestion.explanation}</ExplanationText>
+              </ExplanationSection>
             )}
-          </NavigationButtons>
+          </OptionsColumn>
+        </TwoColumnLayout>
+        
+        <NavigationButtons>
+          <Button 
+            className="secondary" 
+            onClick={handlePreviousQuestion}
+            disabled={currentQuestionIndex === 0}
+          >
+            Previous
+          </Button>
+          
+          {showAnswer && (
+            <Button onClick={handleNextQuestion}>
+              {currentQuestionIndex < totalQuestions - 1 ? 'Next Question' : 'Finish Exam'}
+            </Button>
+          )}
+        </NavigationButtons>
         </ExamContainer>
-      </ExamLayout>
-    </Layout>
+    </ExamLayout>
   );
 };
 

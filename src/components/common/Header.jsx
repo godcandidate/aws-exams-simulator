@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -244,21 +243,7 @@ const MobileMenuContainer = styled.div`
 `;
 
 const Header = () => {
-  const { currentUser, logout, isAdmin } = useAuth();
-  const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
-  
-  const getUserInitials = () => {
-    if (!currentUser || !currentUser.name) return '';
-    
-    const nameParts = currentUser.name.split(' ');
-    return (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase();
-  };
   
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -276,28 +261,7 @@ const Header = () => {
       
       <Nav $isOpen={mobileMenuOpen}>
         <NavLink to="/" onClick={() => setMobileMenuOpen(false)}>Home</NavLink>
-        
-        {currentUser ? (
-          <UserInfo>
-            <UserName>
-              <UserAvatar>{getUserInitials()}</UserAvatar>
-              {currentUser.name}
-            </UserName>
-            
-            {isAdmin ? (
-              <DashboardLink to="/admin/dashboard" onClick={() => setMobileMenuOpen(false)}>Admin Dashboard</DashboardLink>
-            ) : (
-              <DashboardLink to="/dashboard" onClick={() => setMobileMenuOpen(false)}>My Dashboard</DashboardLink>
-            )}
-            
-            <LogoutButton onClick={handleLogout}>Log Out</LogoutButton>
-          </UserInfo>
-        ) : (
-          <AuthButtons>
-            <LoginButton to="/login" onClick={() => setMobileMenuOpen(false)}>Log In</LoginButton>
-            <SignupButton to="/signup" onClick={() => setMobileMenuOpen(false)}>Sign Up</SignupButton>
-          </AuthButtons>
-        )}
+        <NavLink to="/dashboard" onClick={() => setMobileMenuOpen(false)}>Dashboard</NavLink>
       </Nav>
     </HeaderContainer>
   );

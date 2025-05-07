@@ -1,0 +1,618 @@
+[
+  {
+    "id": 31,
+    "question": "A company is running a multi-tier web application farm in a virtual private cloud (VPC) that is not connected to their corporate network. They are connecting to the VPC over the Internet to manage the fleet of Amazon EC2 instances running in both the public and private subnets. The Solutions Architect has added a bastion host with Microsoft Remote Desktop Protocol (RDP) access to the application instance security groups, but the company wants to further limit administrative access to all of the instances in the VPC. Which of the following bastion host deployment options will meet this requirement?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Deploy a Windows Bastion host with an Elastic IP address in the public subnet and allow RDP access to bastion only from the corporate IP addresses."
+      },
+      {
+        "id": "b",
+        "text": "Deploy a Windows Bastion host with an Elastic IP address in the private subnet, and restrict RDP access to the bastion from only the corporate public IP addresses."
+      },
+      {
+        "id": "c",
+        "text": "Deploy a Windows Bastion host with an Elastic IP address in the public subnet and allow SSH access to the bastion from anywhere."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Deploying a Windows bastion host in the public subnet with an Elastic IP and restricting RDP access to corporate IP addresses (option a) limits administrative access securely. The public subnet allows internet access to the bastion, and restricting RDP to specific IPs enhances security. Option b is incorrect because a bastion in a private subnet cannot be directly accessed over the internet without additional complexity like a NAT gateway. Option c is insecure as allowing SSH access from anywhere violates the requirement to limit access."
+  },
+  {
+    "id": 32,
+    "question": "A company has a static corporate website hosted in a standard S3 bucket and a new web domain name that was registered using Route 53. You are instructed by your manager to integrate these two services in order to successfully launch their corporate website. What are the prerequisites when routing traffic using Amazon Route 53 to a website that is hosted in an Amazon S3 Bucket?",
+    "options": [
+      { "id": "a", "text": "A registered domain name." },
+      { "id": "b", "text": "The record set must be of type 'MX'." },
+      {
+        "id": "c",
+        "text": "The S3 bucket must be in the same region as the hosted zone."
+      },
+      {
+        "id": "d",
+        "text": "The Cross-Origin Resource Sharing (CORS) option should be enabled in the S3 bucket."
+      },
+      {
+        "id": "e",
+        "text": "The S3 bucket name must be the same as the domain name."
+      }
+    ],
+    "correctAnswer": ["a", "e"],
+    "explanation": "A registered domain name (option a) is required to configure Route 53 for DNS routing. The S3 bucket name must match the domain name (option e) for S3 website hosting to work with Route 53 alias records. Option b is incorrect as MX records are for email, not website routing. Option c is incorrect because the S3 bucket and Route 53 hosted zone do not need to be in the same region. Option d is incorrect as CORS is not required for static website hosting."
+  },
+  {
+    "id": 33,
+    "question": "Both historical records and frequently accessed data are stored on an on-premises storage system. The amount of current data is growing at an exponential rate. As the storage's capacity is nearing its limit, the company's Solutions Architect has decided to move the historical records to AWS to free up space for the active data. Which of the following architectures deliver the best solution in terms of cost and operational management?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Use AWS Storage Gateway to move the historical records from on-premises to AWS. Choose Amazon S3 Glacier Deep Archive to be the destination for the data. Modify the S3 lifecycle configuration to move the data from the Standard tier to Amazon S3 Glacier Deep Archive after 30 days."
+      },
+      {
+        "id": "b",
+        "text": "Use AWS Storage Gateway to move the historical records from on-premises to AWS. Choose Amazon S3 Glacier Deep Archive to be the destination for the data."
+      },
+      {
+        "id": "c",
+        "text": "Use AWS DataSync to move the historical records from on-premises to AWS. Choose Amazon S3 Glacier Deep Archive to be the destination for the data."
+      },
+      {
+        "id": "d",
+        "text": "Use AWS DataSync to move the historical records from on-premises to AWS. Choose Amazon S3 Standard to be the destination for the data. Modify the S3 lifecycle configuration to move the data from the Standard tier to Amazon S3 Glacier Deep Archive after 30 days."
+      }
+    ],
+    "correctAnswer": "c",
+    "explanation": "Using AWS DataSync to move historical records to Amazon S3 Glacier Deep Archive (option c) is the most cost-effective and operationally simple solution. DataSync is designed for efficient data transfer to AWS, and Glacier Deep Archive is ideal for infrequently accessed, long-term storage. Option a and b use Storage Gateway, which is more suited for hybrid storage and adds complexity. Option d is less cost-effective as storing data in S3 Standard before transitioning to Deep Archive incurs higher initial costs."
+  },
+  {
+    "id": 34,
+    "question": "A company has an enterprise web application hosted on Amazon ECS Docker containers that use an Amazon FSx for Lustre filesystem for its high-performance computing workloads. A warm standby environment is running in another AWS region for disaster recovery. A Solutions Architect was assigned to design a system that will automatically route the live traffic to the disaster recovery (DR) environment only in the event that the primary application stack experiences an outage. What should the Architect do to satisfy this requirement?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Set up a Weighted routing policy configuration in Route 53 by adding health checks on both the primary stack and the DR environment. Configure the network access control list and the route table to allow Route 53 to send requests to the endpoints specified in the health checks. Enable the Evaluate Target Health option by setting it to Yes."
+      },
+      {
+        "id": "b",
+        "text": "Set up a CloudWatch Alarm to monitor the primary Route 53 DNS endpoint and create a custom Lambda function. Execute the ChangeResourceRecordSets API call using the function to initiate the failover to the secondary DNS record."
+      },
+      {
+        "id": "c",
+        "text": "Set up a CloudWatch Events rule to monitor the primary Route 53 DNS endpoint and create a custom Lambda function. Execute the ChangeResourceRecordSets API call using the function to initiate the failover to the secondary DNS record."
+      },
+      {
+        "id": "d",
+        "text": "Set up a failover routing policy configuration in Route 53 by adding a health check on the primary service endpoint. Configure Route 53 to direct the DNS queries to the secondary record when the primary resource is unhealthy. Configure the network access control list and the route table to allow Route 53 to send requests to the endpoints specified in the health checks. Enable the Evaluate Target Health option by setting it to Yes."
+      }
+    ],
+    "correctAnswer": "d",
+    "explanation": "Setting up a failover routing policy in Route 53 with a health check on the primary endpoint (option d) ensures automatic routing to the DR environment when the primary stack fails. The health check monitors the primary application, and Route 53 redirects traffic to the secondary record if unhealthy. Enabling Evaluate Target Health and configuring NACLs and route tables ensures proper routing. Option a (weighted routing) is for load balancing, not failover. Options b and c require custom Lambda functions, adding complexity compared to Route 53’s native failover."
+  },
+  {
+    "id": 35,
+    "question": "A company has a cryptocurrency exchange portal that is hosted in an Auto Scaling group of EC2 instances behind an Application Load Balancer and is deployed across multiple AWS regions. The users can be found all around the globe, but the majority are from Japan and Sweden. Because of the compliance requirements in these two locations, you want the Japanese users to connect to the servers in the ap-northeast-1 Asia Pacific (Tokyo) region, while the Swedish users should be connected to the servers in the eu-west-1 EU (Ireland) region. Which of the following services would allow you to easily fulfill this requirement?",
+    "options": [
+      { "id": "a", "text": "Use Route 53 Weighted Routing policy." },
+      {
+        "id": "b",
+        "text": "Set up a new CloudFront web distribution with the geo-restriction feature enabled."
+      },
+      {
+        "id": "c",
+        "text": "Set up an Application Load Balancers that will automatically route the traffic to the proper AWS region."
+      },
+      { "id": "d", "text": "Use Route 53 Geolocation Routing policy." }
+    ],
+    "correctAnswer": "d",
+    "explanation": "Route 53 Geolocation Routing policy (option d) allows routing traffic based on the geographic location of users, directing Japanese users to ap-northeast-1 and Swedish users to eu-west-1, meeting compliance requirements. Option a, weighted routing, is for load balancing, not location-based routing. Option b, CloudFront geo-restriction, is for restricting access, not directing to specific regions. Option c is incorrect as Application Load Balancers do not route based on geography."
+  },
+  {
+    "id": 36,
+    "question": "A Solutions Architect of a multinational gaming company develops video games for PS4, Xbox One, and Nintendo Switch consoles, plus a number of mobile games for Android and iOS. Due to the wide range of their products and services, the architect proposed that they use API Gateway. What are the key features of API Gateway that the architect can tell to the client?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Provides you with static anycast IP addresses that serve as a fixed entry point to your applications hosted in one or more AWS Regions."
+      },
+      {
+        "id": "b",
+        "text": "Enables you to build RESTful APIs and WebSocket APIs that are optimized for serverless workloads."
+      },
+      {
+        "id": "c",
+        "text": "You pay only for the API calls you receive and the amount of data transferred out."
+      },
+      {
+        "id": "d",
+        "text": "It automatically provides a query language for your APIs similar to GraphQL."
+      },
+      {
+        "id": "e",
+        "text": "Enables you to run applications requiring high levels of inter-node communications at scale on AWS through its custom-built operating system (OS) bypass hardware interface."
+      }
+    ],
+    "correctAnswer": ["b", "c"],
+    "explanation": "API Gateway enables building RESTful and WebSocket APIs optimized for serverless workloads (option b), making it ideal for integrating with services like Lambda for gaming applications. It also has a pay-as-you-go pricing model based on API calls and data transfer (option c), which is cost-effective. Option a is incorrect as static anycast IPs are a feature of Global Accelerator. Option d is incorrect as API Gateway does not provide a GraphQL-like query language. Option e is incorrect as it describes HPC features, not API Gateway."
+  },
+  {
+    "id": 37,
+    "question": "A company owns a photo-sharing app that stores user uploads on Amazon S3. There has been an increase in the number of explicit and offensive images being reported. The company currently relies on human efforts to moderate content, and they want to streamline this process by using Artificial Intelligence to only flag images for review. For added security, any communication with your resources on your Amazon VPC must not traverse the public Internet. How can this task be accomplished with the LEAST amount of effort?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Use Amazon Detective to detect images with graphic nudity or violence in Amazon S3. Ensure that all communications made by your AWS resources do not traverse the public Internet via the AWS Audit Manager service."
+      },
+      {
+        "id": "b",
+        "text": "Use an image classification model in Amazon SageMaker. Set up Amazon GuardDuty and connect it with Amazon SageMaker to ensure that all communications do not traverse the public Internet."
+      },
+      {
+        "id": "c",
+        "text": "Use Amazon Monitron to monitor each user upload in S3. Use the AWS Transit Gateway Network Manager to block any outbound requests to the public Internet."
+      },
+      {
+        "id": "d",
+        "text": "Use Amazon Rekognition to detect images with graphic nudity or violence in Amazon S3. Create an Interface VPC endpoint for Amazon Rekognition with the necessary policies to prevent any traffic from traversing the public internet."
+      }
+    ],
+    "correctAnswer": "d",
+    "explanation": "Using Amazon Rekognition to detect explicit content and creating an Interface VPC endpoint for Rekognition (option d) is the least-effort solution. Rekognition has built-in content moderation capabilities, and the VPC endpoint ensures private communication within the AWS network. Option a is incorrect as Amazon Detective is for security investigations, and Audit Manager is for compliance auditing. Option b requires building a custom SageMaker model, increasing effort, and GuardDuty is for threat detection. Option c is incorrect as Monitron is for equipment monitoring, and Transit Gateway is for network connectivity, not content moderation."
+  },
+  {
+    "id": 38,
+    "question": "A company runs a messaging application in the ap-northeast-1 and ap-southeast-2 region. A Solutions Architect needs to create a routing policy wherein a larger portion of traffic from the Philippines and North India will be routed to the resource in the ap-northeast-1 region. Which Route 53 routing policy should the Solutions Architect use?",
+    "options": [
+      { "id": "a", "text": "Latency Routing" },
+      { "id": "b", "text": "Geolocation Routing" },
+      { "id": "c", "text": "Weighted Routing" },
+      { "id": "d", "text": "Geoproximity Routing" }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Route 53 Geolocation Routing (option b) allows routing traffic based on the geographic location of users, enabling the architect to direct traffic from the Philippines and North India to ap-northeast-1. Option a, Latency Routing, routes based on lowest latency, not specific regions. Option c, Weighted Routing, is for load balancing with weights, not location-based routing. Option d, Geoproximity Routing, is for fine-grained location-based routing with bias, which is unnecessary here."
+  },
+  {
+    "id": 39,
+    "question": "A commercial bank has a forex trading application. They created an Auto Scaling group of EC2 instances that allow the bank to cope with the current traffic and achieve cost-efficiency. They want the Auto Scaling group to behave in such a way that it will follow a predefined set of parameters before it scales down the number of EC2 instances, which protects the system from unintended slowdown or unavailability. Which of the following statements are true about this requirement?",
+    "options": [
+      {
+        "id": "a",
+        "text": "It ensures that the Auto Scaling group launches or terminates additional EC2 instances without protecting the system from unintended slowdown or unavailability."
+      },
+      {
+        "id": "b",
+        "text": "It ensures that before the Auto Scaling group scales out, the EC2 instances have an ample time to cooldown."
+      },
+      { "id": "c", "text": "Its default value is 300 seconds." },
+      { "id": "d", "text": "Its default value is 600 seconds." },
+      {
+        "id": "e",
+        "text": "It ensures that the Auto Scaling group does not launch or terminate additional EC2 instances before the previous scaling activity takes effect."
+      }
+    ],
+    "correctAnswer": ["c", "e"],
+    "explanation": "The requirement describes the Auto Scaling cooldown period, which ensures that the Auto Scaling group does not launch or terminate additional EC2 instances before the previous scaling activity takes effect (option e), preventing unintended slowdowns. The default cooldown period is 300 seconds (option c). Option a is incorrect as it contradicts the requirement. Option b is incorrect as cooldown applies to both scale-out and scale-in, not just scale-out. Option d is incorrect as the default is 300 seconds, not 600."
+  },
+  {
+    "id": 40,
+    "question": "A company has a top priority requirement to monitor certain database metrics and send email notifications to the Operations team if any issues occur. Which combination of AWS services can accomplish this requirement?",
+    "options": [
+      { "id": "a", "text": "Amazon Simple Email Service" },
+      { "id": "b", "text": "Amazon CloudWatch" }
+    ],
+    "correctAnswer": ["a", "b"],
+    "explanation": "Amazon CloudWatch (option b) monitors database metrics and can trigger alarms based on thresholds. Amazon Simple Email Service (SES) (option a) can send email notifications when CloudWatch alarms are triggered, meeting the requirement. Together, they provide a robust solution for monitoring and alerting the Operations team."
+  },
+  {
+    "id": 41,
+    "question": "A media company is setting up an ECS batch architecture for its image processing application. It will be hosted in an Amazon ECS Cluster with two ECS tasks that will handle image uploads from the users and image processing. The first ECS task will process the user requests, store the image in an S3 input bucket, and push a message to a queue. The second task reads from the queue, parses the message containing the object name, and then downloads the object. Once the image is processed and transformed, it will upload the objects to the S3 output bucket. To complete the architecture, the Solutions Architect must create a queue and the necessary IAM permissions for the ECS tasks. Which of the following should the Architect do next?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Launch a new Amazon AppStream 2.0 queue and configure the second ECS task to read from it."
+      },
+      {
+        "id": "b",
+        "text": "Create an IAM role that the ECS tasks can assume in order to get access to the S3 buckets and AppStream 2.0 queue. Declare the IAM Role (taskRoleArn) in the task definition."
+      },
+      {
+        "id": "c",
+        "text": "Launch a new Amazon Data Firehose and configure the second ECS task to read from it. Create an IAM role that the ECS tasks can assume in order to get access to the S3 buckets and Data Firehose. Specify the ARN of the IAM Role in the (taskDefinitionArn) field of the task definition."
+      },
+      {
+        "id": "d",
+        "text": "Launch a new Amazon MQ queue and configure the second ECS task to read from it. Create an IAM role that the ECS tasks can assume in order to get access to the S3 buckets and Amazon MQ queue. Set the (EnableTaskIAMRole) option to true in the task definition."
+      },
+      {
+        "id": "e",
+        "text": "Launch a new Amazon SQS queue and configure the second ECS task to read from it. Create an IAM role that the ECS tasks can assume in order to get access to the S3 buckets and SQS queue. Declare the IAM Role (taskRoleArn) in the task definition."
+      }
+    ],
+    "correctAnswer": "e",
+    "explanation": "Launching an Amazon SQS queue and configuring the second ECS task to read from it, along with creating an IAM role for S3 and SQS access (option e), completes the architecture efficiently. SQS is ideal for decoupling ECS tasks, and the IAM role (taskRoleArn) ensures secure access. Option a is incorrect as AppStream 2.0 is for application streaming. Option b incorrectly references AppStream. Option c is incorrect as Data Firehose is for streaming to S3, not task queuing, and taskDefinitionArn is not the correct field. Option d is incorrect as Amazon MQ is more complex and less suitable than SQS."
+  },
+  {
+    "id": 42,
+    "question": "A company has multiple VPCs with IPv6 enabled for its suite of web applications. The Solutions Architect attempted to deploy a new Amazon EC2 instance but encountered an error indicating that there were no available IP addresses on the subnet. The VPC has a combination of IPv4 and IPv6 CIDR blocks, but the IPv4 CIDR blocks are nearing exhaustion. The architect needs a solution that will resolve this issue while allowing future scalability. How should the Solutions Architect resolve this problem?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Set up a new IPv4 subnet with a larger CIDR range. Associate the new subnet with the VPC and then launch the instance."
+      },
+      {
+        "id": "b",
+        "text": "Ensure that the VPC has IPv6 CIDRs only. Remove any IPv4 CIDRs associated with the VPC."
+      },
+      {
+        "id": "c",
+        "text": "Disable the IPv4 support in the VPC and use the available IPv6 addresses."
+      },
+      {
+        "id": "d",
+        "text": "Set up a new IPv6-only subnet with a large CIDR range. Associate the new subnet with the VPC then launch the instance."
+      }
+    ],
+    "correctAnswer": "d",
+    "explanation": "Setting up a new IPv6-only subnet with a large CIDR range (option d) resolves the IP exhaustion issue and supports scalability, as IPv6 provides a vast address space. Since the VPC already supports IPv6, this leverages existing capabilities. Option a is less scalable due to limited IPv4 addresses. Option b is impractical as removing IPv4 CIDRs may break existing applications. Option c is incorrect as disabling IPv4 entirely is not feasible for most workloads."
+  },
+  {
+    "id": 43,
+    "question": "A DevOps Engineer is required to design a cloud architecture in AWS. The Engineer is planning to develop a highly available and fault-tolerant architecture consisting of an Elastic Load Balancer and an Auto Scaling group of EC2 instances deployed across multiple Availability Zones. This will be used by an online accounting application that requires path-based routing, host-based routing, and bi-directional streaming using Remote Procedure Call (gRPC). Which configuration will satisfy the given requirement?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Configure an Application Load Balancer in front of the auto-scaling group. Select gRPC as the protocol version."
+      },
+      {
+        "id": "b",
+        "text": "Configure a Gateway Load Balancer in front of the auto-scaling group. Ensure that the IP Listener Routing uses the GENEVE protocol on port 6081 to allow gRPC response traffic."
+      },
+      {
+        "id": "c",
+        "text": "Configure a Network Load Balancer in front of the auto-scaling group. Create an AWS Global Accelerator accelerator and set the load balancer as an endpoint."
+      },
+      {
+        "id": "d",
+        "text": "Configure a Network Load Balancer in front of the auto-scaling group. Use a UDP listener for routing."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Configuring an Application Load Balancer (ALB) with gRPC as the protocol version (option a) supports path-based routing, host-based routing, and gRPC bi-directional streaming. ALB is designed for HTTP/2 and gRPC, making it ideal for this application. Option b is incorrect as Gateway Load Balancer is for network traffic inspection, not gRPC. Option c is incorrect as Network Load Balancer does not support gRPC or path/host-based routing. Option d is incorrect as UDP is not suitable for gRPC, which uses HTTP/2."
+  },
+  {
+    "id": 44,
+    "question": "A company has a dynamic web app written in MEAN stack that is going to be launched in the next month. There is a probability that the traffic will be quite high in the first couple of weeks. In the event of a load failure, how can you set up DNS failover to a static website?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Duplicate the exact application architecture in another region and configure DNS weight-based routing."
+      },
+      {
+        "id": "b",
+        "text": "Enable failover to an application hosted in an on-premises data center."
+      },
+      { "id": "c", "text": "Add more servers in case the application fails." },
+      {
+        "id": "d",
+        "text": "Use Route 53 with the failover option to a static S3 website bucket or CloudFront distribution."
+      }
+    ],
+    "correctAnswer": "d",
+    "explanation": "Using Route 53 with the failover option to a static S3 website bucket or CloudFront distribution (option d) ensures that traffic is redirected to a static site if the primary MEAN stack application fails. Route 53’s failover routing with health checks detects failures and routes traffic seamlessly. Option a is overly complex and costly for failover. Option b is impractical for a cloud-native app. Option c does not address DNS failover."
+  },
+  {
+    "id": 45,
+    "question": "A company has an on-premises MySQL database that needs to be replicated in Amazon S3 as CSV files. The database will eventually be launched to an Amazon Aurora Serverless cluster and be integrated with an RDS Proxy to allow the web applications to pool and share database connections. Once data has been fully copied, the ongoing changes to the on-premises database should be continually streamed into the S3 bucket. The company wants a solution that can be implemented with little management overhead yet still highly secure. Which ingestion pattern should a solutions architect take?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Set up a full load replication task using AWS Database Migration Service (AWS DMS). Launch an AWS DMS endpoint with SSL using the AWS Network Firewall service."
+      },
+      {
+        "id": "b",
+        "text": "Use AWS Schema Conversion Tool (AWS SCT) to convert MySQL data to CSV files. Set up the AWS Application Migration Service (AWS MGN) to capture ongoing changes from the on-premises MySQL database and send them to Amazon S3."
+      },
+      {
+        "id": "c",
+        "text": "Use an AWS Snowball Edge cluster to migrate data to Amazon S3 and AWS DataSync to capture ongoing changes. Create your own custom AWS KMS envelope encryption key for the associated AWS Snowball Edge job."
+      },
+      {
+        "id": "d",
+        "text": "Create a full load and change data capture (CDC) replication task using AWS Database Migration Service (AWS DMS). Add a new Certificate Authority (CA) certificate and create an AWS DMS endpoint with SSL."
+      }
+    ],
+    "correctAnswer": "d",
+    "explanation": "Creating a full load and change data capture (CDC) replication task using AWS DMS with an SSL-enabled endpoint (option d) is secure and low-overhead. DMS supports full load and ongoing replication to S3 as CSV files, and SSL ensures security. Option a is incorrect as Network Firewall is not used for DMS endpoints. Option b is incorrect as SCT is for schema conversion, and MGN is for server migration, not database streaming. Option c is complex and not suited for ongoing replication."
+  },
+  {
+    "id": 46,
+    "question": "An accounting application uses an RDS database configured with Multi-AZ deployments to improve availability. What would happen to the I/O operations of the primary database while a backup is being performed?",
+    "options": [
+      {
+        "id": "a",
+        "text": "The I/O operations will be briefly suspended during the backup."
+      },
+      {
+        "id": "b",
+        "text": "The I/O operations will continue as normal without any impact."
+      },
+      {
+        "id": "c",
+        "text": "The I/O operations will be redirected to the standby replica."
+      },
+      {
+        "id": "d",
+        "text": "The I/O operations will experience significant latency."
+      }
+    ],
+    "correctAnswer": "b",
+    "explanation": "In an RDS Multi-AZ deployment, backups are performed on the standby replica, so the I/O operations on the primary database continue as normal without any impact (option b). This ensures high availability and performance during backups. Option a is incorrect as I/O suspension occurs in single-AZ setups, not Multi-AZ. Option c is incorrect as I/O operations remain on the primary. Option d is incorrect as Multi-AZ backups do not cause latency on the primary."
+  },
+  {
+    "id": 47,
+    "question": "A company has recently migrated their web application to AWS and is hosted in a fleet of Amazon EC2 instances behind an Application Load Balancer. The application interacts with an Amazon RDS instance that contains sensitive Personally Identifiable Information (PII). As part of their compliance requirements, the company must ensure that all data transmissions are encrypted in transit. Which of the following should a Solutions Architect implement to satisfy this requirement?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Configure the Application Load Balancer to use HTTPS listeners and install an SSL/TLS certificate. Enable encryption for connections to the RDS instance using SSL/TLS."
+      },
+      {
+        "id": "b",
+        "text": "Configure the Application Load Balancer to use HTTP listeners and install an SSL/TLS certificate on the EC2 instances. Enable encryption for connections to the RDS instance using SSL/TLS."
+      },
+      {
+        "id": "c",
+        "text": "Enable AWS Shield Advanced to encrypt all data in transit between the Application Load Balancer and the EC2 instances. Use AWS Key Management Service (KMS) to encrypt connections to the RDS instance."
+      },
+      {
+        "id": "d",
+        "text": "Use AWS CloudHSM to manage encryption keys for the Application Load Balancer. Configure the RDS instance to use Transparent Data Encryption (TDE)."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Configuring the Application Load Balancer to use HTTPS listeners with an SSL/TLS certificate and enabling SSL/TLS for RDS connections (option a) ensures all data transmissions are encrypted in transit, meeting compliance requirements. Option b is less secure as HTTP listeners do not encrypt traffic to the ALB. Option c is incorrect as AWS Shield Advanced is for DDoS protection, and KMS is for data at rest. Option d is incorrect as CloudHSM and TDE are for key management and data at rest, not in-transit encryption."
+  },
+  {
+    "id": 48,
+    "question": "A company operates a machine learning application that processes large datasets stored in Amazon S3. The application runs on Amazon EC2 instances and requires high throughput access to the S3 bucket. The Solutions Architect wants to optimize costs while ensuring the application has the necessary permissions to access the S3 bucket securely. Which of the following should the Solutions Architect do?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Create an IAM user with S3 access permissions and store the credentials on the EC2 instances. Use S3 Transfer Acceleration to improve throughput."
+      },
+      {
+        "id": "b",
+        "text": "Attach an IAM role to the EC2 instances with permissions to access the S3 bucket. Enable S3 Transfer Acceleration for the bucket."
+      },
+      {
+        "id": "c",
+        "text": "Attach an IAM role to the EC2 instances with permissions to access the S3 bucket. Use an S3 VPC Gateway Endpoint to route traffic to the S3 bucket."
+      },
+      {
+        "id": "d",
+        "text": "Create an IAM user with S3 access permissions and store the credentials in AWS Secrets Manager. Use an S3 VPC Interface Endpoint to route traffic to the S3 bucket."
+      }
+    ],
+    "correctAnswer": "c",
+    "explanation": "Attaching an IAM role to the EC2 instances with S3 permissions and using an S3 VPC Gateway Endpoint (option c) is the most secure and cost-effective solution. The IAM role provides temporary credentials, and the gateway endpoint routes traffic privately to S3 without internet costs or latency. Option a is insecure due to stored credentials. Option b is less optimal as Transfer Acceleration incurs additional costs and is for internet-based transfers. Option d is incorrect as S3 uses gateway endpoints, not interface endpoints, and Secrets Manager adds unnecessary complexity."
+  },
+  {
+    "id": 49,
+    "question": "A company is running a web application on Amazon EC2 instances in an Auto Scaling group behind an Application Load Balancer. The application stores session data in an Amazon DynamoDB table. The Solutions Architect notices that during peak traffic, some users are experiencing session loss. Which of the following solutions would address this issue with the LEAST operational overhead?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Increase the capacity of the DynamoDB table by enabling auto-scaling for read and write capacity."
+      },
+      {
+        "id": "b",
+        "text": "Migrate the session data to Amazon ElastiCache and configure the application to store session data in ElastiCache."
+      },
+      {
+        "id": "c",
+        "text": "Store session data on the EC2 instances’ local storage and configure sticky sessions on the Application Load Balancer."
+      },
+      {
+        "id": "d",
+        "text": "Migrate the session data to Amazon RDS and configure the application to store session data in RDS."
+      }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Migrating session data to Amazon ElastiCache (option b) is the best solution with low operational overhead. ElastiCache is designed for low-latency session storage, addressing session loss during peak traffic. Option a may help but DynamoDB is not optimized for session storage. Option c introduces single points of failure and loses scalability benefits. Option d adds complexity as RDS is not ideal for session management compared to ElastiCache."
+  },
+  {
+    "id": 50,
+    "question": "A company has a legacy application running on an on-premises server that needs to be migrated to AWS. The application requires direct access to the operating system and cannot be containerized. The Solutions Architect wants to ensure high availability and minimize operational overhead. Which of the following is the BEST solution?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Deploy the application on Amazon EC2 instances in an Auto Scaling group across multiple Availability Zones."
+      },
+      {
+        "id": "b",
+        "text": "Deploy the application on AWS Elastic Beanstalk with a single instance environment."
+      },
+      {
+        "id": "c",
+        "text": "Deploy the application on AWS Lambda to achieve serverless scalability."
+      },
+      {
+        "id": "d",
+        "text": "Deploy the application on Amazon ECS with Fargate launch type."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Deploying the application on EC2 instances in an Auto Scaling group across multiple Availability Zones (option a) ensures high availability and supports the requirement for direct OS access. Option b is less resilient as Elastic Beanstalk single-instance environments lack HA. Option c is unsuitable as Lambda is serverless and does not allow OS access. Option d is incorrect as the application cannot be containerized."
+  },
+  {
+    "id": 51,
+    "question": "A company is planning to deploy a new web application that requires a relational database with read-heavy workloads. The database must support automatic failover and high availability. Which of the following database solutions should the Solutions Architect recommend?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Amazon RDS with Multi-AZ deployment and read replicas."
+      },
+      { "id": "b", "text": "Amazon DynamoDB with global tables." },
+      { "id": "c", "text": "Amazon Redshift with a single node." },
+      { "id": "d", "text": "Amazon ElastiCache with Redis." }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Amazon RDS with Multi-AZ deployment and read replicas (option a) supports relational databases, automatic failover, and read-heavy workloads through read replicas. Option b is incorrect as DynamoDB is NoSQL, not relational. Option c is unsuitable as Redshift is for data warehousing, not transactional workloads. Option d is incorrect as ElastiCache is for caching, not relational databases."
+  },
+  {
+    "id": 52,
+    "question": "A company runs a microservices-based application on Amazon EKS. The application requires persistent storage for some services. The Solutions Architect wants to ensure that the storage solution is highly available and can be easily integrated with Kubernetes. Which of the following should the Solutions Architect use?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Amazon Elastic File System (EFS) with a Kubernetes Storage Class."
+      },
+      {
+        "id": "b",
+        "text": "Amazon Elastic Block Store (EBS) with a single volume."
+      },
+      { "id": "c", "text": "Amazon S3 with a custom storage controller." },
+      { "id": "d", "text": "Amazon FSx for Windows File Server." }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Amazon EFS with a Kubernetes Storage Class (option a) is highly available, supports dynamic provisioning, and integrates seamlessly with EKS for persistent storage. Option b is incorrect as EBS volumes are limited to a single AZ and less flexible. Option c is complex and not native to Kubernetes storage. Option d is incorrect as FSx for Windows is not optimized for EKS or Kubernetes."
+  },
+  {
+    "id": 53,
+    "question": "A company is migrating a large dataset to Amazon S3. The dataset is stored on an on-premises NFS server, and the company wants to minimize downtime during the migration. Which of the following services should the Solutions Architect use to perform the migration?",
+    "options": [
+      { "id": "a", "text": "AWS DataSync" },
+      { "id": "b", "text": "AWS Snowball" },
+      { "id": "c", "text": "AWS Storage Gateway" },
+      { "id": "d", "text": "Amazon S3 Transfer Acceleration" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "AWS DataSync (option a) is designed for efficient, online data transfer from on-premises NFS servers to S3, minimizing downtime. Option b is incorrect as Snowball is for offline transfers, which may cause delays. Option c is suited for hybrid storage, not one-time migrations. Option d is less efficient for large datasets over NFS."
+  },
+  {
+    "id": 54,
+    "question": "A company runs a stateless web application on Amazon EC2 instances behind an Application Load Balancer. The application experiences occasional spikes in traffic, causing performance issues. The Solutions Architect wants to implement a solution that automatically scales the application with minimal latency. Which of the following should the Solutions Architect do?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Configure an Auto Scaling group with a target tracking scaling policy based on CPU utilization."
+      },
+      {
+        "id": "b",
+        "text": "Migrate the application to AWS Lambda and configure API Gateway."
+      },
+      {
+        "id": "c",
+        "text": "Deploy the application on AWS Elastic Beanstalk with a load-balanced environment."
+      },
+      { "id": "d", "text": "Use AWS Global Accelerator to reduce latency." }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Configuring an Auto Scaling group with a target tracking scaling policy based on CPU utilization (option a) ensures the application scales automatically to handle traffic spikes with minimal latency. Option b is unsuitable as Lambda is for serverless, not stateless EC2 applications. Option c adds management overhead compared to Auto Scaling. Option d addresses latency but not scaling."
+  },
+  {
+    "id": 55,
+    "question": "A company has a mobile application that stores user data in Amazon DynamoDB. The application requires low-latency access to the data from multiple regions. Which of the following solutions should the Solutions Architect implement to achieve this?",
+    "options": [
+      { "id": "a", "text": "Enable DynamoDB global tables." },
+      { "id": "b", "text": "Use Amazon CloudFront to cache DynamoDB data." },
+      {
+        "id": "c",
+        "text": "Deploy DynamoDB in multiple regions with cross-region replication."
+      },
+      { "id": "d", "text": "Use Amazon ElastiCache to cache DynamoDB data." }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Enabling DynamoDB global tables (option a) provides low-latency access by replicating data across multiple regions with automatic synchronization. Option b is incorrect as CloudFront is for static content, not DynamoDB. Option c is redundant as global tables handle cross-region replication. Option d is less effective as ElastiCache is for caching, not multi-region replication."
+  },
+  {
+    "id": 56,
+    "question": "A company is developing a serverless application using AWS Lambda and Amazon API Gateway. The application needs to authenticate users against an existing on-premises Active Directory. Which of the following should the Solutions Architect use to achieve this?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Configure Amazon Cognito with a SAML identity provider integrated with Active Directory."
+      },
+      {
+        "id": "b",
+        "text": "Use AWS IAM Identity Center with Active Directory integration."
+      },
+      {
+        "id": "c",
+        "text": "Configure AWS Directory Service for Microsoft Active Directory."
+      },
+      {
+        "id": "d",
+        "text": "Use AWS Secrets Manager to store Active Directory credentials."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Configuring Amazon Cognito with a SAML identity provider integrated with Active Directory (option a) enables user authentication for the serverless application. Option b is incorrect as IAM Identity Center is for AWS account access, not application authentication. Option c is for managing AD in AWS, not direct authentication. Option d is incorrect as Secrets Manager is for credential storage, not authentication."
+  },
+  {
+    "id": 57,
+    "question": "A company runs a batch processing workload on AWS Batch that processes large datasets stored in Amazon S3. The workload occasionally fails due to insufficient compute resources. The Solutions Architect wants to ensure that the workload scales dynamically to handle varying demands. Which of the following should the Solutions Architect do?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Configure AWS Batch to use a managed compute environment with auto-scaling."
+      },
+      {
+        "id": "b",
+        "text": "Deploy the workload on Amazon EC2 instances with a fixed number of instances."
+      },
+      { "id": "c", "text": "Migrate the workload to AWS Lambda." },
+      { "id": "d", "text": "Use Amazon ECS with a fixed task definition." }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Configuring AWS Batch with a managed compute environment and auto-scaling (option a) ensures dynamic scaling for batch processing workloads. Option b lacks scalability with fixed instances. Option c is unsuitable as Lambda has execution time limits. Option d is less flexible than AWS Batch for batch processing."
+  },
+  {
+    "id": 58,
+    "question": "A company has an application that generates log files stored in Amazon S3. The logs need to be analyzed using SQL queries for compliance reporting. Which of the following services should the Solutions Architect use to enable this analysis with minimal setup?",
+    "options": [
+      { "id": "a", "text": "Amazon Athena" },
+      { "id": "b", "text": "Amazon Redshift" },
+      { "id": "c", "text": "Amazon RDS" },
+      { "id": "d", "text": "Amazon Elasticsearch Service" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Amazon Athena (option a) enables SQL queries on S3 data with minimal setup, ideal for log analysis. Option b requires data loading and management. Option c is for relational databases, not S3 log analysis. Option d is for search and analytics, not SQL-based compliance reporting."
+  },
+  {
+    "id": 59,
+    "question": "A company is deploying a containerized application using Amazon ECS with Fargate. The application requires a persistent storage solution that supports multiple containers accessing the same data. Which of the following should the Solutions Architect use?",
+    "options": [
+      { "id": "a", "text": "Amazon Elastic File System (EFS)" },
+      { "id": "b", "text": "Amazon Elastic Block Store (EBS)" },
+      { "id": "c", "text": "Amazon S3" },
+      { "id": "d", "text": "Amazon DynamoDB" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Amazon EFS (option a) provides persistent, shared storage for multiple ECS containers, supporting concurrent access. Option b is incorrect as EBS is limited to a single instance. Option c is not suitable for file-based storage in ECS. Option d is a NoSQL database, not a file system."
+  },
+  {
+    "id": 60,
+    "question": "A company has a hybrid cloud environment with an on-premises data center connected to AWS via AWS Direct Connect. The company wants to ensure that its EC2 instances in a VPC can access an on-premises database securely without traversing the public internet. Which of the following should the Solutions Architect implement?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Configure a Site-to-Site VPN over AWS Direct Connect with a Virtual Private Gateway."
+      },
+      {
+        "id": "b",
+        "text": "Use AWS Transit Gateway to route traffic to the on-premises database."
+      },
+      {
+        "id": "c",
+        "text": "Configure an Internet Gateway and use NAT instances for secure access."
+      },
+      {
+        "id": "d",
+        "text": "Use Amazon API Gateway to proxy requests to the on-premises database."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Configuring a Site-to-Site VPN over AWS Direct Connect with a Virtual Private Gateway (option a) ensures secure, private access to the on-premises database without traversing the public internet. Option b is incorrect as Transit Gateway is for VPC-to-VPC or VPN routing, not direct on-premises access. Option c involves the public internet, violating the requirement. Option d is unsuitable as API Gateway is for APIs, not database access."
+  }
+]
