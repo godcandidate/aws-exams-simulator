@@ -43,7 +43,7 @@ const AboutText = styled.p`
 
 const AboutPage = () => {
   return (
-    <PageContainer>
+    <PageContainer className="page-container">
       <Header />
       <AboutContainer>
         <AboutHeader>About AWS Exams Simulator</AboutHeader>

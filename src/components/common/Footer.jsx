@@ -9,6 +9,13 @@ const FooterContainer = styled.footer`
   color: #6c757d;
   font-size: 0.9rem;
   margin-top: auto;
+  width: 100%;
+  text-align: center;
+  
+  @media (max-width: 576px) {
+    padding: 1rem;
+    font-size: 0.8rem;
+  }
 `;
 
 const Footer = () => {
