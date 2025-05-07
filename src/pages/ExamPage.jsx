@@ -102,13 +102,14 @@ const QuestionNumber = styled.span`
 `;
 
 const QuestionText = styled.h2`
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   color: #333;
   margin-bottom: 1.5rem;
-  line-height: 1.5;
+  line-height: 1.6;
+  font-weight: 500;
   
   @media (max-width: 768px) {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin-bottom: 1rem;
   }
 `;
@@ -145,7 +146,7 @@ const OptionsList = styled.div`
 
 const OptionItem = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   padding: 1.2rem;
   border: 1px solid ${props => {
     if (props.isSelected && props.isCorrect) return '#28a745';
@@ -163,6 +164,7 @@ const OptionItem = styled.div`
   cursor: ${props => props.showAnswer ? 'default' : 'pointer'};
   transition: all 0.2s ease;
   margin-bottom: 1rem;
+  width: 100%;
   
   &:hover {
     background-color: ${props => props.showAnswer ? '' : '#f8f9fa'};
@@ -177,7 +179,7 @@ const OptionItem = styled.div`
 
 const OptionLabel = styled.label`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
   cursor: ${props => props.showAnswer ? 'default' : 'pointer'};
 `;
@@ -185,7 +187,9 @@ const OptionLabel = styled.label`
 const OptionText = styled.span`
   font-size: 1.1rem;
   margin-left: 1rem;
-  line-height: 1.5;
+  line-height: 1.6;
+  display: block;
+  width: 100%;
   
   @media (max-width: 768px) {
     font-size: 1rem;
