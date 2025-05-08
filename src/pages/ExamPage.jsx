@@ -437,6 +437,85 @@ const CorrectAnswerItem = styled.span`
   font-size: 0.9rem;
 `;
 
+// Modal components for exit confirmation
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+const ModalContent = styled.div`
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+`;
+
+const ModalTitle = styled.h3`
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+`;
+
+const ModalText = styled.p`
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: #555;
+  line-height: 1.5;
+`;
+
+const ModalButtons = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+`;
+
+const CancelButton = styled.button`
+  background-color: #f8f9fa;
+  color: #333;
+  border: 1px solid #dee2e6;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: #e9ecef;
+  }
+`;
+
+const ConfirmButton = styled.button`
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: #c82333;
+  }
+`;
+
 // No need for mock data as we'll load directly from JSON files
 
 const ExamPage = () => {
@@ -450,6 +529,7 @@ const ExamPage = () => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [score, setScore] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState({});
+  const [showExitModal, setShowExitModal] = useState(false);
   
   useEffect(() => {
     const fetchExamData = async () => {
@@ -607,9 +687,18 @@ const ExamPage = () => {
 
   // Add a custom exit handler to the component
   const handleExitExam = () => {
-    if (window.confirm('Are you sure you want to exit this exam? Your progress will not be saved.')) {
-      navigate('/dashboard');
-    }
+    setShowExitModal(true);
+  };
+  
+  // Handle confirm exit
+  const handleConfirmExit = () => {
+    setShowExitModal(false);
+    navigate('/dashboard');
+  };
+  
+  // Handle cancel exit
+  const handleCancelExit = () => {
+    setShowExitModal(false);
   };
   
   // Define the missing styled components
@@ -672,6 +761,24 @@ const ExamPage = () => {
 
   return (
     <ExamLayout>
+      {showExitModal && (
+        <ModalOverlay>
+          <ModalContent>
+            <ModalTitle>Exit Exam?</ModalTitle>
+            <ModalText>
+              Are you sure you want to exit this exam? Your progress will not be saved.
+            </ModalText>
+            <ModalButtons>
+              <CancelButton onClick={handleCancelExit}>
+                Continue Exam
+              </CancelButton>
+              <ConfirmButton onClick={handleConfirmExit}>
+                Exit to Dashboard
+              </ConfirmButton>
+            </ModalButtons>
+          </ModalContent>
+        </ModalOverlay>
+      )}
       <ExamContainer>
         <ExamHeader>
           <QuestionNumber>Question {currentQuestionIndex + 1} of {totalQuestions}</QuestionNumber>
@@ -727,7 +834,7 @@ const ExamPage = () => {
                             disabled={showAnswer}
                             onChange={() => handleSelectOption(optionId)}
                           />
-                          <OptionText>{option.id.toUpperCase()}. {option.text}</OptionText>
+                          <OptionText>{option.text}</OptionText>
                         </CheckboxContainer>
                       ) : (
                         <RadioContainer>
@@ -737,7 +844,7 @@ const ExamPage = () => {
                             disabled={showAnswer}
                             onChange={() => handleSelectOption(optionId)}
                           />
-                          <OptionText>{option.id.toUpperCase()}. {option.text}</OptionText>
+                          <OptionText>{option.text}</OptionText>
                         </RadioContainer>
                       )}
                     </OptionLabel>

@@ -83,107 +83,96 @@ const SectionTitle = styled.h2`
 `;
 
 const ExamGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
   margin-top: 2rem;
 `;
 
 const ExamCard = styled.div`
   background-color: white;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 100%;
+  border-radius: 8px;
+  border: 1px solid #eaeaea;
+  padding: 1.5rem;
+  transition: all 0.2s ease;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   
   &:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   }
 `;
 
-const ExamCardHeader = styled.div`
-  background-color: #0066cc;
-  color: white;
-  padding: 2rem;
-  position: relative;
-  overflow: hidden;
-  
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -20px;
-    right: -20px;
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
-    border-radius: 50%;
-  }
+const ExamInfo = styled.div`
+  flex: 1;
 `;
 
 const ExamTitle = styled.h2`
-  font-size: 1.6rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
   font-weight: 600;
+  color: #333;
 `;
 
-const ExamCardBody = styled.div`
-  padding: 2rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-const ExamStats = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 2rem;
+const ExamDescription = styled.p`
+  color: #666;
   font-size: 1rem;
+  margin-bottom: 0;
+  line-height: 1.5;
 `;
 
-const StatItem = styled.div`
-  text-align: center;
-  background-color: #f8f9fa;
-  padding: 1rem 1.5rem;
-  border-radius: 12px;
-  min-width: 120px;
+const ExamActions = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 `;
 
-const StatValue = styled.div`
-  font-size: 2rem;
-  font-weight: 700;
-  color: #0066cc;
-  margin-bottom: 0.5rem;
-`;
-
-const StatLabel = styled.div`
-  color: #555;
-  font-weight: 500;
-`;
-
-const StartButton = styled(Link)`
-  display: block;
-  background-color: #0066cc;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 102, 204, 0.2);
+const QuestionCount = styled.div`
+  text-align: right;
+  margin-right: 1.5rem;
   
-  &:hover {
-    background-color: #0055aa;
-    box-shadow: 0 6px 15px rgba(0, 102, 204, 0.3);
-    transform: translateY(-2px);
+  span {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.25rem;
+  }
+  
+  small {
+    color: #666;
+    font-size: 0.9rem;
   }
 `;
+
+const ModeButton = styled(Link)`
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  
+  svg {
+    margin-left: 0.5rem;
+  }
+`;
+
+const PracticeButton = styled(ModeButton)`
+  background-color: #e6f3ff;
+  color: #0066cc;
+  
+  &:hover {
+    background-color: #d6ebff;
+  }
+`;
+
+
 
 const UserDashboard = () => {
   const [exams, setExams] = useState([]);
@@ -216,18 +205,21 @@ const UserDashboard = () => {
         <ExamGrid>
           {exams.map((exam) => (
             <ExamCard key={exam.id}>
-              <ExamCardHeader>
+              <ExamInfo>
                 <ExamTitle>{exam.title}</ExamTitle>
-              </ExamCardHeader>
-              <ExamCardBody>
-                <ExamStats>
-                  <StatItem>
-                    <StatValue>{exam.numberOfTests}</StatValue>
-                    <StatLabel>Questions</StatLabel>
-                  </StatItem>
-                </ExamStats>
-                <StartButton to={`/exam/${exam.id}`}>Start Practice</StartButton>
-              </ExamCardBody>
+                <ExamDescription>This test contains {exam.numberOfTests} questions to assess your knowledge.</ExamDescription>
+              </ExamInfo>
+              <ExamActions>
+                <QuestionCount>
+                  <span>{exam.numberOfTests}</span>
+                  <small>Questions</small>
+                </QuestionCount>
+                <div>
+                  <PracticeButton to={`/exam/${exam.id}`}>
+                    Start Practice <span>&rsaquo;</span>
+                  </PracticeButton>
+                </div>
+              </ExamActions>
             </ExamCard>
           ))}
         </ExamGrid>
