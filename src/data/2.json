@@ -168,8 +168,8 @@
       { "id": "c", "text": "Weighted Routing" },
       { "id": "d", "text": "Geoproximity Routing" }
     ],
-    "correctAnswer": "b",
-    "explanation": "Route 53 Geolocation Routing (option b) allows routing traffic based on the geographic location of users, enabling the architect to direct traffic from the Philippines and North India to ap-northeast-1. Option a, Latency Routing, routes based on lowest latency, not specific regions. Option c, Weighted Routing, is for load balancing with weights, not location-based routing. Option d, Geoproximity Routing, is for fine-grained location-based routing with bias, which is unnecessary here."
+    "correctAnswer": "d",
+    "explanation": "Route 53 Geoproximity Routing (option d) allows routing traffic based on the geographic location of your resources and the option to apply a bias. By applying a positive bias to the ap-northeast-1 region for traffic originating from the Philippines and North India, the Solutions Architect can ensure that a larger portion of this traffic is directed to that region. Geolocation Routing (option b) routes based on the user's location but doesn't inherently offer a mechanism to send a *larger portion* of traffic without complex configurations. Latency Routing (option a) routes based on the lowest latency, not geographic origin. Weighted Routing (option c) distributes traffic based on assigned weights, not user location."
   },
   {
     "id": 39,
@@ -198,10 +198,13 @@
     "question": "A company has a top priority requirement to monitor certain database metrics and send email notifications to the Operations team if any issues occur. Which combination of AWS services can accomplish this requirement?",
     "options": [
       { "id": "a", "text": "Amazon Simple Email Service" },
-      { "id": "b", "text": "Amazon CloudWatch" }
+      { "id": "b", "text": "Amazon CloudWatch" },
+      { "id": "c", "text": "Amazon Simple Notification Service (SNS)" },
+      { "id": "d", "text": "Amazon EC2 Instance with a running Berkeley Internet Name Domain (BIND) Server." },
+      { "id": "e", "text": "Amazon Simple Queue Service (SQS)" }
     ],
-    "correctAnswer": ["a", "b"],
-    "explanation": "Amazon CloudWatch (option b) monitors database metrics and can trigger alarms based on thresholds. Amazon Simple Email Service (SES) (option a) can send email notifications when CloudWatch alarms are triggered, meeting the requirement. Together, they provide a robust solution for monitoring and alerting the Operations team."
+    "correctAnswer": ["b", "a"],
+    "explanation": "Amazon CloudWatch (option b) is essential for monitoring database metrics and setting up alarms based on defined thresholds. When these alarms are triggered due to issues, Amazon Simple Email Service (SES) (option a) can be used to send email notifications to the Operations team. While Amazon SNS (option c) can also be used for notifications, including email, SES is specifically designed for email sending and is a common choice for this scenario when direct email is required. The other options are not directly relevant to monitoring database metrics and sending email notifications."
   },
   {
     "id": 41,

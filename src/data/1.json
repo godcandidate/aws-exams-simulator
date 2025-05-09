@@ -265,22 +265,43 @@
     "question": "An organization needs to control the access for several S3 buckets. They plan to use a gateway endpoint to allow access to trusted buckets. Which of the following could help you achieve this requirement?",
     "options": [
       { "id": "a", "text": "Generate a bucket policy for trusted VPCs." },
-      { "id": "b", "text": "Generate an endpoint policy for trusted VPCs." }
+      { "id": "b", "text": "Generate a bucket policy for trusted S3 buckets." },
+      {
+        "id": "c",
+        "text": "Generate an endpoint policy for trusted S3 buckets."
+      },
+      { "id": "d", "text": "Generate an endpoint policy for trusted VPCs." }
     ],
-    "correctAnswer": "b",
-    "explanation": "Generating an endpoint policy for trusted VPCs (option b) is the correct approach. A VPC gateway endpoint for S3 allows resources in the VPC to access S3 without traversing the public internet, and an endpoint policy can restrict access to specific S3 buckets, ensuring only trusted buckets are accessible. Option a, a bucket policy, can control access but does not leverage the gateway endpoint’s capabilities for secure, private access within the VPC."
+    "correctAnswer": "c",
+    "explanation": "To control access to S3 buckets using a gateway endpoint, you need to create an **endpoint policy for the trusted S3 buckets (option c)**. Here's why:\n\n* **VPC Gateway Endpoints for S3:** These endpoints allow resources within your VPC to access S3 privately, without requiring internet gateways, NAT devices, VPN connections, or AWS Direct Connect connections.\n* **Endpoint Policies:** These policies are attached to the VPC endpoint itself. They control which S3 buckets and resources within those buckets can be accessed by traffic originating from the VPC using that endpoint. By creating an endpoint policy that explicitly allows access only to the 'trusted S3 buckets', you enforce the required control.\n\nLet's look at why the other options are less suitable:\n\n* **Generate a bucket policy for trusted VPCs (option a):** Bucket policies are attached to S3 buckets and control who can access the bucket and what actions they can perform. While you can restrict access based on the VPC ID or VPC endpoint ID in a bucket policy, it's the endpoint policy that is directly associated with the gateway endpoint and controls the traffic flowing through it.\n* **Generate a bucket policy for trusted S3 buckets (option b):** Similar to option a, bucket policies control access to the bucket but don't directly leverage the control offered by the gateway endpoint itself.\n* **Generate an endpoint policy for trusted VPCs (option d):** Endpoint policies are associated with the VPC endpoint, but you need to specify the S3 buckets that are allowed to be accessed through that endpoint. Therefore, the policy should be for the 'trusted S3 buckets', not just the 'trusted VPCs'."
   },
   {
     "id": 14,
-    "question": "A software company has resources hosted in AWS and on-premises servers. You have been requested to create a decoupled architecture for applications which make use of both resources. Which of the following options are valid?",
+    "question": "A software company has resources hosted in AWS and on-premises servers. You have been requested to create a decoupled architecture for applications which make use of both resources. Which of the following options are valid? (Select TWO.)",
     "options": [
       {
         "id": "a",
-        "text": "Use SQS to utilize both on-premises servers and EC2 instances for your decoupled application."
+        "text": "Use SQS to utilize both on-premises servers and EC2 instances for your decoupled application"
+      },
+      {
+        "id": "b",
+        "text": "Use RDS to utilize both on-premises servers and EC2 instances for your decoupled application"
+      },
+      {
+        "id": "c",
+        "text": "Use SWF to utilize both on-premises servers and EC2 instances for your decoupled application"
+      },
+      {
+        "id": "d",
+        "text": "Use VPC peering to connect both on-premises servers and EC2 instances for your decoupled application"
+      },
+      {
+        "id": "e",
+        "text": "Use DynamoDB to utilize both on-premises servers and EC2 instances for your decoupled application"
       }
     ],
-    "correctAnswer": ["a"],
-    "explanation": "Using Amazon SQS (option a) is a valid approach for creating a decoupled architecture. SQS allows both on-premises servers and EC2 instances to send and receive messages asynchronously, enabling loose coupling between components. This ensures that the application can process tasks independently, improving scalability and resilience. The question lists only one option, but SQS is well-suited for this use case due to its ability to integrate with both AWS and on-premises environments."
+    "correctAnswer": ["a", "c"],
+    "explanation": "To create a decoupled architecture that utilizes both AWS EC2 instances and on-premises servers, the following AWS services are suitable:\n\n* **Use SQS to utilize both on-premises servers and EC2 instances for your decoupled application (option a):** Amazon Simple Queue Service (SQS) enables decoupled and asynchronous communication between different components of an application. Both on-premises servers and EC2 instances can send messages to and receive messages from SQS queues, allowing them to work independently without direct, tightly coupled interactions.\n* **Use SWF to utilize both on-premises servers and EC2 instances for your decoupled application (option c):** Amazon Simple Workflow Service (SWF) is a fully-managed workflow service that helps developers build, run, and scale background jobs that have parallel or sequential steps. It can coordinate tasks across both AWS and on-premises environments, thus decoupling the application components and managing the workflow execution across these distributed resources.\n\nLet's examine why the other options are less suitable for achieving decoupled application components across AWS and on-premises:\n\n* **Use RDS to utilize both on-premises servers and EC2 instances for your decoupled application (option b):** Amazon Relational Database Service (RDS) is a managed relational database service. While it can be accessed from both AWS and on-premises, using it directly for inter-component communication doesn't inherently decouple the application logic in the same way that messaging or workflow services do. It introduces a more direct dependency on the database.\n* **Use VPC peering to connect both on-premises servers and EC2 instances for your decoupled application (option d):** VPC peering establishes a network connection between VPCs. While it allows communication between EC2 instances and on-premises servers (often in conjunction with other connectivity options like VPN or Direct Connect), it primarily addresses network connectivity and doesn't, by itself, decouple application components.\n* **Use DynamoDB to utilize both on-premises servers and EC2 instances for your decoupled application (option e):** Amazon DynamoDB is a NoSQL database service. Similar to RDS, while accessible from both environments, using it directly for inter-component communication creates a direct data dependency rather than decoupling the application flow."
   },
   {
     "id": 15,
