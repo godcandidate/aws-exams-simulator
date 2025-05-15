@@ -1,0 +1,390 @@
+[
+  {
+    "id": 61,
+    "question": "Which AWS service is used to store objects in a scalable and durable manner?",
+    "options": [
+      { "id": "a", "text": "Amazon S3" },
+      { "id": "b", "text": "Amazon EC2" },
+      { "id": "c", "text": "Amazon RDS" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Amazon S3 (option a) is a scalable and durable object storage service for storing and retrieving data. Option b, EC2, is for compute instances, and option c, RDS, is for relational databases, not object storage."
+  },
+  {
+    "id": 62,
+    "question": "A company wants to use Amazon Elastic Container Service (Amazon ECS) to run its on-premises application in a hybrid environment. The application currently runs on containers on premises. The company needs a single container solution that can scale in an on-premises, hybrid, or cloud environment. The company must run new application containers in the AWS Cloud and must use a load balancer for HTTP traffic. Which combination of actions will meet these requirements? (Choose two.)",
+    "options": [
+      { "id": "a", "text": "Set up an ECS cluster that uses the AWS Fargate launch type for the cloud application containers. Use an Amazon ECS Anywhere external launch type for the on-premises application containers." },
+      { "id": "b", "text": "Set up an Application Load Balancer for cloud ECS services." },
+      { "id": "c", "text": "Set up a Network Load Balancer for cloud ECS services." },
+      { "id": "d", "text": "Set up an ECS cluster that uses the AWS Fargate launch type. Use Fargate for the cloud application containers and the on-premises application containers." },
+      { "id": "e", "text": "Set up an ECS cluster that uses the Amazon EC2 launch type for the cloud application containers. Use Amazon ECS Anywhere with an AWS Fargate launch type for the on-premises application containers." }
+    ],
+    "correctAnswer": ["a", "b"],
+    "explanation": "Option a is correct because AWS Fargate for cloud containers and ECS Anywhere for on-premises containers provide a unified solution for hybrid environments. Option b is correct because an Application Load Balancer (ALB) supports HTTP traffic for ECS services. Option c (Network Load Balancer) is less suitable for HTTP traffic. Option d is incorrect because Fargate is cloud-only, not on-premises. Option e is incorrect because ECS Anywhere does not support Fargate for on-premises containers."
+  },
+  {
+    "id": 63,
+    "question": "A company is migrating its workloads to AWS. The company has sensitive and critical data in on-premises relational databases that run on SQL Server instances. The company wants to use the AWS Cloud to increase security and reduce operational overhead for the databases. Which solution will meet these requirements?",
+    "options": [
+      { "id": "a", "text": "Migrate the databases to Amazon EC2 instances. Use an AWS Key Management Service (AWS KMS) AWS managed key for encryption." },
+      { "id": "b", "text": "Migrate the databases to a Multi-AZ Amazon RDS for SQL Server DB instance. Use an AWS Key Management Service (AWS KMS) AWS managed key for encryption." },
+      { "id": "c", "text": "Migrate the data to an Amazon S3 bucket. Use Amazon Macie to ensure data security." },
+      { "id": "d", "text": "Migrate the databases to an Amazon DynamoDB table. Use Amazon CloudWatch Logs to ensure data security." }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Option b is correct because Amazon RDS for SQL Server with Multi-AZ provides high availability, security via KMS encryption, and reduces operational overhead as a managed service. Option a requires managing EC2 instances, increasing overhead. Option c is incorrect because S3 is not suitable for relational databases, and Macie is for data discovery, not encryption. Option d is incorrect because DynamoDB is NoSQL, and CloudWatch Logs is not for data security."
+  },
+  {
+    "id": 64,
+    "question": "A company wants to migrate an application to to AWS. The company wants to increase the application's current availability. The company wants to use AWS WAF in the application's architecture. Which solution will meet these requirements?",
+    "options": [
+      { "id": "a", "text": "Create an Auto Scaling group that contains multiple Amazon EC2 instances that host the application across two Availability Zones. Configure an Application Load Balancer (ALB) and set the Auto Scaling group as the target. Connect a WAF to the ALB." },
+      { "id": "b", "text": "Create a cluster placement group that contains multiple Amazon EC2 instances that hosts the application. Configure an Application Load Balancer and set the EC2 instances as the targets. Connect a WAF to the placement group." },
+      { "id": "c", "text": "Create two Amazon EC2 instances that host the application across two Availability Zones. Configure the EC2 instances as the targets of an Application Load Balancer (ALB). Connect a WAF to the ALB." },
+      { "id": "d", "text": "Create an Auto Scaling group that contains multiple Amazon EC2 instances that host the application across two Availability Zones. Configure an Application Load Balancer (ALB) and set the Auto Scaling group as the target. Connect a WAF to the Auto Scaling group." }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Option a is correct because an Auto Scaling group across two Availability Zones ensures high availability, and an ALB with AWS WAF provides security. Option b is incorrect because cluster placement groups are for low-latency, not high availability, and WAF cannot connect to placement groups. Option c lacks scalability without Auto Scaling. Option d is incorrect because WAF connects to the ALB, not the Auto Scaling group."
+  },
+  {
+    "id": 65,
+    "question": "A company uses AWS to host its public ecommerce website. The website uses an AWS Global Accelerator accelerator for traffic from the internet. The Global Accelerator accelerator forwards the traffic to an Application Load Balancer (ALB) that is the entry point for an Auto Scaling group. The company recently identified a DDoS attack on the website. The company needs a solution to mitigate future attacks. Which solution will meet these requirements with the LEAST implementation effort?",
+    "options": [
+      { "id": "a", "text": "Configure an AWS WAF web ACL for the Global Accelerator accelerator to block traffic by using rate-based rules." },
+      { "id": "b", "text": "Configure an AWS Lambda function to read the ALB metrics to block attacks by updating a VPC network ACL." },
+      { "id": "c", "text": "Configure an AWS WAF web ACL on the ALB to block traffic by using rate-based rules." },
+      { "id": "d", "text": "Configure an Amazon CloudFront distribution in front of the Global Accelerator accelerator." }
+    ],
+    "correctAnswer": "c",
+    "explanation": "Option c is correct because attaching a WAF web ACL to the ALB with rate-based rules mitigates DDoS attacks with minimal effort. Option a is incorrect because WAF cannot be directly attached to Global Accelerator. Option b is complex and error-prone. Option d adds unnecessary complexity without directly addressing DDoS mitigation."
+  },
+  {
+    "id": 66,
+    "question": "A company has a web application that includes an embedded NoSQL database. The application runs on Amazon EC2 instances behind an Application Load Balancer (ALB). The instances run in an Amazon EC2 Auto Scaling group in a single Availability Zone. A recent increase in traffic requires the application to be highly available and for the database to be eventually consistent. Which solution will meet these requirements with the LEAST operational overhead?",
+    "options": [
+      { "id": "a", "text": "Replace the ALB with a Network Load Balancer. Maintain the embedded NoSQL database with its replication service on the EC2 instances." },
+      { "id": "b", "text": "Replace the ALB with a Network Load Balancer. Migrate the embedded NoSQL database to Amazon DynamoDB by using AWS Database Migration Service (AWS DMS)." },
+      { "id": "c", "text": "Modify the Auto Scaling group to use EC2 instances across three Availability Zones. Maintain the embedded NoSQL database with its replication service on the EC2 instances." },
+      { "id": "d", "text": "Modify the Auto Scaling group to use EC2 instances across three Availability Zones. Migrate the embedded NoSQL database to Amazon DynamoDB by using AWS Database Migration Service (AWS DMS)." }
+    ],
+    "correctAnswer": "d",
+    "explanation": "Option d is correct because spreading the Auto Scaling group across three Availability Zones ensures high availability, and migrating to DynamoDB provides eventual consistency with minimal operational overhead as a managed service. Option a does not improve availability. Option b uses a Network Load Balancer, which is less suitable for web applications. Option c requires managing the NoSQL database, increasing overhead."
+  },
+  {
+    "id": 67,
+    "question": "A company is migrating its data processing application to the AWS Cloud. The application processes several short-lived batch jobs that cannot be disrupted. Data is generated after each batch job is completed. The data is accessed for 30 days and retained for 2 years. The company wants to keep the cost of running the application in the AWS Cloud as low as possible. Which solution will meet these requirements?",
+    "options": [
+      { "id": "a", "text": "Migrate the data processing application to Amazon EC2 Spot Instances. Store the data in Amazon S3 Standard. Move the data to Amazon S3 Glacier Instant Retrieval after 30 days. Set an expiration to delete the data after 2 years." },
+      { "id": "b", "text": "Migrate the data processing application to Amazon EC2 On-Demand Instances. Store the data in Amazon S3 Glacier Instant Retrieval. Move the data to S3 Glacier Deep Archive after 30 days. Set an expiration to delete the data after 2 years." },
+      { "id": "c", "text": "Deploy Amazon EC2 Spot Instances to run the batch jobs. Store the data in Amazon S3 Standard. Move the data to Amazon S3 Glacier Flexible Retrieval after 30 days. Set an expiration to delete the data after 2 years." },
+      { "id": "d", "text": "Deploy Amazon EC2 On-Demand Instances to run the batch jobs. Store the data in Amazon S3 Standard. Move the data to Amazon S3 Glacier Deep Archive after 30 days. Set an expiration to delete the data after 2 years." }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Option a is correct because EC2 Spot Instances reduce compute costs for batch jobs, and S3 Standard with a transition to S3 Glacier Instant Retrieval after 30 days minimizes storage costs while ensuring immediate access. Option b uses costly On-Demand Instances. Option c uses Flexible Retrieval, which has slower access times. Option d uses expensive On-Demand Instances and Deep Archive, which is less suitable for 30-day access."
+  },
+  {
+    "id": 68,
+    "question": "A company wants to create an Amazon EMR cluster that multiple teams will use. The company wants to ensure that each team’s big data workloads can access only the AWS services that each team needs to interact with. The company does not want the workloads to have access to Instance Metadata Service Version 2 (IMDSv2) on the cluster’s underlying EC2 instances. Which solution will meet these requirements?",
+    "options": [
+      { "id": "a", "text": "Configure interface VPC endpoints for each AWS service that the teams need. Use the required interface VPC endpoints to submit the big data workloads." },
+      { "id": "b", "text": "Create EMR runtime roles. Configure the cluster to use the runtime roles. Use the runtime roles to submit the big data workloads." },
+      { "id": "c", "text": "Create an EC2 IAM instance profile that has the required permissions for each team. Use the instance profile to submit the big data workloads." },
+      { "id": "d", "text": "Create an EMR security configuration that has the EnableApplicationScopedIAMRole option set to false. Use the security configuration to submit the big data workloads." }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Option b is correct because EMR runtime roles allow fine-grained permissions for each team’s workloads and can restrict IMDSv2 access. Option a is impractical for restricting IMDSv2. Option c does not provide workload-specific permissions. Option d is incorrect because disabling application-scoped roles does not address the requirements."
+  },
+  {
+    "id": 69,
+    "question": "A company is developing a new application that uses a relational database to store user data and application configurations. The company expects the application to have steady user growth. The company expects the database usage to be variable and read-heavy, with occasional writes. The company wants to cost-optimize the database solution. The company wants to use an AWS managed database solution that will provide the necessary performance. Which solution will meet these requirements MOST cost-effectively?",
+    "options": [
+      { "id": "a", "text": "Deploy the database on Amazon RDS. Use Provisioned IOPS SSD storage to ensure consistent performance for read and write operations." },
+      { "id": "b", "text": "Deploy the database on Amazon Aurora Serverless to automatically scale the database capacity based on actual usage to accommodate the workload." },
+      { "id": "c", "text": "Deploy the database on Amazon DynamoDB. Use on-demand capacity mode to automatically scale throughput to accommodate the workload." },
+      { "id": "d", "text": "Deploy the database on Amazon RDS. Use magnetic storage and use read replicas to accommodate the workload." }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Option b is correct because Aurora Serverless automatically scales for variable, read-heavy workloads, reducing costs during low usage. Option a is expensive due to Provisioned IOPS. Option c is incorrect because DynamoDB is NoSQL, not relational. Option d uses outdated magnetic storage and requires manual read replica management."
+  },
+  {
+    "id": 70,
+    "question": "A company currently runs an on-premises stock trading application by using Microsoft Windows Server. The company wants to migrate the application to the AWS Cloud. The company needs to design a highly available solution that provides low-latency access to block storage across multiple Availability Zones. Which solution will meet these requirements with the LEAST implementation effort?",
+    "options": [
+      { "id": "a", "text": "Configure a Windows Server cluster that spans two Availability Zones on Amazon EC2 instances. Install the application on both cluster nodes. Use Amazon FSx for Windows File Server as shared storage between the two cluster nodes." },
+      { "id": "b", "text": "Configure a Windows Server cluster that spans two Availability Zones on Amazon EC2 instances. Install the application on both cluster nodes. Use Amazon Elastic Block Store (Amazon EBS) General Purpose SSD (gp3) volumes as storage attached to the EC2 instances. Set up application-level replication to sync data from one EBS volume in one Availability Zone to another EBS volume in the second Availability Zone." },
+      { "id": "c", "text": "Deploy the application on Amazon EC2 instances in two Availability Zones. Configure one EC2 instance as active and the second EC2 instance in standby mode. Use an Amazon FSx for NetApp ONTAP Multi-AZ file system to access the data by using Internet Small Computer Systems Interface (iSCSI) protocol." },
+      { "id": "d", "text": "Deploy the application on Amazon EC2 instances in two Availability Zones. Configure one EC2 instance as active and the second EC2 instance in standby mode. Use Amazon Elastic Block Store (Amazon EBS) Provisioned IOPS SSD (io2) volumes as storage attached to the EC2 instances. Set up Amazon EBS level replication to sync data from one io2 volume in one Availability Zone to another io2 volume in the second Availability Zone." }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Option a is correct because Amazon FSx for Windows File Server provides shared, low-latency block storage across Availability Zones with minimal setup. Option b requires complex application-level replication. Option c uses iSCSI, which is less straightforward. Option d involves manual EBS replication, increasing effort."
+  },
+  {
+    "id": 71,
+    "question": "A company is designing a web application with an internet-facing Application Load Balancer (ALB). The company needs the ALB to receive HTTPS web traffic from the public internet. The ALB must send only HTTPS traffic to the web application servers hosted on the Amazon EC2 instances on port 443. The ALB must perform a health check of the web application servers over HTTPS on port 8443. Which combination of configurations of the security group that is associated with the ALB will meet these requirements? (Choose three.)",
+    "options": [
+      { "id": "a", "text": "Allow HTTPS inbound traffic from 0.0.0.0/0 for port 443." },
+      { "id": "b", "text": "Allow all outbound traffic to 0.0.0.0/0 for port 443." },
+      { "id": "c", "text": "Allow HTTPS outbound traffic to the web application instances for port 443." },
+      { "id": "d", "text": "Allow HTTPS inbound traffic from the web application instances for port 443." },
+      { "id": "e", "text": "Allow HTTPS outbound traffic to the web application instances for the health check on port 8443." },
+      { "id": "f", "text": "Allow HTTPS inbound traffic from the web application instances for the health check on port 8443." }
+    ],
+    "correctAnswer": ["a", "c", "e"],
+    "explanation": "Option a allows public HTTPS traffic to the ALB. Option c allows the ALB to send HTTPS traffic to the EC2 instances on port 443. Option e allows the ALB to perform health checks on port 8443. Option b is too broad, option d is unnecessary, and option f is incorrect because health checks are outbound from the ALB."
+  },
+  {
+    "id": 72,
+    "question": "A company hosts an application on AWS. The application gives users the ability to upload photos and store the photos in an Amazon S3 bucket. The company wants to use Amazon CloudFront and a custom domain name to upload the photo files to the S3 bucket in the eu-west-1 Region. Which solution will meet these requirements? (Choose two.)",
+    "options": [
+      { "id": "a", "text": "Use AWS Certificate Manager (ACM) to create a public certificate in the us-east-1 Region. Use the certificate in CloudFront." },
+      { "id": "b", "text": "Use AWS Certificate Manager (ACM) to create a public certificate in eu-west-1. Use the certificate in CloudFront." },
+      { "id": "c", "text": "Configure Amazon S3 to allow uploads from CloudFront. Configure S3 Transfer Acceleration." },
+      { "id": "d", "text": "Configure Amazon S3 to allow uploads from CloudFront origin access control (OAC)." },
+      { "id": "e", "text": "Configure Amazon S3 to allow uploads from CloudFront. Configure an Amazon S3 website endpoint." }
+    ],
+    "correctAnswer": ["a", "d"],
+    "explanation": "Option a is correct because CloudFront requires ACM certificates in us-east-1 for custom domains. Option d is correct because CloudFront origin access control (OAC) secures S3 uploads. Option b is incorrect because ACM certificates for CloudFront must be in us-east-1. Option c is unnecessary for uploads. Option e is incorrect because S3 website endpoints are for static websites, not uploads."
+  },
+  {
+    "id": 73,
+    "question": "A weather forecasting company collects temperature readings from various sensors on a continuous basis. An existing data ingestion process collects the readings and aggregates the readings into larger Apache Parquet files. Then the process encrypts the files by using client-side encryption with KMS managed keys (CSE-KMS). Finally, the process writes the files to an Amazon S3 bucket with separate prefixes for each calendar day. The company wants to run occasional SQL queries on the data to take sample moving averages for a specific calendar day. Which solution will meet these requirements MOST cost-effectively?",
+    "options": [
+      { "id": "a", "text": "Configure Amazon Athena to read the encrypted files. Run SQL queries on the data directly in Amazon S3." },
+      { "id": "b", "text": "Use Amazon S3 Select to run SQL queries on the data directly in Amazon S3." },
+      { "id": "c", "text": "Configure Amazon Redshift to read the encrypted files. Use Redshift Spectrum and Redshift query editor v2 to run SQL queries on the data directly in Amazon S3." },
+      { "id": "d", "text": "Configure Amazon EMR Serverless to read the encrypted files. Use Apache SparkSQL to run SQL queries on the data directly in Amazon S3." }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Option a is correct because Amazon Athena supports SQL queries on Parquet files in S3 with CSE-KMS encryption, offering low cost for occasional queries. Option b is limited to simple queries. Option c is more expensive due to Redshift costs. Option d is overkill for occasional queries."
+  },
+  {
+    "id": 74,
+    "question": "A financial services company plans to launch a new application on AWS to handle sensitive financial transactions. The company will deploy the application on Amazon EC2 instances. The company will use Amazon RDS for MySQL as the database. The company’s security policies mandate that data must be encrypted at rest and in transit. Which solution will meet these requirements with the LEAST operational overhead?",
+    "options": [
+      { "id": "a", "text": "Configure encryption at rest for Amazon RDS for MySQL by using AWS KMS managed keys. Configure AWS Certificate Manager (ACM) SSL/TLS certificates for encryption in transit." },
+      { "id": "b", "text": "Configure encryption at rest for Amazon RDS for MySQL by using AWS KMS managed keys. Configure IPsec tunnels for encryption in transit." },
+      { "id": "c", "text": "Implement third-party application-level data encryption before storing data in Amazon RDS for MySQL. Configure AWS Certificate Manager (ACM) SSL/TLS certificates for encryption in transit." },
+      { "id": "d", "text": "Configure encryption at rest for Amazon RDS for MySQL by using AWS KMS managed keys. Configure a VPN connection to enable private connectivity to encrypt data in transit." }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Option a is correct because RDS with KMS encryption and ACM SSL/TLS certificates provides encryption at rest and in transit with minimal overhead. Option b requires complex IPsec setup. Option c adds application-level encryption overhead. Option d involves VPN management, increasing complexity."
+  },
+  {
+    "id": 75,
+    "question": "A company hosts its application on several Amazon EC2 instances inside a VPC. The company creates a dedicated Amazon S3 bucket for each customer to store their relevant information in Amazon S3. The company wants to ensure that the application running on EC2 instances can securely access only the S3 buckets that belong to the company’s AWS account. Which solution will meet these requirements with the LEAST operational overhead?",
+    "options": [
+      { "id": "a", "text": "Create a gateway endpoint for Amazon S3 that is attached to the VPC. Update the IAM instance profile policy to provide access to only the specific buckets that the application needs." },
+      { "id": "b", "text": "Create a NAT gateway in a public subnet with a security group that allows access to only Amazon S3. Update the route tables to use the NAT Gateway." },
+      { "id": "c", "text": "Create a gateway endpoint for Amazon S3 that is attached to the VPC. Update the IAM instance profile policy with a Deny action and the following condition key: [condition key not provided]." },
+      { "id": "d", "text": "Create a NAT Gateway in a public subnet. Update route tables to use the NAT Gateway. Assign bucket policies for all buckets with a Deny action and the following condition key: [condition key not provided]." }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Option a is correct because an S3 gateway endpoint ensures secure access within the VPC, and an IAM instance profile policy restricts access to company-owned buckets with minimal overhead. Options b and d involve NAT gateways, which are unnecessary and costly. Option c is incomplete due to the missing condition key."
+  },
+  {
+    "id": 76,
+    "question": "A company is building a cloud-based application on AWS that will handle sensitive customer data. The application uses Amazon RDS for the database, Amazon S3 for object storage, and S3 Event Notifications that invoke AWS Lambda for serverless processing. The company uses AWS IAM Identity Center to manage user credentials. The development, testing, and operations teams need secure access to Amazon RDS and Amazon S3 while ensuring the confidentiality of sensitive customer data. The solution must comply with the principle of least privilege. Which solution meets these requirements with the LEAST operational overhead?",
+    "options": [
+      { "id": "a", "text": "Use IAM roles with least privilege to grant all the teams access. Assign IAM roles to each team with customized IAM policies defining specific permission for Amazon RDS and S3 object access based on team responsibilities." },
+      { "id": "b", "text": "Enable IAM Identity Center with an Identity Center directory. Create and configure permission sets with granular access to Amazon RDS and Amazon S3. Assign all the teams to groups that have specific access with the permission sets." },
+      { "id": "c", "text": "Create individual IAM users for each member in all the teams with role-based permissions. Assign the IAM roles with predefined policies for RDS and S3 access to each user based on user needs. Implement IAM Access Analyzer for periodic credential evaluation." },
+      { "id": "d", "text": "Use AWS Organizations to create separate accounts for each team. Implement cross-account IAM roles with least privilege. Grant specific permission for RDS and S3 access based on team roles and responsibilities." }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Option b is correct because IAM Identity Center with permission sets and group assignments provides least privilege access with minimal overhead, leveraging existing infrastructure. Option a requires manual role management. Option c is labor-intensive for individual users. Option d involves complex account management."
+  },
+  {
+    "id": 77,
+    "question": "A company has an Amazon S3 bucket that contains sensitive data files. The company has an application that runs on virtual machines in an on-premises data center. The company currently uses AWS IAM Identity Center. The application requires temporary access to files in the S3 bucket. The company wants to grant the application secure access to the files in the S3 bucket. Which solution will meet these requirements?",
+    "options": [
+      { "id": "a", "text": "Create an S3 bucket policy that permits access to the bucket from the public IP address range of the company’s on-premises data center." },
+      { "id": "b", "text": "Use IAM Roles Anywhere to obtain security credentials in IAM Identity Center that grant access to the S3 bucket. Configure the virtual machines to assume the role by using the AWS CLI." },
+      { "id": "c", "text": "Install the AWS CLI on the virtual machine. Configure the AWS CLI with access keys from an IAM user that has access to the bucket." },
+      { "id": "d", "text": "Create an IAM user and policy that grants access to the bucket. Store the access key and secret key for the IAM user in AWS Secrets Manager. Configure the application to retrieve the access key and secret key at startup." }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Option b is correct because IAM Roles Anywhere provides secure, temporary credentials for on-premises VMs using IAM Identity Center, minimizing key management. Option a is insecure due to IP-based access. Options c and d rely on long-term access keys, increasing security risks."
+  },
+  {
+    "id": 78,
+    "question": "A company needs to provide customers with secure access to its data. The company processes customer data and stores the results in an Amazon S3 bucket. All the data is subject to strong regulations and security requirements. The data must be encrypted at rest. Each customer must be able to access only their data from their AWS account. Company employees must not be able to access the data. Which solution will meet these requirements?",
+    "options": [
+      { "id": "a", "text": "Provision an AWS Certificate Manager (ACM) certificate for each customer. Encrypt the data client-side. In the private certificate policy, deny access to the certificate for all principals except an IAM role that the customer provides." },
+      { "id": "b", "text": "Provision a separate AWS Key Management Service (AWS KMS) key for each customer. Encrypt the data server-side. In the S3 bucket policy, deny decryption of data for all principals except an IAM role that the customer provides." },
+      { "id": "c", "text": "Provision a separate AWS Key Management Service (AWS KMS) key for each customer. Encrypt the data server-side. In each KMS key policy, deny decryption of data for all principals except an IAM role that the customer provides." },
+      { "id": "d", "text": "Provision an AWS Certificate Manager (ACM) certificate for each customer. Encrypt the data client-side. In the public certificate policy, deny access to the certificate for all principals except an IAM role that the customer provides." }
+    ],
+    "correctAnswer": "c",
+    "explanation": "Option c is correct because server-side encryption with customer-specific KMS keys and key policies restricting access to customer IAM roles ensures encryption at rest and access control. Options a and d misuse ACM certificates for encryption. Option b incorrectly relies on bucket policies for decryption control."
+  },
+  {
+    "id": 79,
+    "question": "A company is using an Amazon Elastic Kubernetes Service (Amazon EKS) cluster. The company must ensure that Kubernetes service accounts in the EKS cluster have secure and granular access to specific AWS resources by using IAM roles for service accounts (IRSA). Which combination of solutions will meet these requirements? (Choose two.)",
+    "options": [
+      { "id": "a", "text": "Create an IAM policy that defines the required permissions. Attach the policy directly to the IAM role of the EKS nodes." },
+      { "id": "b", "text": "Implement network policies within the EKS cluster to prevent Kubernetes service accounts from accessing specific AWS services." },
+      { "id": "c", "text": "Modify the EKS cluster's IAM role to include permissions for each Kubernetes service account. Ensure a one-to-one mapping between IAM roles and Kubernetes roles." },
+      { "id": "d", "text": "Define an IAM role that includes the necessary permissions. Annotate the Kubernetes service accounts with the Amazon Resource Name (ARN) of the IAM role." },
+      { "id": "e", "text": "Set up a trust relationship between the IAM roles for the service accounts and an OpenID Connect (OIDC) identity provider." }
+    ],
+    "correctAnswer": ["d", "e"],
+    "explanation": "Option d is correct because annotating Kubernetes service accounts with the IAM role ARN enables IRSA for granular access. Option e is correct because a trust relationship with an OIDC provider allows service accounts to assume IAM roles securely. Option a is incorrect because attaching policies to node roles grants broad access, not granular. Option b is incorrect because network policies control network traffic, not AWS resource access. Option c is impractical and not aligned with IRSA best practices."
+  },
+  {
+    "id": 80,
+    "question": "A company has migrated several applications to AWS in the past 3 months. The company wants to know the breakdown of costs for each of these applications. The company wants to receive a regular report that includes this information. Which solution will meet these requirements MOST cost-effectively?",
+    "options": [
+      { "id": "a", "text": "Use AWS Budgets to download data for the past 3 months into a .csv file. Look up the desired information." },
+      { "id": "b", "text": "Load AWS Cost and Usage Reports into an Amazon RDS DB instance. Run SQL queries to get the desired information." },
+      { "id": "c", "text": "Tag all the AWS resources with a key for cost and a value of the application's name. Activate cost allocation tags. Use Cost Explorer to get the desired information." },
+      { "id": "d", "text": "Tag all the AWS resources with a key for cost and a value of the application's name. Use the AWS Billing and Cost Management console to download bills for the past 3 months. Look up the desired information." }
+    ],
+    "correctAnswer": "c",
+    "explanation": "Option c is correct because tagging resources and using Cost Explorer with cost allocation tags provides detailed, regular cost breakdowns with minimal effort. Option a is incorrect because AWS Budgets is for tracking, not detailed reporting. Option b is complex and costly due to RDS management. Option d is manual and lacks automation for regular reports."
+  },
+  {
+    "id": 81,
+    "question": "An ecommerce company is preparing to deploy a web application on AWS to ensure continuous service for customers. The architecture includes a web application that the company hosts on Amazon EC2 instances, a relational database in Amazon RDS, and static assets that the company stores in Amazon S3. The company wants to design a robust and resilient architecture for the application. Which solution will meet these requirements?",
+    "options": [
+      { "id": "a", "text": "Deploy Amazon EC2 instances in a single Availability Zone. Deploy an RDS DB instance in the same Availability Zone. Use Amazon S3 with versioning enabled to store static assets." },
+      { "id": "b", "text": "Deploy Amazon EC2 instances in an Auto Scaling group across multiple Availability Zones. Deploy a Multi-AZ RDS DB instance. Use Amazon CloudFront to distribute static assets." },
+      { "id": "c", "text": "Deploy Amazon EC2 instances in a single Availability Zone. Deploy an RDS DB instance in a second Availability Zone for cross-AZ redundancy. Serve static assets directly from the EC2 instances." },
+      { "id": "d", "text": "Use AWS Lambda functions to serve the web application. Use Amazon Aurora Serverless v2 for the database. Store static assets in Amazon Elastic File System (Amazon EFS) One Zone-Infrequent Access (One Zone-IA)." }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Option b is correct because an Auto Scaling group across multiple AZs, Multi-AZ RDS, and CloudFront for S3 assets ensure high availability and resilience. Option a lacks redundancy. Option c is not resilient due to single-AZ EC2 deployment. Option d is less suitable as Lambda and EFS One Zone-IA are not optimized for this use case."
+  },
+  {
+    "id": 82,
+    "question": "A company wants to replicate existing and ongoing data changes from an on-premises Oracle database to Amazon RDS for Oracle. The amount of data to replicate varies throughout each day. The company wants to use AWS Database Migration Service (AWS DMS) for data replication. The solution must allocate only the capacity that the replication instance requires. Which solution will meet these requirements?",
+    "options": [
+      { "id": "a", "text": "Configure the AWS DMS replication instance with a Multi-AZ deployment to provision instances across multiple Availability Zones." },
+      { "id": "b", "text": "Create an AWS DMS Serverless replication task to analyze and replicate the data while provisioning the required capacity." },
+      { "id": "c", "text": "Use Amazon EC2 Auto Scaling to scale the size of the AWS DMS replication instance up or down based on the amount of data to replicate." },
+      { "id": "d", "text": "Provision AWS DMS replication capacity by using Amazon Elastic Container Service (Amazon ECS) with an AWS Fargate launch type to analyze and replicate the data while provisioning the required capacity." }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Option b is correct because AWS DMS Serverless automatically adjusts capacity based on workload, ideal for variable data replication. Option a is incorrect as Multi-AZ focuses on availability, not dynamic scaling. Option c is not supported for DMS instances. Option d is impractical as DMS does not run on ECS/Fargate."
+  },
+  {
+    "id": 83,
+    "question": "A company is migrating an application from an on-premises location to Amazon Elastic Kubernetes Service (Amazon EKS). The company must use a custom subnet for pods that are in the company's VPC to comply with requirements. The company also needs to ensure that the pods can communicate securely within the pods' VPC. Which solution will meet these requirements?",
+    "options": [
+      { "id": "a", "text": "Configure AWS Transit Gateway to directly manage custom subnet configurations for the pods in Amazon EKS." },
+      { "id": "b", "text": "Create an AWS Direct Connect connection from the company's on-premises IP address ranges to the EKS pods." },
+      { "id": "c", "text": "Use the Amazon VPC CNI plugin for Kubernetes. Define custom subnets in the VPC cluster for the pods to use." },
+      { "id": "d", "text": "Implement a Kubernetes network policy that has pod anti-affinity rules to restrict pod placement to specific nodes that are within custom subnets." }
+    ],
+    "correctAnswer": "c",
+    "explanation": "Option c is correct because the Amazon VPC CNI plugin allows pods to use custom VPC subnets and ensures secure communication within the VPC. Option a is incorrect as Transit Gateway is for inter-VPC routing, not pod subnets. Option b is irrelevant for pod communication. Option d does not address subnet configuration."
+  },
+  {
+    "id": 84,
+    "question": "A company hosts an ecommerce application that stores all data in a single Amazon RDS for MySQL DB instance that is fully managed by AWS. The company needs to mitigate the risk of a single point of failure. Which solution will meet these requirements with the LEAST implementation effort?",
+    "options": [
+      { "id": "a", "text": "Modify the RDS DB instance to use a Multi-AZ deployment. Apply the changes during the next maintenance window." },
+      { "id": "b", "text": "Migrate the current database to a new Amazon DynamoDB Multi-AZ deployment. Use AWS Database Migration Service (AWS DMS) with a heterogeneous migration strategy to migrate the current RDS DB instance to DynamoDB tables." },
+      { "id": "c", "text": "Create a new RDS DB instance in a Multi-AZ deployment. Manually restore the data from the existing RDS DB instance from the most recent snapshot." },
+      { "id": "d", "text": "Configure the DB instance in an Amazon EC2 Auto Scaling group with a minimum group size of three. Use Amazon Route 53 simple routing to distribute requests to all DB instances." }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Option a is correct because enabling Multi-AZ on the existing RDS instance adds redundancy with minimal effort. Option b requires significant migration effort to DynamoDB. Option c involves manual restoration, increasing complexity. Option d is incorrect as Auto Scaling and Route 53 are not applicable to RDS."
+  },
+  {
+    "id": 85,
+    "question": "A company has an internal application that runs on Amazon EC2 instances in an Auto Scaling group. The EC2 instances are compute optimized and use Amazon Elastic Block Store (Amazon EBS) volumes. The company wants to identify cost optimizations across the EC2 instances, the Auto Scaling group, and the EBS volumes. Which solution will meet these requirements with the MOST operational efficiency?",
+    "options": [
+      { "id": "a", "text": "Create a new AWS Cost and Usage Report. Search the report for cost recommendations for the EC2 instances, the Auto Scaling group, and the EBS volumes." },
+      { "id": "b", "text": "Create new Amazon CloudWatch billing alerts. Check the alert statuses for cost recommendations for the EC2 instances, the Auto Scaling group, and the EBS volumes." },
+      { "id": "c", "text": "Configure AWS Compute Optimizer for cost recommendations for the EC2 instances, the Auto Scaling group, and the EBS volumes." },
+      { "id": "d", "text": "Configure AWS Compute Optimizer for cost recommendations for the EC2 instances. Create a new AWS Cost and Usage Report. Search the report for cost recommendations for the Auto Scaling group and the EBS volumes." }
+    ],
+    "correctAnswer": "c",
+    "explanation": "Option c is correct because AWS Compute Optimizer provides automated cost recommendations for EC2 instances, Auto Scaling groups, and EBS volumes with minimal effort. Option a requires manual analysis. Option b is incorrect as CloudWatch alerts do not provide cost recommendations. Option d is less efficient due to manual report analysis."
+  },
+  {
+    "id": 86,
+    "question": "A company recently migrated a monolithic application to an Amazon EC2 instance and Amazon RDS. The application has tightly coupled modules. The existing design of the application gives the application the ability to run on only a single EC2 instance. The company has noticed high CPU utilization on the EC2 instance during peak usage times. The high CPU utilization corresponds to degraded performance on Amazon RDS for read requests. The company wants to reduce the high CPU utilization and improve read request performance. Which solution will meet these requirements?",
+    "options": [
+      { "id": "a", "text": "Resize the EC2 instance to an EC2 instance type that has more CPU capacity. Configure an Auto Scaling group with a minimum and maximum size of 1. Configure an RDS read replica for read requests." },
+      { "id": "b", "text": "Resize the EC2 instance to an EC2 instance type that has more CPU capacity. Configure an Auto Scaling group with a minimum and maximum size of 1. Add an RDS read replica and redirect all read/write traffic to the replica." },
+      { "id": "c", "text": "Configure an Auto Scaling group with a minimum size of 1 and maximum size of 2. Resize the RDS DB instance to an instance type that has more CPU capacity." },
+      { "id": "d", "text": "Resize the EC2 instance to an EC2 instance type that has more CPU capacity. Configure an Auto Scaling group with a minimum and maximum size of 1. Resize the RDS DB instance to an instance type that has more CPU capacity." }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Option a is correct because resizing the EC2 instance addresses CPU utilization, and an RDS read replica offloads read requests, improving performance. Option b is incorrect as read replicas are read-only. Option c allows multiple instances, conflicting with the single-instance requirement. Option d is less optimal as resizing RDS does not address read performance efficiently."
+  },
+  {
+    "id": 87,
+    "question": "A company needs to grant a team of developers access to the company's AWS resources. The company must maintain a high level of security for the resources. The company requires an access control solution that will prevent unauthorized access to the sensitive data. Which solution will meet these requirements?",
+    "options": [
+      { "id": "a", "text": "Share the IAM user credentials for each development team member with the rest of the team to simplify access management and to streamline development workflows." },
+      { "id": "b", "text": "Define IAM roles that have fine-grained permissions based on the principle of least privilege. Assign an IAM role to each developer." },
+      { "id": "c", "text": "Create IAM access keys to grant programmatic access to AWS resources. Allow only developers to interact with AWS resources through API calls by using the access keys." },
+      { "id": "d", "text": "Create an AWS Cognito user pool. Grant developers access to AWS resources by using the user pool." }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Option b is correct because IAM roles with least privilege ensure secure, granular access without sharing credentials. Option a is insecure due to credential sharing. Option c relies on access keys, increasing risk. Option d is incorrect as Cognito is for application authentication, not AWS resource access."
+  },
+  {
+    "id": 88,
+    "question": "A company runs all its business applications in the AWS Cloud. The company uses AWS Organizations to manage multiple AWS accounts. A solutions architect needs to review all permissions that are granted to IAM users to determine which IAM users have more permissions than required. Which solution will meet these requirements with the LEAST administrative overhead?",
+    "options": [
+      { "id": "a", "text": "Use Network Access Analyzer to review all access permissions in the company's AWS accounts." },
+      { "id": "b", "text": "Create an AWS CloudWatch alarm that activates when an IAM user creates or modifies resources in an AWS account." },
+      { "id": "c", "text": "Use AWS Identity and Access Management (IAM) Access Analyzer to review all the company’s resources and accounts." },
+      { "id": "d", "text": "Use Amazon Inspector to find vulnerabilities in existing IAM policies." }
+    ],
+    "correctAnswer": "c",
+    "explanation": "Option c is correct because IAM Access Analyzer identifies over-privileged IAM users with minimal effort across accounts. Option a is for network access, not IAM permissions. Option b monitors actions, not permissions. Option d is for security vulnerabilities, not permission analysis."
+  },
+  {
+    "id": 89,
+    "question": "A company needs to implement a new data retention policy for regulatory compliance. As part of this policy, sensitive documents that are stored in an Amazon S3 bucket must be protected from deletion or modification for a fixed period of time. Which solution will meet these requirements?",
+    "options": [
+      { "id": "a", "text": "Activate S3 Object Lock on the required objects and enable governance mode." },
+      { "id": "b", "text": "Activate S3 Object Lock on the required objects and enable compliance mode." },
+      { "id": "c", "text": "Enable versioning on the S3 bucket. Set a lifecycle policy to delete the objects after a specified period." },
+      { "id": "d", "text": "Configure an S3 Lifecycle policy to transition objects to S3 Glacier Flexible Retrieval for the retention duration." }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Option b is correct because S3 Object Lock with compliance mode prevents deletion or modification for a fixed period, meeting regulatory requirements. Option a (governance mode) allows overrides. Option c does not prevent modification. Option d is for storage tiering, not retention protection."
+  },
+  {
+    "id": 90,
+    "question": "A company runs its customer-facing web application on containers. The workload uses Amazon Elastic Container Service (Amazon ECS) on AWS Fargate. The web application is resource intensive. The web application needs to be available 24 hours a day, 7 days a week for customers. The company expects the application to experience short bursts of high traffic. The workload must be highly available. Which solution will meet these requirements MOST cost-effectively?",
+    "options": [
+      { "id": "a", "text": "Configure an ECS capacity provider with Fargate. Conduct load testing by using a third-party tool. Rightsize the Fargate tasks in Amazon CloudWatch." },
+      { "id": "b", "text": "Configure an ECS capacity provider with Fargate for steady state and Fargate Spot for burst traffic." },
+      { "id": "c", "text": "Configure an ECS capacity provider with Fargate Spot for steady state and Fargate for burst traffic." },
+      { "id": "d", "text": "Configure an ECS capacity provider with Fargate. Use AWS Compute Optimizer to rightsize the Fargate task." }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Option b is correct because Fargate for steady state ensures availability, and Fargate Spot for bursts reduces costs while handling high traffic. Option a is manual and less cost-effective. Option c risks availability with Spot for steady state. Option d does not address burst traffic efficiently."
+  },
+  {
+    "id": 91,
+    "question": "A company is building an application in the AWS Cloud. The application is hosted on Amazon EC2 instances behind an Application Load Balancer (ALB). The company uses Amazon Route 53 for the DNS. The company needs a managed solution with proactive engagement to detect against DDoS attacks. Which solution will meet these requirements?",
+    "options": [
+      { "id": "a", "text": "Enable AWS Config. Configure an AWS Config managed rule that detects DDoS attacks." },
+      { "id": "b", "text": "Enable AWS WAF on the ALB. Create an AWS WAF web ACL with rules to detect and prevent DDoS attacks. Associate the web ACL with the ALB." },
+      { "id": "c", "text": "Store the ALB access logs in an Amazon S3 bucket. Configure Amazon GuardDuty to detect and take automated preventative actions for DDoS attacks." },
+      { "id": "d", "text": "Subscribe to AWS Shield Advanced. Configure hosted zones in Route 53. Add ALB resources as protected resources." }
+    ],
+    "correctAnswer": "d",
+    "explanation": "Option d is correct because AWS Shield Advanced provides managed DDoS protection with proactive engagement for Route 53 and ALB. Option a is incorrect as AWS Config does not detect DDoS. Option b lacks proactive engagement. Option c is incorrect as GuardDuty does not focus on DDoS prevention."
+  },
+  {
+    "id": 92,
+    "question": "A company hosts a video streaming web application in a VPC. The company uses a Network Load Balancer (NLB) to handle TCP traffic for real-time data processing. There have been unauthorized attempts to access the application. The company wants to improve application security with minimal architectural change to prevent unauthorized attempts to access the application. Which solution will meet these requirements?",
+    "options": [
+      { "id": "a", "text": "Implement a series of AWS WAF rules directly on the NLB to filter out unauthorized traffic." },
+      { "id": "b", "text": "Recreate the NLB with a security group to allow only trusted IP addresses." },
+      { "id": "c", "text": "Deploy a second NLB in parallel with the existing NLB configured with a strict IP address allow list." },
+      { "id": "d", "text": "Use AWS Shield Advanced to provide enhanced DDoS protection and prevent unauthorized access attempts." }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Option b is correct because adding a security group to the NLB to allow only trusted IPs prevents unauthorized access with minimal change. Option a is incorrect as WAF is not supported on NLB. Option c adds unnecessary complexity. Option d focuses on DDoS, not IP-based access control."
+  }
+]
