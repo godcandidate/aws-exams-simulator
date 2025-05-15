@@ -4,7 +4,7 @@ const testsData = [
     title: "AWS SAA-C03",
     description:
       "Welcome to the AWS Solution Architect Associate Exams, practice and test yourself",
-    numberOfTests: 3,
+    numberOfTests: 4,
   },
   {
     id: 1,
@@ -20,6 +20,11 @@ const testsData = [
     id: 3,
     title: "Test 3",
     numberOfTests: 5,
+  },
+    {
+    id: 4,
+    title: "Test 4 - Dumps",
+    numberOfTests: 32,
   },
 ];
 
