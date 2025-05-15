@@ -71,19 +71,19 @@
     "correctAnswer": "d",
     "explanation": "Option d is correct because spreading the Auto Scaling group across three Availability Zones ensures high availability, and migrating to DynamoDB provides eventual consistency with minimal operational overhead as a managed service. Option a does not improve availability. Option b uses a Network Load Balancer, which is less suitable for web applications. Option c requires managing the NoSQL database, increasing overhead."
   },
-  {
-    "id": 67,
-    "question": "A company is migrating its data processing application to the AWS Cloud. The application processes several short-lived batch jobs that cannot be disrupted. Data is generated after each batch job is completed. The data is accessed for 30 days and retained for 2 years. The company wants to keep the cost of running the application in the AWS Cloud as low as possible. Which solution will meet these requirements?",
-    "options": [
-      { "id": "a", "text": "Migrate the data processing application to Amazon EC2 Spot Instances. Store the data in Amazon S3 Standard. Move the data to Amazon S3 Glacier Instant Retrieval after 30 days. Set an expiration to delete the data after 2 years." },
-      { "id": "b", "text": "Migrate the data processing application to Amazon EC2 On-Demand Instances. Store the data in Amazon S3 Glacier Instant Retrieval. Move the data to S3 Glacier Deep Archive after 30 days. Set an expiration to delete the data after 2 years." },
-      { "id": "c", "text": "Deploy Amazon EC2 Spot Instances to run the batch jobs. Store the data in Amazon S3 Standard. Move the data to Amazon S3 Glacier Flexible Retrieval after 30 days. Set an expiration to delete the data after 2 years." },
-      { "id": "d", "text": "Deploy Amazon EC2 On-Demand Instances to run the batch jobs. Store the data in Amazon S3 Standard. Move the data to Amazon S3 Glacier Deep Archive after 30 days. Set an expiration to delete the data after 2 years." }
-    ],
-    "correctAnswer": "a",
-    "explanation": "Option a is correct because EC2 Spot Instances reduce compute costs for batch jobs, and S3 Standard with a transition to S3 Glacier Instant Retrieval after 30 days minimizes storage costs while ensuring immediate access. Option b uses costly On-Demand Instances. Option c uses Flexible Retrieval, which has slower access times. Option d uses expensive On-Demand Instances and Deep Archive, which is less suitable for 30-day access."
-  },
-  {
+{
+  "id": 67,
+  "question": "A company is migrating its data processing application to the AWS Cloud. The application processes several short-lived batch jobs that cannot be disrupted. Data is generated after each batch job is completed. The data is accessed for 30 days and retained for 2 years. The company wants to keep the cost of running the application in the AWS Cloud as low as possible. Which solution will meet these requirements?",
+  "options": [
+    { "id": "a", "text": "Migrate the data processing application to Amazon EC2 Spot Instances. Store the data in Amazon S3 Standard. Move the data to Amazon S3 Glacier Instant Retrieval after 30 days. Set an expiration to delete the data after 2 years." },
+    { "id": "b", "text": "Migrate the data processing application to Amazon EC2 On-Demand Instances. Store the data in Amazon S3 Glacier Instant Retrieval. Move the data to S3 Glacier Deep Archive after 30 days. Set an expiration to delete the data after 2 years." },
+    { "id": "c", "text": "Deploy Amazon EC2 Spot Instances to run the batch jobs. Store the data in Amazon S3 Standard. Move the data to Amazon S3 Glacier Flexible Retrieval after 30 days. Set an expiration to delete the data after 2 years." },
+    { "id": "d", "text": "Deploy Amazon EC2 On-Demand Instances to run the batch jobs. Store the data in Amazon S3 Standard. Move the data to Amazon S3 Glacier Deep Archive after 30 days. Set an expiration to delete the data after 2 years." }
+  ],
+  "correctAnswer": "d",
+  "explanation": "Option d is correct. Since the batch jobs cannot be disrupted, using EC2 On-Demand Instances is necessary to ensure reliability. The data needs to be accessed frequently for the first 30 days, so S3 Standard is suitable. After 30 days, moving the data to S3 Glacier Deep Archive keeps long-term storage costs as low as possible. Options a and c use Spot Instances, which can be interrupted, making them unsuitable. Option b starts with Glacier Instant Retrieval, which is not ideal for data that needs frequent access during the first 30 days."
+},
+{
     "id": 68,
     "question": "A company wants to create an Amazon EMR cluster that multiple teams will use. The company wants to ensure that each team’s big data workloads can access only the AWS services that each team needs to interact with. The company does not want the workloads to have access to Instance Metadata Service Version 2 (IMDSv2) on the cluster’s underlying EC2 instances. Which solution will meet these requirements?",
     "options": [
