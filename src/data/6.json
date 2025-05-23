@@ -757,4 +757,3 @@
     "explanation": "Amazon CloudWatch (option a) can monitor Amazon MQ queue metrics, such as queue depth, and allows creating alarms to trigger notifications if the threshold is exceeded. Option b (CloudTrail) is for auditing API calls, not queue metrics. Option c (S3 with Lambda) is overly complex for monitoring. Option d (X-Ray) is for tracing application performance, not queue monitoring."
   }
 ]
-]
