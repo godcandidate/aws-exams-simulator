@@ -1,0 +1,826 @@
+[
+  {
+    "id": 1,
+    "question": "A company is generating confidential data that is saved on its on-premise data center. As a backup solution, the company wants to upload its data to an Amazon S3 bucket. In compliance with its internal security mandate, the encryption of the data must be done before sending it to S3. The company must spend time managing and rotating the encryption keys as well as controlling who can access those keys. Which of the following methods can achieve this requirement? (Select TWO)",
+    "options": [
+      {
+        "id": "a",
+        "text": "Set up Server-Side Encryption (SSE) with Amazon EC2 key pair."
+      },
+      {
+        "id": "b",
+        "text": "Set up Server-Side Encryption with keys stored in a separate S3 bucket."
+      },
+      {
+        "id": "c",
+        "text": "Set up Client-Side Encryption using a client-side master key."
+      },
+      {
+        "id": "d",
+        "text": "Set up Client-Side Encryption with AWS KMS key."
+      },
+      {
+        "id": "e",
+        "text": "Set up Client-Side Encryption with S3 managed encryption keys."
+      }
+    ],
+    "correctAnswer": ["c", "d"],
+    "explanation": "Client-Side Encryption using a client-side master key (option c) allows the company to encrypt data before uploading it to S3, giving them control over key management and rotation. Similarly, Client-Side Encryption with AWS KMS key (option d) enables encryption before upload with the company managing access to the keys via AWS KMS, aligning with their security mandate. Server-Side Encryption options (a and b) handle encryption after data is uploaded to S3, which does not meet the requirement of encryption before sending. Option e relies on S3-managed keys, which shifts key management to AWS, contrary to the company's need to manage and rotate keys themselves."
+  },
+  {
+    "id": 2,
+    "question": "An investment bank is working with an IT team to handle the launch of the new digital wallet system. The applications will run on multiple EBS-backed EC2 instances which will store the logs, transactions, and billing statements of the user in an S3 bucket. Due to tight security and compliance requirements, the IT team is exploring options on how to safely store sensitive data on the EBS volumes and S3. Which of the below options should be carried out when storing sensitive data on AWS? (Select TWO)",
+    "options": [
+      {
+        "id": "a",
+        "text": "Enable Amazon S3 Server-Side or use Client-Side Encryption"
+      },
+      {
+        "id": "b",
+        "text": "Migrate the EC2 instances from the public to private subnet."
+      },
+      {
+        "id": "c",
+        "text": "Enable EBS Encryption"
+      },
+      {
+        "id": "d",
+        "text": "Create an EBS Snapshot"
+      },
+      {
+        "id": "e",
+        "text": "Use AWS Shield and WAF"
+      }
+    ],
+    "correctAnswer": ["b", "c"],
+    "explanation": "Migrating EC2 instances to a private subnet (option b) enhances security by restricting direct internet access, reducing the risk of exposure for sensitive data. Enabling EBS Encryption (option c) ensures that data on EBS volumes is encrypted at rest, meeting compliance requirements. Option a addresses S3 encryption but not EBS volumes directly. Creating an EBS Snapshot (option d) is a backup mechanism, not a security measure. Using AWS Shield and WAF (option e) protects against DDoS attacks but does not directly secure data storage on EBS or S3."
+  },
+  {
+    "id": 3,
+    "question": "A Solutions Architect working for a startup is designing a High Performance Computing (HPC) application which is publicly accessible for their customers. The startup founders want to mitigate distributed denial-of-service (DDoS) attacks on their application. Which of the following options are not suitable to be implemented in this scenario? (Select TWO)",
+    "options": [
+      {
+        "id": "a",
+        "text": "Use AWS Shield and AWS WAF."
+      },
+      {
+        "id": "b",
+        "text": "Add multiple Elastic Fabric Adapters (EFA) to each EC2 instance to increase the network bandwidth."
+      },
+      {
+        "id": "c",
+        "text": "Use Dedicated EC2 instances to ensure that each instance has the maximum performance possible."
+      },
+      {
+        "id": "d",
+        "text": "Use an Application Load Balancer with Auto Scaling groups for your EC2 instances. Prevent direct internet traffic to your Amazon RDS database by deploying it to a new private subnet."
+      },
+      {
+        "id": "e",
+        "text": "Use an Amazon CloudFront service for distributing both static and dynamic content."
+      }
+    ],
+    "correctAnswer": ["b", "c"],
+    "explanation": "Adding Elastic Fabric Adapters (EFA) (option b) improves network bandwidth for HPC workloads but does not mitigate DDoS attacks, making it unsuitable for this scenario. Using Dedicated EC2 instances (option c) enhances performance but is unrelated to DDoS protection. Options a, d, and e (AWS Shield, WAF, Load Balancer with private subnet, and CloudFront) are designed to mitigate or prevent DDoS attacks by providing protection, load distribution, and content delivery security."
+  },
+  {
+    "id": 4,
+    "question": "An online stocks trading application that stores financial data in an S3 bucket has a lifecycle policy that moves older data to Glacier every month. There is a strict compliance requirement where a surprise audit can happen at anytime and you should be able to retrieve the required data in under 15 minutes under all circumstances. Your manager instructed you to ensure that retrieval capacity is available when you need it and should handle up to 150 MB/s of retrieval throughput. Which of the following should you do to meet the above requirement? (Select TWO)",
+    "options": [
+      {
+        "id": "a",
+        "text": "Specify a range, or portion, of the financial data archive to retrieve."
+      },
+      {
+        "id": "b",
+        "text": "Retrieve the data using Amazon Glacier Select."
+      },
+      {
+        "id": "c",
+        "text": "Purchase provisioned retrieval capacity."
+      },
+      {
+        "id": "d",
+        "text": "Use Bulk Retrieval to access the financial data."
+      },
+      {
+        "id": "e",
+        "text": "Use Expedited Retrieval to access the financial data."
+      }
+    ],
+    "correctAnswer": ["c", "e"],
+    "explanation": "Purchasing provisioned retrieval capacity (option c) ensures that the required 150 MB/s throughput is available for Glacier data retrieval, meeting the compliance requirement. Using Expedited Retrieval (option e) allows data to be retrieved in under 15 minutes, satisfying the audit timeline. Specifying a range (option a) or using Glacier Select (option b) does not guarantee retrieval speed or capacity. Bulk Retrieval (option d) is slower and not suitable for the 15-minute requirement."
+  },
+  {
+    "id": 5,
+    "question": "A company needs to use Amazon Aurora as the Amazon RDS database engine of their web application. The Solutions Architect has been instructed to implement a 90-day backup retention policy. Which of the following options can satisfy the given requirement?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Create a daily scheduled event using CloudWatch Events and AWS Lambda to directly download the RDS automated snapshot to an S3 bucket. Archive snapshots older than 90 days to Glacier."
+      },
+      {
+        "id": "b",
+        "text": "Create an AWS Backup plan to take daily snapshots with a retention period of 90 days."
+      },
+      {
+        "id": "c",
+        "text": "Configure RDS to export the automated snapshot automatically to Amazon S3 and create a lifecycle policy to delete the object after 90 days."
+      },
+      {
+        "id": "d",
+        "text": "Configure an automated backup and set the backup retention period to 90 days."
+      }
+    ],
+    "correctAnswer": "d",
+    "explanation": "Configuring an automated backup and setting the backup retention period to 90 days (option d) directly meets the requirement using Aurora's built-in backup feature, which manages retention natively. Options a and c involve manual or additional steps (e.g., Lambda, S3 export) that add complexity, while option b (AWS Backup) is a valid alternative but overcomplicates the solution compared to the native RDS backup feature."
+  },
+  {
+    "id": 6,
+    "question": "A company has a global online trading platform in which the users from all over the world regularly upload terabytes of transactional data to a centralized S3 bucket. What AWS feature should you use in your present system to improve throughput and ensure consistently fast data transfer to the Amazon S3 bucket, regardless of your user's location?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Use CloudFront Origin Access Control (OAC)"
+      },
+      {
+        "id": "b",
+        "text": "Amazon S3 Transfer Acceleration"
+      },
+      {
+        "id": "c",
+        "text": "AWS Direct Connect"
+      },
+      {
+        "id": "d",
+        "text": "FTP"
+      }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Amazon S3 Transfer Acceleration (option b) optimizes data transfer speeds globally by using Amazon CloudFront's edge locations, ensuring fast and consistent uploads to S3 regardless of user location. Options a (CloudFront OAC) and c (AWS Direct Connect) are not designed for improving S3 upload throughput, while option d (FTP) is a generic protocol and not an AWS-specific feature for this purpose."
+  },
+  {
+    "id": 7,
+    "question": "A company hosted a web application on a Linux Amazon EC2 instance in the public subnet that uses a non-default network ACL. The instance uses a default security group and has an attached Elastic IP address. The network ACL is configured to block all inbound and outbound traffic. The Solutions Architect must allow incoming traffic on port 443 to access the application from any source. Which combination of steps will accomplish this requirement? (Select TWO)",
+    "options": [
+      {
+        "id": "a",
+        "text": "In the Network ACL, update the rule to allow inbound TCP connection on port 443 from source 0.0.0.0/0 and outbound TCP connection on port 32768 - 65535 to destination 0.0.0.0/0"
+      },
+      {
+        "id": "b",
+        "text": "In the Network ACL, update the rule to allow outbound TCP connection on port 32768 - 65535 to destination 0.0.0.0/0"
+      },
+      {
+        "id": "c",
+        "text": "In the Security Group, add a new rule to allow TCP connection on port 443 from source 0.0.0.0/0"
+      },
+      {
+        "id": "d",
+        "text": "In the Network ACL, update the rule to allow both inbound and outbound TCP connection on port 443 from source 0.0.0.0/0 and to destination 0.0.0.0/0"
+      },
+      {
+        "id": "e",
+        "text": "In the Security Group, create a new rule to allow TCP connection on port 443 to destination 0.0.0.0/0"
+      }
+    ],
+    "correctAnswer": ["a", "c"],
+    "explanation": "Updating the Network ACL to allow inbound traffic on port 443 and the corresponding outbound ephemeral ports (32768 - 65535) (option a) ensures network-level access. Adding a rule in the Security Group to allow inbound TCP on port 443 from any source (option c) permits instance-level access. Option b alone is insufficient as it only handles outbound traffic. Option d is redundant since the outbound rule should cover ephemeral ports, not port 443. Option e is incorrect as Security Group rules should allow inbound traffic, not outbound to a destination."
+  },
+  {
+    "id": 8,
+    "question": "A company is building an automation tool for generating custom reports on its AWS usage. The company must be able to programmatically access and forecast usage costs on specific services. Which of the following would meet the requirements with the LEAST amount of operational overhead?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Generate AWS Budgets reports for usage cost data and deliver them via Amazon Simple Queue Service (SQS)."
+      },
+      {
+        "id": "b",
+        "text": "Utilize the downloadable AWS Cost Explorer report .csv files to access the cost-related data."
+      },
+      {
+        "id": "c",
+        "text": "Predict usage costs using AWS Budgets."
+      },
+      {
+        "id": "d",
+        "text": "Use the AWS Cost Explorer API with pagination to programmatically retrieve the usage cost-related data."
+      },
+      {
+        "id": "e",
+        "text": "Configure AWS Budgets to send usage cost data to the company via Amazon SNS."
+      }
+    ],
+    "correctAnswer": "d",
+    "explanation": "Using the AWS Cost Explorer API with pagination (option d) allows programmatic access and forecasting with minimal manual intervention, reducing operational overhead. Options a and e involve additional setup (SQS/SNS delivery), while option b requires manual downloading of CSV files, increasing overhead. Option c focuses on prediction but lacks programmatic access capability."
+  },
+  {
+    "id": 9,
+    "question": "A solutions architect is managing an application that runs on a Windows EC2 instance with an attached Amazon FSx for Windows File Server. To save cost, management has decided to stop the instance during off-hours and restart it only when needed. It has been observed that the application takes several minutes to become fully operational which impacts productivity. How can the solutions architect speed up the instance's loading time without driving the cost up?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Disable the Instance Metadata Service to reduce the things that need to be loaded at startup."
+      },
+      {
+        "id": "b",
+        "text": "Migrate the application to a Linux-based EC2 instance."
+      },
+      {
+        "id": "c",
+        "text": "Enable the hibernation mode on the EC2 instance."
+      },
+      {
+        "id": "d",
+        "text": "Migrate the application to an EC2 instance with hibernation enabled."
+      }
+    ],
+    "correctAnswer": "c",
+    "explanation": "Enabling hibernation mode on the EC2 instance (option c) allows the instance to save its in-memory state to the EBS root volume, enabling faster restarts without additional cost, as it leverages the existing instance. Option a does not significantly speed up loading. Option b involves migration effort and potential compatibility issues. Option d requires migration to a new instance, increasing complexity and potential cost."
+  },
+  {
+"id": 10,
+"question": "A company runs a web application on an EC2 instance with an attached Elastic IP address. The application is behind an Application Load Balancer (ALB). To improve security, the company wants to restrict access to the application so that it can only be accessed through the ALB. Which steps should the Solutions Architect take to achieve this? (Select TWO)",
+"options": [
+{
+"id": "a",
+"text": "Modify the EC2 instance’s security group to allow inbound traffic on port 80 and 443 only from the ALB’s security group."
+},
+{
+"id": "b",
+"text": "Configure the ALB to route traffic to the EC2 instance using a private IP address."
+},
+{
+"id": "c",
+"text": "Update the Network ACL to block all inbound traffic to the EC2 instance except from the ALB."
+},
+{
+"id": "d",
+"text": "Enable AWS Shield to protect the EC2 instance from direct internet access."
+},
+{
+"id": "e",
+"text": "Modify the EC2 instance’s security group to allow all inbound traffic on port 80 and 443 from any source."
+}
+],
+"correctAnswer": ["a", "b"],
+"explanation": "Modifying the EC2 instance’s security group to allow inbound traffic on ports 80 and 443 only from the ALB’s security group (option a) ensures that only traffic routed through the ALB can reach the instance. Configuring the ALB to route traffic using the EC2 instance’s private IP (option b) ensures the instance isn’t directly exposed to the internet. Option c (Network ACL) is less precise for this scenario as NACLs are stateless and harder to manage for this use case. Option d (AWS Shield) protects against DDoS but doesn’t restrict traffic sources. Option e allows unrestricted access, which violates the requirement."
+},
+{
+"id": 11,
+"question": "A company hosts a static website on Amazon S3 with a CloudFront distribution for global access. Some users report intermittent access issues, and the Solutions Architect suspects stale content. How can the architect ensure users always receive the most up-to-date content with minimal latency?",
+"options": [
+{
+"id": "a",
+"text": "Set a low TTL (Time to Live) value on the CloudFront distribution."
+},
+{
+"id": "b",
+"text": "Enable S3 Versioning and update the website content frequently."
+},
+{
+"id": "c",
+"text": "Use AWS Lambda@Edge to modify cache behavior dynamically."
+},
+{
+"id": "d",
+"text": "Configure S3 Transfer Acceleration for faster content updates."
+}
+],
+"correctAnswer": "a",
+"explanation": "Setting a low TTL value on the CloudFront distribution (option a) ensures that cached content expires quickly, forcing CloudFront to fetch the latest content from S3 more frequently, reducing the chance of serving stale content. Option b (S3 Versioning) helps with data recovery but doesn’t address caching issues. Option c (Lambda@Edge) is overkill for simply ensuring fresh content, as it’s better for dynamic behavior. Option d (S3 Transfer Acceleration) improves upload speeds but doesn’t affect content freshness for users."
+},
+{
+"id": 12,
+"question": "A company uses Amazon RDS for MySQL to support a critical application. To meet compliance requirements, the company needs to ensure that the database is highly available and can recover from a failure within 5 minutes. Which of the following should the Solutions Architect implement? (Select TWO)",
+"options": [
+{
+"id": "a",
+"text": "Enable Multi-AZ deployment for the RDS instance."
+},
+{
+"id": "b",
+"text": "Configure automated backups with a 5-minute retention period."
+},
+{
+"id": "c",
+"text": "Set up RDS Read Replicas in a different region."
+},
+{
+"id": "d",
+"text": "Enable RDS automatic failover with a 5-minute recovery time objective (RTO)."
+},
+{
+"id": "e",
+"text": "Use AWS Backup to create a 5-minute recovery point objective (RPO)."
+}
+],
+"correctAnswer": ["a", "d"],
+"explanation": "Enabling Multi-AZ deployment (option a) ensures high availability by maintaining a synchronous standby replica in another Availability Zone, allowing automatic failover in case of a failure. Enabling RDS automatic failover with a 5-minute RTO (option d) aligns with the recovery requirement, as Multi-AZ failovers typically complete within a few minutes. Option b (automated backups) doesn’t ensure quick recovery within 5 minutes. Option c (Read Replicas) helps with read scalability but not failover. Option e (AWS Backup) focuses on RPO, not RTO, and recovery would take longer than 5 minutes."
+},
+{
+"id": 13,
+"question": "A company runs a microservices-based application on Amazon ECS with an Application Load Balancer (ALB). The application experiences sudden spikes in traffic, causing performance degradation. The Solutions Architect needs to ensure the application can scale dynamically to handle these spikes. Which solution should be implemented?",
+"options": [
+{
+"id": "a",
+"text": "Configure ECS Service Auto Scaling based on CPU utilization."
+},
+{
+"id": "b",
+"text": "Migrate the application to AWS Lambda for serverless scaling."
+},
+{
+"id": "c",
+"text": "Increase the ALB’s idle timeout to handle more connections."
+},
+{
+"id": "d",
+"text": "Switch to a Network Load Balancer (NLB) for better performance."
+}
+],
+"correctAnswer": "a",
+"explanation": "Configuring ECS Service Auto Scaling based on CPU utilization (option a) allows the application to dynamically scale the number of tasks in response to traffic spikes, ensuring performance. Option b (AWS Lambda) requires significant refactoring and may not suit a microservices architecture. Option c (ALB idle timeout) doesn’t address scaling needs. Option d (NLB) is better for low-latency scenarios but doesn’t solve the scaling issue for ECS tasks."
+},
+{
+"id": 14,
+"question": "A company stores sensitive customer data in an Amazon DynamoDB table. To comply with regulatory requirements, the data must be encrypted at rest, and the company must manage the encryption keys. Which of the following should the Solutions Architect do? (Select TWO)",
+"options": [
+{
+"id": "a",
+"text": "Enable server-side encryption on the DynamoDB table using an AWS KMS customer-managed key."
+},
+{
+"id": "b",
+"text": "Use client-side encryption before writing data to the DynamoDB table."
+},
+{
+"id": "c",
+"text": "Enable DynamoDB encryption with AWS-managed keys."
+},
+{
+"id": "d",
+"text": "Store the encryption keys in an S3 bucket with restricted access."
+},
+{
+"id": "e",
+"text": "Use AWS Secrets Manager to store and rotate the encryption keys."
+}
+],
+"correctAnswer": ["a", "e"],
+"explanation": "Enabling server-side encryption on the DynamoDB table with an AWS KMS customer-managed key (option a) ensures data is encrypted at rest while allowing the company to manage the keys. Using AWS Secrets Manager to store and rotate the keys (option e) provides a secure way to handle key management. Option b (client-side encryption) adds complexity and isn’t necessary since DynamoDB supports server-side encryption. Option c (AWS-managed keys) doesn’t allow the company to manage the keys. Option d (S3 bucket) is not a secure or recommended way to manage encryption keys."
+},
+{
+"id": 15,
+"question": "A company uses AWS Lambda to process real-time data from an Amazon Kinesis Data Stream. The Lambda function occasionally fails due to throttling errors. How can the Solutions Architect resolve this issue with the least operational overhead?",
+"options": [
+{
+"id": "a",
+"text": "Increase the Lambda function’s reserved concurrency."
+},
+{
+"id": "b",
+"text": "Increase the Kinesis Data Stream shard count."
+},
+{
+"id": "c",
+"text": "Switch to using Amazon SQS as the event source for Lambda."
+},
+{
+"id": "d",
+"text": "Reduce the Lambda function’s memory allocation."
+}
+],
+"correctAnswer": "a",
+"explanation": "Increasing the Lambda function’s reserved concurrency (option a) ensures that more instances of the function can run concurrently, reducing throttling errors with minimal operational changes. Option b (increasing Kinesis shards) addresses Kinesis throughput but not Lambda throttling. Option c (switching to SQS) requires significant refactoring. Option d (reducing memory) may worsen performance and doesn’t address concurrency limits."
+},
+{
+"id": 16,
+"question": "A company runs a web application on Amazon EC2 instances in an Auto Scaling group behind an Application Load Balancer. The application must be accessible only to users in a specific country. How can the Solutions Architect enforce this geographic restriction?",
+"options": [
+{
+"id": "a",
+"text": "Use AWS WAF with a geo-match condition to restrict access."
+},
+{
+"id": "b",
+"text": "Configure the EC2 instances’ security group to allow traffic only from the specific country."
+},
+{
+"id": "c",
+"text": "Use Amazon CloudFront with a geo-restriction policy."
+},
+{
+"id": "d",
+"text": "Set up a Network ACL to block traffic from all other countries."
+}
+],
+"correctAnswer": "c",
+"explanation": "Using Amazon CloudFront with a geo-restriction policy (option c) allows the Solutions Architect to restrict access to the application based on the user’s country, leveraging CloudFront’s edge locations for enforcement. Option a (AWS WAF) can also work but requires more configuration than CloudFront’s built-in feature. Option b (security group) cannot filter by country, as security groups operate on IP ranges. Option d (Network ACL) is impractical for country-level filtering due to the complexity of managing IP ranges."
+},
+{
+"id": 17,
+"question": "A company needs to migrate a large on-premises PostgreSQL database to Amazon RDS with minimal downtime. The database size is 2 TB, and the migration must be completed over a weekend. Which strategy should the Solutions Architect use?",
+"options": [
+{
+"id": "a",
+"text": "Use AWS Database Migration Service (DMS) with ongoing replication."
+},
+{
+"id": "b",
+"text": "Export the database to an S3 bucket and import it into RDS using a SQL script."
+},
+{
+"id": "c",
+"text": "Use AWS Snowball to transfer the database dump to S3, then import it into RDS."
+},
+{
+"id": "d",
+"text": "Take a snapshot of the on-premises database and restore it directly to RDS."
+}
+],
+"correctAnswer": "a",
+"explanation": "Using AWS Database Migration Service (DMS) with ongoing replication (option a) allows for a full load of the 2 TB database followed by continuous replication of changes, minimizing downtime during the final cutover. Option b (S3 export/import) would take too long for 2 TB and cause significant downtime. Option c (Snowball) is better for larger datasets but isn’t practical for a weekend migration due to shipping time. Option d (direct snapshot restore) isn’t supported for on-premises to RDS migrations."
+},
+{
+"id": 18,
+"question": "A company uses Amazon S3 to store application logs that are accessed infrequently but must be retained for 7 years to meet compliance requirements. The Solutions Architect wants to minimize costs while ensuring the logs remain accessible. Which of the following should be implemented? (Select TWO)",
+"options": [
+{
+"id": "a",
+"text": "Create an S3 lifecycle policy to transition objects to S3 Glacier after 30 days."
+},
+{
+"id": "b",
+"text": "Enable S3 Versioning to protect against accidental deletions."
+},
+{
+"id": "c",
+"text": "Set up an S3 lifecycle policy to expire objects after 7 years."
+},
+{
+"id": "d",
+"text": "Use S3 Standard-Infrequent Access (S3 Standard-IA) for the entire retention period."
+},
+{
+"id": "e",
+"text": "Encrypt the logs using S3 server-side encryption."
+}
+],
+"correctAnswer": ["a", "c"],
+"explanation": "Creating an S3 lifecycle policy to transition objects to S3 Glacier after 30 days (option a) minimizes costs by moving infrequently accessed data to a cheaper storage class. Setting up a lifecycle policy to expire objects after 7 years (option c) ensures compliance with the retention requirement while avoiding unnecessary costs. Option b (S3 Versioning) adds cost without addressing the primary requirement. Option d (S3 Standard-IA) is more expensive than Glacier for long-term storage. Option e (encryption) is a security measure but doesn’t impact cost or accessibility."
+},
+{
+"id": 19,
+"question": "A company runs a batch processing workload on AWS Fargate that processes data every night. The workload occasionally fails due to insufficient memory, causing delays. The Solutions Architect wants to ensure the workload runs reliably without increasing costs significantly. What should the architect do?",
+"options": [
+{
+"id": "a",
+"text": "Increase the memory allocation for the Fargate task definition."
+},
+{
+"id": "b",
+"text": "Migrate the workload to EC2 instances with Auto Scaling."
+},
+{
+"id": "c",
+"text": "Use AWS Batch to manage the workload with a higher memory configuration."
+},
+{
+"id": "d",
+"text": "Reduce the frequency of the batch processing to every other night."
+}
+],
+"correctAnswer": "a",
+"explanation": "Increasing the memory allocation for the Fargate task definition (option a) directly addresses the memory issue without significantly increasing costs, as Fargate pricing scales with resource usage. Option b (EC2 with Auto Scaling) adds complexity and may increase costs. Option c (AWS Batch) is a good alternative but introduces additional overhead for a simple fix. Option d (reducing frequency) doesn’t solve the reliability issue and may violate requirements."
+},
+  {
+"id": 20,
+"question": "A document sharing website is using AWS as its cloud infrastructure. Free users can upload a total of 5 GB data while premium users can upload as much as 5 TB. Their application uploads the user files, which can have a max file size of 1 TB, to an S3 bucket. In this scenario, what is the best way for the application to upload the large files in S3?",
+"options": [
+{
+"id": "a",
+"text": "Use AWS Import/Export"
+},
+{
+"id": "b",
+"text": "Use Multipart Upload"
+},
+{
+"id": "c",
+"text": "Use a single PUT request to upload the large file"
+},
+{
+"id": "d",
+"text": "Use AWS Snowball"
+}
+],
+"correctAnswer": "b",
+"explanation": "Using Multipart Upload (option b) is the best way to upload large files (up to 1 TB) to S3, as it allows breaking the file into smaller parts, improving reliability and performance, especially for files exceeding 100 MB. Option a (AWS Import/Export) is for physical data transfer, not suitable here. Option c (single PUT) is inefficient and unreliable for files over 5 GB. Option d (AWS Snowball) is for massive data transfers (e.g., petabytes) and not practical for this scenario."
+},
+{
+"id": 21,
+"question": "An aerospace engineering company recently adopted a hybrid cloud infrastructure with AWS. One of the Solutions Architect’s tasks is to launch a VPC with both public and private subnets for their EC2 instances as well as their database instances. Which of the following statements are true regarding Amazon VPC subnets? (Select TWO)",
+"options": [
+{
+"id": "a",
+"text": "Each subnet spans to 2 Availability Zones."
+},
+{
+"id": "b",
+"text": "Each subnet maps to a single Availability Zone."
+},
+{
+"id": "c",
+"text": "Every subnet that you create is automatically associated with the main route table for the VPC."
+},
+{
+"id": "d",
+"text": "EC2 instances in a private subnet can communicate with the Internet only if they have an Elastic IP."
+},
+{
+"id": "e",
+"text": "The allowed block size in VPC is between a /16 netmask (65,536 IP addresses) and /27 netmask (32 IP addresses)."
+}
+],
+"correctAnswer": ["b", "c"],
+"explanation": "Each subnet maps to a single Availability Zone (option b) to ensure isolation and fault tolerance within a VPC. Every subnet created is automatically associated with the main route table for the VPC (option c) unless a custom route table is specified. Option a is incorrect as subnets are confined to one AZ. Option d is false because private subnets require a NAT Gateway or NAT Instance for internet access, not an Elastic IP. Option e defines the CIDR range but is not a functional statement about subnets."
+},
+{
+"id": 22,
+"question": "A Solutions Architect is working for a large insurance firm. To maintain compliance with HIPAA laws, all data that is backed up or stored on Amazon S3 needs to be encrypted at rest. Which encryption methods can be employed, assuming S3 is being used for storing financial-related data? (Select TWO)",
+"options": [
+{
+"id": "a",
+"text": "Enable SSE on S3 bucket to make use of AES-256 encryption"
+},
+{
+"id": "b",
+"text": "Store the data on EBS volumes with encryption enabled instead of using Amazon S3"
+},
+{
+"id": "c",
+"text": "Use AWS Shield to protect your data at rest"
+},
+{
+"id": "d",
+"text": "Encrypt the data using your own encryption keys then copy the data to Amazon S3 over HTTPS endpoints."
+},
+{
+"id": "e",
+"text": "Store the data in encrypted EBS snapshots"
+}
+],
+"correctAnswer": ["a", "d"],
+"explanation": "Enabling SSE on the S3 bucket with AES-256 encryption (option a) provides server-side encryption managed by AWS, meeting HIPAA requirements. Encrypting data with your own keys and uploading via HTTPS (option d) allows client-side encryption, giving control over keys while ensuring secure transfer. Option b and e apply to EBS, not S3. Option c (AWS Shield) protects against DDoS, not encryption at rest."
+},
+{
+"id": 23,
+"question": "A data analytics company is setting up an innovative checkout-free grocery store. Their Solutions Architect developed a real-time monitoring application that uses smart sensors to collect the items that the customers are getting from the grocery’s refrigerators and shelves then automatically deduct it from their accounts. The company wants to analyze the items that are frequently being bought and store the results in S3 for durable storage to determine the purchase behavior of its customers. What service must be used to easily capture, transform, and load streaming data into Amazon S3, Amazon OpenSearch Service, and Splunk?",
+"options": [
+{
+"id": "a",
+"text": "Amazon SQS"
+},
+{
+"id": "b",
+"text": "Amazon Redshift"
+},
+{
+"id": "c",
+"text": "Amazon DynamoDB Streams"
+},
+{
+"id": "d",
+"text": "Amazon Data Firehose"
+}
+],
+"correctAnswer": "d",
+"explanation": "Amazon Data Firehose (option d) is designed to capture, transform, and load streaming data into destinations like S3, OpenSearch Service, and Splunk, making it ideal for real-time analytics. Option a (SQS) is for message queuing, not streaming data loading. Option b (Redshift) is a data warehouse, not a streaming service. Option c (DynamoDB Streams) is specific to DynamoDB changes, not general streaming."
+},
+{
+"id": 24,
+"question": "A Solutions Architect is designing a highly available environment for an application. She plans to host the application on EC2 instances within an Auto Scaling Group. One of the conditions requires data stored on root EBS volumes to be preserved if an instance terminates. What should be done to satisfy the requirement?",
+"options": [
+{
+"id": "a",
+"text": "Use AWS DataSync to replicate root volume data to Amazon S3."
+},
+{
+"id": "b",
+"text": "Enable the Termination Protection option for all EC2 instances."
+},
+{
+"id": "c",
+"text": "Configure ASG to suspend the health check process for each EC2 instance."
+},
+{
+"id": "d",
+"text": "Set the value of DeleteOnTermination attribute of the EBS volumes to False."
+}
+],
+"correctAnswer": "d",
+"explanation": "Setting the DeleteOnTermination attribute to False (option d) ensures that root EBS volume data persists after an instance terminates, meeting the requirement. Option a (AWS DataSync) is for data migration, not preservation. Option b (Termination Protection) prevents termination but doesn’t preserve data. Option c (suspending health checks) doesn’t address data persistence."
+},
+{
+"id": 25,
+"question": "A large financial firm needs to set up a Linux bastion host to allow access to the Amazon EC2 instances running in their VPC. For security purposes, only the clients connecting from the corporate external public IP address 175.45.116.100 should have SSH access to the host. Which is the best option that can meet the customer’s requirement?",
+"options": [
+{
+"id": "a",
+"text": "Security Group Inbound Rule: Protocol - UDP, Port Range - 22, Source 175.45.116.100/32"
+},
+{
+"id": "b",
+"text": "Network ACL Inbound Rule: Protocol - TCP, Port Range - 22, Source 175.45.116.100/0"
+},
+{
+"id": "c",
+"text": "Network ACL Inbound Rule: Protocol - UDP, Port Range - 22, Source 175.45.116.100/32"
+},
+{
+"id": "d",
+"text": "Security Group Inbound Rule: Protocol - TCP, Port Range - 22, Source 175.45.116.100/32"
+}
+],
+"correctAnswer": "d",
+"explanation": "A Security Group Inbound Rule with Protocol - TCP, Port Range - 22, and Source 175.45.116.100/32 (option d) is the best option, as SSH uses TCP on port 22, and security groups allow specific IP-based access control. Option a uses UDP, which is incorrect for SSH. Options b and c (Network ACLs) are stateless and less suitable; b has an incorrect CIDR (/0), and c uses UDP."
+},
+{
+"id": 26,
+"question": "A company installed sensors to track the number of people who visit the park. The data is sent every day to an Amazon Kinesis stream with default settings for processing, in which a consumer is configured to process the data every other day. You noticed that the S3 bucket is not receiving all of the data that is being sent to the Kinesis stream. You checked the sensors if they are properly sending the data to Amazon Kinesis and verified that the data is indeed sent every day. What could be the reason for this?",
+"options": [
+{
+"id": "a",
+"text": "By default, the data records are only accessible for 24 hours from the time they are added to a Kinesis stream."
+},
+{
+"id": "b",
+"text": "Your AWS account was hacked and someone has deleted some data in your Kinesis stream."
+},
+{
+"id": "c",
+"text": "By default, Amazon S3 stores the data for 1 day and moves it to Amazon Glacier."
+},
+{
+"id": "d",
+"text": "There is a problem in the sensors. They probably had some intermittent connection hence, the data is not sent to the stream."
+}
+],
+"correctAnswer": "a",
+"explanation": "By default, Kinesis stream data records are only accessible for 24 hours (option a), and since the consumer processes every other day, data older than 24 hours is lost, explaining the missing S3 data. Option b is speculative without evidence. Option c is incorrect as S3 lifecycle policies are not default. Option d is ruled out as sensor data is verified to be sent."
+},
+{
+"id": 27,
+"question": "A company is deploying a Microsoft SharePoint Server environment on AWS using CloudFormation. The Solutions Architect needs to install and configure the architecture that is composed of Microsoft Active Directory (AD) domain controllers, Microsoft SQL Server 2012, multiple Amazon EC2 instances to host the Microsoft SharePoint Server and many other dependencies. The Architect needs to ensure that the required components are properly running before the stack creation proceeds. Which of the following should the Architect do to meet this requirement?",
+"options": [
+{
+"id": "a",
+"text": "Configure the DependsOn attribute in the CloudFormation template. Send a success signal after the applications are installed and configured using the cfn-init helper script."
+},
+{
+"id": "b",
+"text": "Configure a UpdatePolicy attribute to the instance in the CloudFormation template. Send a success signal after the applications are installed and configured using the cfn-signal helper script."
+},
+{
+"id": "c",
+"text": "Configure a CreationPolicy attribute to the instance in the CloudFormation template. Send a success signal after the applications are installed and configured using the cfn-signal helper script."
+},
+{
+"id": "d",
+"text": "Configure the UpdateReplacePolicy attribute in the CloudFormation template. Send a success signal after the applications are installed and configured using the cfn-signal helper script."
+}
+],
+"correctAnswer": "c",
+"explanation": "Configuring a CreationPolicy attribute (option c) ensures the stack waits for a success signal from the cfn-signal helper script after the applications are installed and configured, verifying dependencies are ready. Option a (DependsOn) defines order but doesn’t wait for completion. Options b (UpdatePolicy) and d (UpdateReplacePolicy) are for updates, not initial creation."
+},
+{
+"id": 28,
+"question": "Due to the large volume of query requests, the database performance of an online reporting application significantly slowed down. The Solutions Architect is trying to convince her client to use Amazon RDS Read Replica for their application instead of setting up a Multi-AZ Deployments configuration. What are two benefits of using Read Replicas over Multi-AZ that the Architect should point out? (Select TWO)",
+"options": [
+{
+"id": "a",
+"text": "Provides synchronous replication and automatic failover in the case of Availability Zone service failures."
+},
+{
+"id": "b",
+"text": "It enhances the read performance of your primary database by increasing its IOPS and accelerates its query processing via AWS Global Accelerator."
+},
+{
+"id": "c",
+"text": "It elastically scales out beyond the capacity constraints of a single DB instance for read-heavy database workloads."
+},
+{
+"id": "d",
+"text": "Allows both read and write operations on the read replica to complement the primary database."
+},
+{
+"id": "e",
+"text": "Provides asynchronous replication and improves the performance of the primary database by taking read-heavy database workloads from it."
+}
+],
+"correctAnswer": ["c", "e"],
+"explanation": "Read Replicas elastically scale out for read-heavy workloads (option c) and provide asynchronous replication, offloading read traffic from the primary database (option e), improving performance. Option a is a Multi-AZ benefit, not Read Replica. Option b mentions Global Accelerator, which is unrelated. Option d is incorrect as Read Replicas are read-only."
+},
+{
+"id": 29,
+"question": "A manufacturing company has EC2 instances running in AWS. The EC2 instances are configured with Auto Scaling. There are a lot of requests being lost because of too much load on the servers. The Auto Scaling is launching new EC2 instances to take the load accordingly, yet there are still some requests that are being lost. Which of the following is the MOST suitable solution that you should implement to avoid losing recently submitted requests?",
+"options": [
+{
+"id": "a",
+"text": "Replace the Auto Scaling group with a cluster placement group to achieve a low-latency network performance necessary for tightly-coupled node-to-node communication."
+},
+{
+"id": "b",
+"text": "Use larger instances for your application with an attached Elastic Fabric Adapter (EFA)."
+},
+{
+"id": "c",
+"text": "Use an Amazon SQS queue to decouple the application components and scale out the EC2 instances based upon the ApproximateNumberOfMessages metric in Amazon CloudWatch."
+},
+{
+"id": "d",
+"text": "Set up Amazon Aurora Serverless for on-demand, auto-scaling configuration of your EC2 instances and also enable Amazon Aurora Parallel Query feature for faster analytical queries over your current data."
+}
+],
+"correctAnswer": "c",
+"explanation": "Using an Amazon SQS queue (option c) decouples the application, allowing requests to be queued and processed as EC2 instances scale, preventing loss. Option a is for low-latency communication, not request loss. Option b (larger instances with EFA) may help but doesn’t address queuing. Option d (Aurora Serverless) is for databases, not EC2 scaling."
+},
+  {
+"id": 30,
+"question": "A healthcare company is migrating its patient records system to AWS. The Solutions Architect needs to ensure that the application hosted on EC2 instances can securely connect to an Amazon RDS database. The database should only be accessible from within the VPC. Which of the following steps should the Architect take to achieve this?",
+"options": [
+{
+"id": "a",
+"text": "Place the RDS database in a public subnet and restrict access using a security group."
+},
+{
+"id": "b",
+"text": "Place the RDS database in a private subnet and configure a security group to allow traffic only from the EC2 instances’ security group."
+},
+{
+"id": "c",
+"text": "Enable public access on the RDS database and use an Elastic IP for secure connectivity."
+},
+{
+"id": "d",
+"text": "Use AWS Direct Connect to establish a private connection between the EC2 instances and the RDS database."
+}
+],
+"correctAnswer": "b",
+"explanation": "Placing the RDS database in a private subnet and configuring a security group to allow traffic only from the EC2 instances’ security group (option b) ensures the database is not publicly accessible and can only be reached within the VPC, enhancing security. Option a (public subnet) exposes the database to the internet. Option c (public access with Elastic IP) is insecure. Option d (Direct Connect) is for on-premises connectivity, not VPC-internal communication."
+},
+{
+"id": 31,
+"question": "A retail company is launching an e-commerce platform on AWS. They expect high traffic during sales events and need to ensure their web application on EC2 instances can handle sudden spikes in demand. Which of the following configurations would best support this requirement?",
+"options": [
+{
+"id": "a",
+"text": "Use a single EC2 instance with a large instance type to handle all traffic."
+},
+{
+"id": "b",
+"text": "Set up an Auto Scaling group with a target tracking scaling policy based on CPU utilization."
+},
+{
+"id": "c",
+"text": "Use Amazon Lightsail to host the web application for simplicity."
+},
+{
+"id": "d",
+"text": "Deploy the application on AWS Lambda to automatically scale with traffic."
+}
+],
+"correctAnswer": "b",
+"explanation": "An Auto Scaling group with a target tracking scaling policy based on CPU utilization (option b) ensures the application can dynamically scale out EC2 instances during traffic spikes and scale in during low demand, maintaining performance. Option a (single instance) risks failure under load. Option c (Lightsail) is for simpler workloads, not high-traffic apps. Option d (Lambda) is serverless but not ideal for traditional web apps on EC2."
+},
+{
+"id": 32,
+"question": "A gaming company is hosting a multiplayer game on AWS using EC2 instances. They want to minimize latency for players globally. Which of the following services or features should the Solutions Architect use to achieve this? (Select TWO)",
+"options": [
+{
+"id": "a",
+"text": "Deploy EC2 instances across multiple Availability Zones in a single region."
+},
+{
+"id": "b",
+"text": "Use Amazon CloudFront to cache static game assets closer to users."
+},
+{
+"id": "c",
+"text": "Use AWS Global Accelerator to route user traffic to the nearest endpoint."
+},
+{
+"id": "d",
+"text": "Use Amazon RDS Multi-AZ for database latency reduction."
+},
+{
+"id": "e",
+"text": "Enable Enhanced Networking on EC2 instances."
+}
+],
+"correctAnswer": ["b", "c"],
+"explanation": "Amazon CloudFront (option b) caches static game assets (e.g., images, videos) closer to users, reducing latency for content delivery. AWS Global Accelerator (option c) routes user traffic to the nearest endpoint, minimizing latency for dynamic requests. Option a doesn’t address global latency. Option d (RDS Multi-AZ) is for high availability, not latency. Option e (Enhanced Networking) improves network performance but doesn’t address global distribution."
+}
+]
