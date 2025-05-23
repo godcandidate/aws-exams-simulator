@@ -1,0 +1,760 @@
+[
+  {
+"id": 33,
+"question": "A financial services company needs to store sensitive transaction logs in Amazon S3 for auditing purposes. The logs must be immutable and retained for 7 years. Which S3 feature should the Solutions Architect use to meet this requirement?",
+"options": [
+{
+"id": "a",
+"text": "Enable S3 Versioning and set a lifecycle policy to transition objects to S3 Glacier."
+},
+{
+"id": "b",
+"text": "Enable S3 Object Lock with a retention period of 7 years in governance mode."
+},
+{
+"id": "c",
+"text": "Use S3 Standard-Infrequent Access (S3 Standard-IA) with a lifecycle policy."
+},
+{
+"id": "d",
+"text": "Enable MFA Delete on the S3 bucket."
+}
+],
+"correctAnswer": "b",
+"explanation": "S3 Object Lock with a 7-year retention period in governance mode (option b) ensures logs are immutable and cannot be deleted or modified until the retention period expires, meeting audit requirements. Option a (Versioning with Glacier) doesn’t guarantee immutability. Option c (S3 Standard-IA) is for cost savings, not immutability. Option d (MFA Delete) adds deletion protection but doesn’t enforce retention."
+},
+{
+"id": 34,
+"question": "A media company is using AWS to host a video streaming application. The videos are stored in Amazon S3, and the application uses an Application Load Balancer (ALB) to distribute traffic to EC2 instances. During peak hours, users report slow video loading times. What can the Solutions Architect do to improve performance?",
+"options": [
+{
+"id": "a",
+"text": "Increase the size of the EC2 instances to handle more traffic."
+},
+{
+"id": "b",
+"text": "Configure Amazon CloudFront to distribute video content from S3."
+},
+{
+"id": "c",
+"text": "Replace the ALB with a Network Load Balancer (NLB) for better performance."
+},
+{
+"id": "d",
+"text": "Migrate the videos to Amazon EFS for faster access."
+}
+],
+"correctAnswer": "b",
+"explanation": "Configuring Amazon CloudFront (option b) to distribute video content from S3 reduces latency by caching videos at edge locations closer to users, improving load times. Option a (larger EC2 instances) doesn’t address content delivery speed. Option c (NLB) focuses on lower-level traffic but doesn’t solve content distribution. Option d (EFS) is for file storage, not optimized for streaming."
+},
+{
+"id": 35,
+"question": "A logistics company is running a fleet management application on AWS. The application uses Amazon RDS for its database and is experiencing slow query performance during peak hours. The Solutions Architect wants to offload read traffic from the primary database. Which solution should be implemented?",
+"options": [
+{
+"id": "a",
+"text": "Enable Multi-AZ for the RDS instance to distribute read traffic."
+},
+{
+"id": "b",
+"text": "Create an RDS Read Replica and direct read queries to it."
+},
+{
+"id": "c",
+"text": "Migrate the database to Amazon DynamoDB for better scalability."
+},
+{
+"id": "d",
+"text": "Increase the instance class of the primary RDS instance."
+}
+],
+"correctAnswer": "b",
+"explanation": "Creating an RDS Read Replica (option b) offloads read traffic from the primary database, improving performance during peak hours. Option a (Multi-AZ) is for high availability, not read distribution. Option c (DynamoDB) requires a full migration, which may not be feasible. Option d (larger instance) increases costs and doesn’t address read scaling."
+},
+{
+"id": 36,
+"question": "A startup is building a serverless application on AWS using API Gateway, AWS Lambda, and Amazon DynamoDB. They need to ensure that the Lambda functions can only be invoked by API Gateway and not directly by other services. How can the Solutions Architect enforce this restriction?",
+"options": [
+{
+"id": "a",
+"text": "Enable CORS on the API Gateway to restrict access."
+},
+{
+"id": "b",
+"text": "Configure an IAM role for API Gateway to invoke the Lambda functions and set a resource-based policy on the Lambda functions to allow only API Gateway."
+},
+{
+"id": "c",
+"text": "Use AWS WAF to block direct requests to the Lambda functions."
+},
+{
+"id": "d",
+"text": "Deploy the Lambda functions in a VPC to restrict access."
+}
+],
+"correctAnswer": "b",
+"explanation": "Configuring an IAM role for API Gateway and setting a resource-based policy on the Lambda functions to allow only API Gateway (option b) ensures that only API Gateway can invoke the functions. Option a (CORS) is for browser requests, not service restrictions. Option c (WAF) is for web traffic, not Lambda invocation. Option d (VPC) adds complexity and doesn’t directly address invocation control."
+},
+{
+"id": 37,
+"question": "A company is using AWS CloudFormation to deploy an application stack that includes EC2 instances and an Amazon RDS database. The stack deployment fails because the RDS instance takes longer to initialize than expected. How can the Solutions Architect ensure that the EC2 instances wait for the RDS database to be fully available before proceeding?",
+"options": [
+{
+"id": "a",
+"text": "Use a DependsOn attribute in the CloudFormation template to make the EC2 instances wait for the RDS instance."
+},
+{
+"id": "b",
+"text": "Configure a CreationPolicy attribute for the RDS instance and use a wait condition to signal when it’s ready."
+},
+{
+"id": "c",
+"text": "Increase the timeout period in the CloudFormation stack settings."
+},
+{
+"id": "d",
+"text": "Manually provision the RDS instance before deploying the CloudFormation stack."
+}
+],
+"correctAnswer": "b",
+"explanation": "Configuring a CreationPolicy attribute for the RDS instance and using a wait condition (option b) ensures the EC2 instances wait for the RDS instance to signal readiness, preventing deployment failures. Option a (DependsOn) ensures order but not readiness. Option c (timeout increase) doesn’t guarantee synchronization. Option d (manual provisioning) defeats the purpose of automation."
+},
+{
+"id": 38,
+"question": "A pharmaceutical company is running a batch processing workload on AWS using EC2 Spot Instances to analyze drug trial data. The workload is interruptible but needs to minimize costs. What should the Solutions Architect do to optimize the use of Spot Instances for this workload?",
+"options": [
+{
+"id": "a",
+"text": "Use On-Demand Instances instead of Spot Instances for cost predictability."
+},
+{
+"id": "b",
+"text": "Use a Spot Fleet with a diversified instance type strategy and enable Spot Instance interruption handling."
+},
+{
+"id": "c",
+"text": "Run the workload on a single Spot Instance type to simplify management."
+},
+{
+"id": "d",
+"text": "Use Reserved Instances for the workload to ensure availability."
+}
+],
+"correctAnswer": "b",
+"explanation": "Using a Spot Fleet with a diversified instance type strategy and enabling interruption handling (option b) minimizes costs by leveraging Spot Instances while ensuring resilience through diversification and proper interruption management. Option a (On-Demand) increases costs. Option c (single instance type) risks interruptions. Option d (Reserved Instances) is costlier and less flexible for interruptible workloads."
+},
+{
+"id": 39,
+"question": "A company is running a containerized application on Amazon ECS with Fargate. They want to monitor the application logs and send them to Amazon CloudWatch Logs for analysis. How should the Solutions Architect configure this?",
+"options": [
+{
+"id": "a",
+"text": "Configure the ECS task definition to use the awslogs log driver and specify a CloudWatch Logs group."
+},
+{
+"id": "b",
+"text": "Install the CloudWatch Logs agent on the Fargate containers."
+},
+{
+"id": "c",
+"text": "Use Amazon Kinesis to stream the logs to CloudWatch Logs."
+},
+{
+"id": "d",
+"text": "Store the logs in an S3 bucket and use a Lambda function to send them to CloudWatch Logs."
+}
+],
+"correctAnswer": "a",
+"explanation": "Configuring the ECS task definition to use the awslogs log driver and specifying a CloudWatch Logs group (option a) is the simplest way to send container logs to CloudWatch Logs in Fargate. Option b (CloudWatch Logs agent) isn’t supported in Fargate. Option c (Kinesis) adds unnecessary complexity. Option d (S3 with Lambda) is indirect and less efficient."
+}
+  ,
+  {
+    "id": 40,
+    "question": "A company is hosting a web application on AWS using EC2 instances behind an Application Load Balancer (ALB). They want to ensure that the application is only accessible over HTTPS. What should the Solutions Architect do to enforce this requirement?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Configure the ALB to redirect HTTP traffic to HTTPS and attach an SSL/TLS certificate to the ALB listener."
+      },
+      {
+        "id": "b",
+        "text": "Modify the EC2 instances’ security group to only allow HTTPS traffic on port 443."
+      },
+      {
+        "id": "c",
+        "text": "Use AWS WAF to block all HTTP traffic at the ALB."
+      },
+      {
+        "id": "d",
+        "text": "Enable HTTPS on the EC2 instances and disable HTTP access in the application code."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Configuring the ALB to redirect HTTP traffic to HTTPS and attaching an SSL/TLS certificate to the ALB listener (option a) ensures all traffic is encrypted and enforces HTTPS. Option b only restricts traffic at the security group but doesn’t redirect HTTP. Option c (WAF) can block HTTP but doesn’t redirect. Option d requires application changes and doesn’t leverage the ALB’s capabilities."
+  },
+  {
+    "id": 41,
+    "question": "A company is running a microservices architecture on AWS using Amazon ECS with the Fargate launch type. They need to ensure that the ECS tasks can communicate securely with an Amazon RDS database in the same VPC. Which of the following steps should the Solutions Architect take? (Select TWO)",
+    "options": [
+      {
+        "id": "a",
+        "text": "Place the RDS database in a private subnet and configure its security group to allow traffic from the ECS tasks’ security group."
+      },
+      {
+        "id": "b",
+        "text": "Enable VPC endpoints for RDS to allow private communication."
+      },
+      {
+        "id": "c",
+        "text": "Assign a public IP to the ECS tasks to allow direct access to the RDS database."
+      },
+      {
+        "id": "d",
+        "text": "Configure the RDS database to use SSL/TLS for encrypted connections."
+      },
+      {
+        "id": "e",
+        "text": "Use AWS App Mesh to route traffic between the ECS tasks and the RDS database."
+      }
+    ],
+    "correctAnswer": ["a", "d"],
+    "explanation": "Placing the RDS database in a private subnet and configuring its security group to allow traffic from the ECS tasks’ security group (option a) ensures secure communication within the VPC. Configuring the RDS database to use SSL/TLS (option d) encrypts the connection, adding security. Option b (VPC endpoints) isn’t needed for RDS within the same VPC. Option c (public IP) exposes the tasks unnecessarily. Option e (App Mesh) is for service-to-service communication, not RDS."
+  },
+  {
+    "id": 42,
+    "question": "A company is using Amazon S3 to store user-uploaded files for a mobile application. They want to ensure that files are automatically encrypted at rest and that older files are moved to a lower-cost storage tier after 90 days. Which of the following should the Solutions Architect implement?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Enable default encryption on the S3 bucket and create a lifecycle policy to transition objects to S3 Glacier after 90 days."
+      },
+      {
+        "id": "b",
+        "text": "Use S3 Intelligent-Tiering to automatically move objects between tiers."
+      },
+      {
+        "id": "c",
+        "text": "Enable server-side encryption with customer-provided keys (SSE-C) and manually move files to S3 Standard-IA."
+      },
+      {
+        "id": "d",
+        "text": "Use AWS KMS to encrypt files and transition them to S3 One Zone-IA after 90 days."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Enabling default encryption on the S3 bucket ensures files are encrypted at rest, and a lifecycle policy to transition objects to S3 Glacier after 90 days (option a) meets the cost-saving requirement. Option b (Intelligent-Tiering) doesn’t guarantee a move after exactly 90 days. Option c (SSE-C) requires manual key management and doesn’t automate tiering. Option d (One Zone-IA) is less durable than Glacier for long-term storage."
+  },
+  {
+    "id": 43,
+    "question": "A company is running a data analytics workload on AWS using Amazon Redshift. They need to ensure that the Redshift cluster can only be accessed by specific IAM users within the company. How should the Solutions Architect configure this?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Place the Redshift cluster in a private subnet and configure an IAM policy to allow only specific IAM users to access the cluster."
+      },
+      {
+        "id": "b",
+        "text": "Use a security group to restrict access to the Redshift cluster to specific IP addresses."
+      },
+      {
+        "id": "c",
+        "text": "Enable public access for the Redshift cluster and use a password for authentication."
+      },
+      {
+        "id": "d",
+        "text": "Use AWS Organizations to restrict access to the Redshift cluster."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Placing the Redshift cluster in a private subnet and configuring an IAM policy to allow only specific IAM users to access it (option a) ensures secure, user-based access control. Option b (security group with IPs) doesn’t restrict by IAM user. Option c (public access) is insecure. Option d (AWS Organizations) is for account-level management, not user access to Redshift."
+  },
+  {
+    "id": 44,
+    "question": "A company is migrating an on-premises application to AWS and wants to use AWS Lambda for a serverless compute solution. The application requires access to a third-party API over the internet. What should the Solutions Architect do to allow Lambda to access the third-party API?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Deploy the Lambda function in a VPC with an internet gateway and a NAT gateway in a public subnet."
+      },
+      {
+        "id": "b",
+        "text": "Configure the Lambda function with a public IP address to directly access the internet."
+      },
+      {
+        "id": "c",
+        "text": "Use Amazon API Gateway to proxy the third-party API requests."
+      },
+      {
+        "id": "d",
+        "text": "Deploy the Lambda function outside of a VPC to allow direct internet access."
+      }
+    ],
+    "correctAnswer": "d",
+    "explanation": "Deploying the Lambda function outside of a VPC (option d) allows it to directly access the internet and the third-party API, as Lambda functions not in a VPC have internet access by default. Option a (VPC with NAT) adds complexity and is only needed for VPC resources. Option b (public IP) isn’t a valid Lambda configuration. Option c (API Gateway) is unnecessary for direct API calls."
+  },
+  {
+    "id": 45,
+    "question": "A company is using AWS Step Functions to orchestrate a workflow that processes customer orders. One of the steps involves invoking an AWS Lambda function that occasionally fails due to timeout errors. How can the Solutions Architect improve the reliability of this workflow?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Increase the timeout value of the Lambda function and configure a retry policy in the Step Functions state machine."
+      },
+      {
+        "id": "b",
+        "text": "Replace the Lambda function with an EC2 instance to handle the processing."
+      },
+      {
+        "id": "c",
+        "text": "Use Amazon SNS to invoke the Lambda function instead of Step Functions."
+      },
+      {
+        "id": "d",
+        "text": "Disable the Lambda function’s timeout setting to prevent failures."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Increasing the timeout value of the Lambda function and configuring a retry policy in the Step Functions state machine (option a) improves reliability by giving the function more time to complete and retrying on failure. Option b (EC2) defeats the serverless architecture. Option c (SNS) doesn’t address the timeout issue. Option d (disabling timeout) isn’t possible in Lambda."
+  },
+  {
+    "id": 46,
+    "question": "A company is running a web application on AWS using Amazon EC2 instances and an Amazon Aurora database. They want to back up the database daily and ensure that backups are retained for 30 days. What should the Solutions Architect do to automate this process?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Enable automated backups for the Aurora database and set the backup retention period to 30 days."
+      },
+      {
+        "id": "b",
+        "text": "Use AWS Backup to create a backup plan for the Aurora database with a 30-day retention policy."
+      },
+      {
+        "id": "c",
+        "text": "Create a Lambda function to manually export Aurora snapshots to S3 daily."
+      },
+      {
+        "id": "d",
+        "text": "Use Amazon Data Lifecycle Manager (DLM) to manage Aurora backups."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Enabling automated backups for the Aurora database and setting the retention period to 30 days (option a) is the simplest way to automate daily backups with the desired retention. Option b (AWS Backup) is also viable but more complex. Option c (Lambda with S3) is manual and unnecessary. Option d (DLM) is for EBS volumes, not Aurora."
+  },
+  {
+    "id": 47,
+    "question": "A company is running a real-time analytics application on AWS using Amazon Kinesis Data Streams to ingest data and Amazon Kinesis Data Analytics to process it. The processed data needs to be stored in Amazon S3 for long-term analysis. Which service should the Solutions Architect use to deliver the processed data to S3?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Use Amazon Kinesis Data Firehose to deliver the processed data from Kinesis Data Analytics to S3."
+      },
+      {
+        "id": "b",
+        "text": "Use AWS Lambda to read the processed data and write it to S3."
+      },
+      {
+        "id": "c",
+        "text": "Configure Kinesis Data Analytics to directly write to S3."
+      },
+      {
+        "id": "d",
+        "text": "Use Amazon SNS to send the processed data to S3."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Amazon Kinesis Data Firehose (option a) is designed to deliver streaming data, including from Kinesis Data Analytics, to S3 reliably and with minimal setup. Option b (Lambda) requires custom coding and is less efficient. Option c (direct S3 write) isn’t supported by Kinesis Data Analytics. Option d (SNS) isn’t suited for data delivery to S3."
+  },
+  {
+    "id": 48,
+    "question": "A company is using AWS Organizations to manage multiple AWS accounts. They want to ensure that all S3 buckets across all accounts enforce server-side encryption. How can the Solutions Architect enforce this requirement?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Create an SCP in AWS Organizations to deny S3 bucket creation unless server-side encryption is enabled."
+      },
+      {
+        "id": "b",
+        "text": "Use AWS Config to monitor S3 buckets and automatically enable encryption."
+      },
+      {
+        "id": "c",
+        "text": "Manually enable encryption on all existing and new S3 buckets in each account."
+      },
+      {
+        "id": "d",
+        "text": "Use Amazon CloudWatch Events to detect unencrypted buckets and trigger a Lambda function to enable encryption."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Creating an SCP in AWS Organizations to deny S3 bucket creation unless server-side encryption is enabled (option a) enforces the requirement across all accounts centrally. Option b (AWS Config) can monitor but not enforce proactively. Option c (manual) is inefficient. Option d (CloudWatch Events with Lambda) is reactive and more complex."
+  },
+  {
+    "id": 49,
+    "question": "A company is running a machine learning workload on AWS using Amazon SageMaker. The training jobs require access to a large dataset stored in Amazon EFS. How should the Solutions Architect configure SageMaker to access the EFS file system?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Mount the EFS file system to the SageMaker training job by specifying the EFS file system ID in the training job configuration."
+      },
+      {
+        "id": "b",
+        "text": "Copy the dataset from EFS to S3 and configure the SageMaker training job to read from S3."
+      },
+      {
+        "id": "c",
+        "text": "Use AWS DataSync to replicate the EFS data to the SageMaker instance."
+      },
+      {
+        "id": "d",
+        "text": "Configure SageMaker to directly access EFS using a public IP address."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Mounting the EFS file system to the SageMaker training job by specifying the EFS file system ID (option a) allows direct access to the dataset during training. Option b (S3) requires additional data copying. Option c (DataSync) is for data transfer, not direct access. Option d (public IP) isn’t a valid configuration and is insecure."
+  },
+  {
+    "id": 50,
+    "question": "A company is using Amazon CloudFront to deliver static content globally. They want to restrict access to the content so that only users in specific countries can access it. How should the Solutions Architect implement this requirement?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Configure CloudFront geo-restriction to allow access only from the specified countries."
+      },
+      {
+        "id": "b",
+        "text": "Use AWS WAF to create a geo-match condition and block requests from unauthorized countries."
+      },
+      {
+        "id": "c",
+        "text": "Modify the S3 bucket policy to restrict access based on the requester’s IP address."
+      },
+      {
+        "id": "d",
+        "text": "Use Amazon API Gateway to proxy CloudFront requests and restrict access by country."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Configuring CloudFront geo-restriction to allow access only from specified countries (option a) is the most straightforward way to restrict access by location at the CDN level. Option b (AWS WAF) can also work but is more complex. Option c (S3 bucket policy) doesn’t work effectively with CloudFront distributions. Option d (API Gateway) is unnecessary for static content delivery."
+  },
+  {
+    "id": 51,
+    "question": "A company is running a containerized application on Amazon EKS and needs to ensure that the Kubernetes pods can access an Amazon DynamoDB table securely. Which of the following steps should the Solutions Architect take? (Select TWO)",
+    "options": [
+      {
+        "id": "a",
+        "text": "Create an IAM role for the EKS pods using IRSA (IAM Roles for Service Accounts) and grant it DynamoDB access."
+      },
+      {
+        "id": "b",
+        "text": "Place the EKS cluster in a VPC and configure a VPC endpoint for DynamoDB."
+      },
+      {
+        "id": "c",
+        "text": "Hardcode AWS credentials in the application code to access DynamoDB."
+      },
+      {
+        "id": "d",
+        "text": "Enable public access to the DynamoDB table and allow the EKS pods to connect over the internet."
+      },
+      {
+        "id": "e",
+        "text": "Use AWS Secrets Manager to store DynamoDB credentials and retrieve them in the application."
+      }
+    ],
+    "correctAnswer": ["a", "b"],
+    "explanation": "Using IRSA to create an IAM role for the EKS pods (option a) ensures secure access to DynamoDB without hardcoding credentials. Configuring a VPC endpoint for DynamoDB (option b) keeps traffic private within the VPC. Option c (hardcoding credentials) is insecure. Option d (public access) exposes the table unnecessarily. Option e (Secrets Manager) is unnecessary when IRSA can be used."
+  },
+  {
+    "id": 52,
+    "question": "A company is using AWS CodePipeline to automate the deployment of an application to Amazon ECS. They want to ensure that the pipeline only deploys the application if the code passes unit tests. What should the Solutions Architect do to achieve this?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Add a build stage in CodePipeline using AWS CodeBuild to run unit tests and fail the pipeline if tests fail."
+      },
+      {
+        "id": "b",
+        "text": "Use AWS CodeDeploy to run the unit tests during the deployment stage."
+      },
+      {
+        "id": "c",
+        "text": "Configure Amazon CloudWatch Events to monitor test results and stop the pipeline."
+      },
+      {
+        "id": "d",
+        "text": "Manually run the unit tests and approve the deployment in CodePipeline."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Adding a build stage in CodePipeline using AWS CodeBuild to run unit tests (option a) ensures the pipeline fails automatically if tests don’t pass, enforcing quality checks. Option b (CodeDeploy) is for deployment, not testing. Option c (CloudWatch Events) is reactive and complex. Option d (manual approval) isn’t automated."
+  },
+  {
+    "id": 53,
+    "question": "A company is running a database on Amazon RDS for PostgreSQL and wants to monitor its performance in real-time to detect slow queries. Which AWS service should the Solutions Architect use to achieve this?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Enable Amazon RDS Performance Insights to monitor and analyze database performance."
+      },
+      {
+        "id": "b",
+        "text": "Use Amazon CloudWatch Logs to capture and analyze slow query logs."
+      },
+      {
+        "id": "c",
+        "text": "Configure Amazon CloudTrail to track database performance metrics."
+      },
+      {
+        "id": "d",
+        "text": "Use AWS X-Ray to trace database queries and identify performance bottlenecks."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Amazon RDS Performance Insights (option a) provides real-time monitoring and analysis of database performance, including slow queries, with detailed visualizations. Option b (CloudWatch Logs) can capture logs but lacks real-time analysis. Option c (CloudTrail) is for auditing API calls, not performance. Option d (X-Ray) is for application tracing, not database query monitoring."
+  },
+  {
+    "id": 54,
+    "question": "A company is using AWS Glue to perform ETL jobs on data stored in Amazon S3. The jobs are taking longer than expected due to large datasets. How can the Solutions Architect optimize the performance of the ETL jobs?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Partition the data in S3 and use AWS Glue’s dynamic frame partitioning to process data in parallel."
+      },
+      {
+        "id": "b",
+        "text": "Migrate the ETL jobs to Amazon Redshift for faster processing."
+      },
+      {
+        "id": "c",
+        "text": "Use AWS Lambda to run the ETL jobs instead of AWS Glue."
+      },
+      {
+        "id": "d",
+        "text": "Increase the storage capacity of the S3 bucket to improve read performance."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Partitioning the data in S3 and using AWS Glue’s dynamic frame partitioning (option a) allows parallel processing, reducing ETL job runtime. Option b (Redshift) is a data warehouse, not an ETL tool. Option c (Lambda) isn’t suited for large-scale ETL jobs. Option d (increasing S3 storage) doesn’t impact read performance."
+  },
+  {
+    "id": 55,
+    "question": "A company is running a web application on AWS using an Auto Scaling group of EC2 instances. They notice that the application is slow during traffic spikes. What should the Solutions Architect do to improve performance during these spikes?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Configure the Auto Scaling group to scale based on CPU utilization and add more instances during traffic spikes."
+      },
+      {
+        "id": "b",
+        "text": "Replace the EC2 instances with AWS Lambda functions to handle traffic spikes."
+      },
+      {
+        "id": "c",
+        "text": "Use Amazon SQS to queue requests and process them asynchronously."
+      },
+      {
+        "id": "d",
+        "text": "Increase the size of the EC2 instances manually during traffic spikes."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Configuring the Auto Scaling group to scale based on CPU utilization (option a) ensures more instances are added automatically during traffic spikes, improving performance. Option b (Lambda) isn’t suitable for a traditional web application. Option c (SQS) is for asynchronous processing, not direct performance improvement. Option d (manual scaling) isn’t automated."
+  },
+  {
+    "id": 56,
+    "question": "A company is using Amazon SNS to send notifications to users. They want to ensure that messages are delivered to an HTTP endpoint with retry logic in case of failures. What should the Solutions Architect do to configure this?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Create an SNS subscription with an HTTP endpoint and configure a retry policy with exponential backoff."
+      },
+      {
+        "id": "b",
+        "text": "Use Amazon SQS instead of SNS to handle retries for the HTTP endpoint."
+      },
+      {
+        "id": "c",
+        "text": "Configure SNS to send messages to a Lambda function that handles retries."
+      },
+      {
+        "id": "d",
+        "text": "Use AWS Step Functions to manage retries for the HTTP endpoint."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Creating an SNS subscription with an HTTP endpoint and configuring a retry policy with exponential backoff (option a) ensures reliable delivery with built-in retry logic. Option b (SQS) requires additional setup and isn’t necessary. Option c (Lambda) adds complexity. Option d (Step Functions) is overkill for simple retries."
+  },
+  {
+    "id": 57,
+    "question": "A company is running a batch processing workload on AWS using AWS Batch. The jobs require access to temporary credentials to interact with other AWS services. How should the Solutions Architect configure AWS Batch to securely provide these credentials?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Assign an IAM role to the AWS Batch compute environment and grant it the necessary permissions."
+      },
+      {
+        "id": "b",
+        "text": "Store the credentials in AWS Secrets Manager and retrieve them during job execution."
+      },
+      {
+        "id": "c",
+        "text": "Hardcode the credentials in the batch job scripts."
+      },
+      {
+        "id": "d",
+        "text": "Use AWS KMS to encrypt the credentials and decrypt them in the batch jobs."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Assigning an IAM role to the AWS Batch compute environment (option a) provides temporary credentials securely to the jobs without hardcoding. Option b (Secrets Manager) is unnecessary for this use case. Option c (hardcoding) is insecure. Option d (KMS) adds unnecessary complexity for credential management."
+  },
+  {
+    "id": 58,
+    "question": "A company is using Amazon ElastiCache for Redis to cache frequently accessed data. They want to ensure that the cache is highly available across multiple Availability Zones. How should the Solutions Architect configure ElastiCache?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Enable Multi-AZ with automatic failover for the ElastiCache for Redis cluster."
+      },
+      {
+        "id": "b",
+        "text": "Deploy the ElastiCache cluster in a single Availability Zone with manual backups."
+      },
+      {
+        "id": "c",
+        "text": "Use Amazon CloudFront to cache the data instead of ElastiCache."
+      },
+      {
+        "id": "d",
+        "text": "Configure ElastiCache to use Memcached instead of Redis for high availability."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Enabling Multi-AZ with automatic failover for the ElastiCache for Redis cluster (option a) ensures high availability across Availability Zones. Option b (single AZ) doesn’t provide HA. Option c (CloudFront) is for content delivery, not application caching. Option d (Memcached) doesn’t support Multi-AZ like Redis does."
+  },
+  {
+    "id": 59,
+    "question": "A company is running a serverless application using AWS Lambda and Amazon API Gateway. They want to monitor the API Gateway usage and set up alerts for unusual activity. Which AWS service should the Solutions Architect use to achieve this?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Use Amazon CloudWatch to monitor API Gateway metrics and set up alarms for unusual activity."
+      },
+      {
+        "id": "b",
+        "text": "Use AWS CloudTrail to monitor API Gateway usage and send notifications."
+      },
+      {
+        "id": "c",
+        "text": "Configure AWS X-Ray to track API Gateway usage and detect anomalies."
+      },
+      {
+        "id": "d",
+        "text": "Use AWS Config to monitor API Gateway usage and set up rules for alerts."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Amazon CloudWatch (option a) provides metrics for API Gateway usage and allows setting alarms for unusual activity, such as high error rates or request counts. Option b (CloudTrail) is for auditing API calls, not real-time monitoring. Option c (X-Ray) is for tracing, not usage monitoring. Option d (AWS Config) is for configuration compliance, not usage alerts."
+  },
+  {
+    "id": 60,
+    "question": "A company is running a web application on AWS with an Amazon RDS MySQL database. They want to ensure that the database is backed up automatically and can be restored to a specific point in time in case of data corruption. What should the Solutions Architect do to meet this requirement?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Enable automated backups for the RDS instance and turn on point-in-time recovery."
+      },
+      {
+        "id": "b",
+        "text": "Create a daily snapshot of the RDS instance and store it in Amazon S3."
+      },
+      {
+        "id": "c",
+        "text": "Use AWS Lambda to export the RDS data to an S3 bucket every hour."
+      },
+      {
+        "id": "d",
+        "text": "Configure Amazon CloudWatch to back up the RDS instance and enable point-in-time recovery."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Enabling automated backups for the RDS instance and turning on point-in-time recovery (option a) allows the database to be backed up automatically and restored to any point in time within the retention period. Option b (daily snapshots) doesn’t support point-in-time recovery. Option c (Lambda with S3) is manual and inefficient. Option d (CloudWatch) is not designed for RDS backups or point-in-time recovery."
+  },
+  {
+    "id": 61,
+    "question": "A company is using AWS Direct Connect to connect their on-premises data center to AWS. They want to ensure that their data is encrypted while in transit over the Direct Connect link. Which of the following should the Solutions Architect implement? (Select TWO)",
+    "options": [
+      {
+        "id": "a",
+        "text": "Configure a Virtual Private Gateway (VGW) and enable IPsec VPN over the Direct Connect link."
+      },
+      {
+        "id": "b",
+        "text": "Use AWS Shield to encrypt the data in transit."
+      },
+      {
+        "id": "c",
+        "text": "Enable MACsec encryption on the Direct Connect connection."
+      },
+      {
+        "id": "d",
+        "text": "Use Amazon CloudFront to encrypt the data before sending it over Direct Connect."
+      },
+      {
+        "id": "e",
+        "text": "Store the data in Amazon S3 with server-side encryption before transferring it."
+      }
+    ],
+    "correctAnswer": ["a", "c"],
+    "explanation": "Configuring an IPsec VPN over the Direct Connect link using a Virtual Private Gateway (option a) encrypts data in transit. Enabling MACsec encryption on the Direct Connect connection (option c) provides layer 2 encryption for supported connections. Option b (AWS Shield) is for DDoS protection, not encryption. Option d (CloudFront) is for content delivery, not Direct Connect encryption. Option e (S3 encryption) only encrypts data at rest, not in transit."
+  },
+  {
+    "id": 62,
+    "question": "A company is running a microservices application on AWS using AWS App Runner. They need to ensure that the application can securely access secrets stored in AWS Secrets Manager. How should the Solutions Architect configure this?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Assign an IAM role to the App Runner service with permissions to access Secrets Manager and retrieve secrets in the application code."
+      },
+      {
+        "id": "b",
+        "text": "Hardcode the secrets in the App Runner environment variables."
+      },
+      {
+        "id": "c",
+        "text": "Use AWS KMS to encrypt the secrets and decrypt them in the application."
+      },
+      {
+        "id": "d",
+        "text": "Store the secrets in an Amazon S3 bucket and grant App Runner access to the bucket."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Assigning an IAM role to the App Runner service with permissions to access Secrets Manager (option a) allows the application to securely retrieve secrets at runtime. Option b (hardcoding secrets) is insecure and not recommended. Option c (KMS) adds unnecessary complexity since Secrets Manager already handles encryption. Option d (S3) is not a secure way to manage secrets compared to Secrets Manager."
+  },
+  {
+    "id": 63,
+    "question": "A company is using Amazon MQ as a message broker for their application. They want to monitor the number of messages in the queue and set up an alert if the queue depth exceeds a certain threshold. Which AWS service should the Solutions Architect use to achieve this?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Use Amazon CloudWatch to monitor the Amazon MQ queue metrics and create an alarm for the queue depth."
+      },
+      {
+        "id": "b",
+        "text": "Use AWS CloudTrail to track the number of messages in the queue and set up notifications."
+      },
+      {
+        "id": "c",
+        "text": "Configure Amazon MQ to send queue metrics to Amazon S3 and analyze them with AWS Lambda."
+      },
+      {
+        "id": "d",
+        "text": "Use AWS X-Ray to monitor the queue depth and set up alerts for high message counts."
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Amazon CloudWatch (option a) can monitor Amazon MQ queue metrics, such as queue depth, and allows creating alarms to trigger notifications if the threshold is exceeded. Option b (CloudTrail) is for auditing API calls, not queue metrics. Option c (S3 with Lambda) is overly complex for monitoring. Option d (X-Ray) is for tracing application performance, not queue monitoring."
+  }
+]
+]
