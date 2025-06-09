@@ -52,7 +52,7 @@
         "text": "Use AWS Shield and WAF"
       }
     ],
-    "correctAnswer": ["b", "c"],
+    "correctAnswer": ["a", "c"],
     "explanation": "Migrating EC2 instances to a private subnet (option b) enhances security by restricting direct internet access, reducing the risk of exposure for sensitive data. Enabling EBS Encryption (option c) ensures that data on EBS volumes is encrypted at rest, meeting compliance requirements. Option a addresses S3 encryption but not EBS volumes directly. Creating an EBS Snapshot (option d) is a backup mechanism, not a security measure. Using AWS Shield and WAF (option e) protects against DDoS attacks but does not directly secure data storage on EBS or S3."
   },
   {
@@ -132,7 +132,7 @@
         "text": "Configure an automated backup and set the backup retention period to 90 days."
       }
     ],
-    "correctAnswer": "d",
+    "correctAnswer": "b",
     "explanation": "Configuring an automated backup and setting the backup retention period to 90 days (option d) directly meets the requirement using Aurora's built-in backup feature, which manages retention natively. Options a and c involve manual or additional steps (e.g., Lambda, S3 export) that add complexity, while option b (AWS Backup) is a valid alternative but overcomplicates the solution compared to the native RDS backup feature."
   },
   {
